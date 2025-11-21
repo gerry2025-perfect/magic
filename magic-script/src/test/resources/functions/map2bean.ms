@@ -1,4 +1,4 @@
-import 'org.ssssssss.script.functions.User' as User;
+import 'functions.com.iwhalecloud.bss.magic.script.User' as User;
 var user = {
     age : 18,
     weight : 121,

@@ -1,4 +1,4 @@
-import org.ssssssss.script.GrammarTests$AutoClose as A
+import com.iwhalecloud.bss.magic.script.GrammarTests$AutoClose as A
 import java.lang.StringBuilder
 import java.util.concurrent.atomic.LongAdder
 var sb = new StringBuilder()

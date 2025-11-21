@@ -1,2 +1,2 @@
-import 'org.ssssssss.script.Constants';
+import 'com.iwhalecloud.bss.magic.script.Constants';
 return Constants.Test.OK;
