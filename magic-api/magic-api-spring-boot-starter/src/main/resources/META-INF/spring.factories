@@ -1,1 +1,1 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=org.ssssssss.magicapi.spring.boot.starter.MagicAPIAutoConfiguration
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.iwhalecloud.bss.magic.magicapi.spring.boot.starter.MagicAPIAutoConfiguration

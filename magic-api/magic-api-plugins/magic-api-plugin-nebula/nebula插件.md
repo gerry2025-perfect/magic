@@ -39,7 +39,7 @@ nebula.convert(resultJson)
 nebula.executeNebulaModel(ngsl)
 
 其他支持的方法不太常用, 这里不再一一列举, 可参考源码
-org.ssssssss.magicapi.nebula.NebulaModule
+nebula.com.iwhalecloud.bss.magic.magicapi.NebulaModule
 ```
 
 #### 返回的数据格式为:
