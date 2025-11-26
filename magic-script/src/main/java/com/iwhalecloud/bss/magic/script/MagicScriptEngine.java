@@ -8,6 +8,7 @@ import javax.script.*;
 import java.beans.Transient;
 import java.io.IOException;
 import java.io.Reader;
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
@@ -103,7 +104,14 @@ public class MagicScriptEngine extends AbstractScriptEngine implements ScriptEng
 	}
 
 	private static void appendMethod(Class<?> clazz, ScriptClass scriptClass) {
-		getMethod(clazz).forEach(method -> {
+		//对于被代理类的类，需求获取对应实际类，然后获取
+		List<ScriptMethod> methodList ;
+		if(clazz.getSuperclass()!=null && clazz.getSuperclass().getName().startsWith("com.iwhalecloud.bss")) {
+			methodList = getMethod(clazz.getSuperclass());
+		}else{
+			methodList = getMethod(clazz);
+		}
+		methodList.forEach(method -> {
 			scriptClass.addMethod(method);
 			String methodName = method.getName();
 			if (method.getParameters().isEmpty() && ((methodName.startsWith("get") && methodName.length() > 3) || (methodName.startsWith("is") && methodName.length() > 2))) {
@@ -125,7 +133,13 @@ public class MagicScriptEngine extends AbstractScriptEngine implements ScriptEng
 	}
 
 	private static List<ScriptMethod> getMethod(Class<?> clazz) {
-		List<ScriptMethod> methods = new ArrayList<>();
+		return getMethod(clazz, null);
+	}
+
+	private static List<ScriptMethod> getMethod(Class<?> clazz, List<ScriptMethod> methods) {
+		if(methods==null ){
+			methods = new ArrayList<>();
+		}
 		try {
 			Method[] declaredMethods = clazz.getDeclaredMethods();
 			for (Method declaredMethod : declaredMethods) {
@@ -136,6 +150,16 @@ public class MagicScriptEngine extends AbstractScriptEngine implements ScriptEng
 						}
 					}
 				}
+			}
+			//对于存在父级Module的情况需要把父级的方法也补充进去
+			Annotation[] annotations = clazz.getSuperclass().getAnnotations();
+			if(annotations!=null && annotations.length>0) {
+				for (Annotation annotation : annotations) {
+					if("MagicModule".equals(annotation.annotationType().getSimpleName())){
+						getMethod(clazz.getSuperclass(), methods);
+					}
+				}
+
 			}
 		} catch (Exception ignored) {
 		}

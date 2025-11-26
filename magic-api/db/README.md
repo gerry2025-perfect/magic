@@ -1,4 +1,5 @@
-> 0.7.x版本之后仅需要一张表两个字段，建表语句如下：
+## Mysql脚本
+> > 0.7.x版本之后仅需要一张表两个字段，建表语句如下：
 ```sql
 CREATE TABLE `magic_api_file_v2` (
   `file_path` varchar(512) NOT NULL,
@@ -18,4 +19,29 @@ CREATE TABLE `magic_backup_record_v2` (
   `create_by` varchar(64) DEFAULT NULL COMMENT '操作人',
   PRIMARY KEY (`id`,`create_date`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
+```
+
+## oracle脚本
+```sql
+create table MAGIC_API_FILE
+(
+    FILE_PATH    VARCHAR2(512) not null
+        primary key,
+    FILE_CONTENT CLOB
+);
+```
+
+
+```sql
+create table MAGIC_BACKUP_RECORD
+(
+    ID          VARCHAR2(32) not null,
+    CREATE_DATE NUMBER(13)   not null,
+    TAG         VARCHAR2(32) default NULL,
+    TYPE        VARCHAR2(32) default NULL,
+    NAME        VARCHAR2(64) default NULL,
+    CONTENT     BLOB,
+    CREATE_BY   VARCHAR2(64) default NULL,
+    primary key (ID, CREATE_DATE)
+);
 ```
