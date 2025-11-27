@@ -92,7 +92,7 @@ public class WebSocketSessionManager {
 			}
 			messages.forEach((clientId, logs) -> sendByClientId(clientId, logs.size() > 1 ? MessageType.LOGS : MessageType.LOG, logs));
 		} catch (Exception e) {
-			logger.warn("发送日志失败", e);
+			logger.warn("Failed to send logs", e);
 		}
 	}
 
@@ -164,7 +164,7 @@ public class WebSocketSessionManager {
 				}
 			}
 		} catch (Exception e) {
-			logger.warn("发送WebSocket消息失败: {}", e.getMessage());
+			logger.warn("Failed to send WebSocket message: {}", e.getMessage());
 		}
 	}
 

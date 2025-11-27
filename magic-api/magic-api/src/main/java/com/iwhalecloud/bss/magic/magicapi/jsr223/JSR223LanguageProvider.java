@@ -30,7 +30,7 @@ public class JSR223LanguageProvider implements LanguageProvider {
 			try {
 				return compilable.compile(script).eval(new SimpleBindings(context));
 			} catch (Exception e) {
-				throw new MagicAPIException(String.format("编译%s出错", languageName), e);
+				throw new MagicAPIException(String.format("Compilation error %s", languageName), e);
 			}
 		} else {
 			return scriptEngine.eval(script, new SimpleBindings(context));

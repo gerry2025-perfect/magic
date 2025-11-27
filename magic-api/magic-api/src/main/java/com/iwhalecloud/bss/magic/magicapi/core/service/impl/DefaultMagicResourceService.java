@@ -904,7 +904,7 @@ public class DefaultMagicResourceService implements MagicResourceService, JsonCo
 		try {
 			this.read(false);
 		} catch (Exception e) {
-			logger.error("启动过程中发生异常", e);
+			logger.error("An exception occurred during startup", e);
 		}
 	}
 }

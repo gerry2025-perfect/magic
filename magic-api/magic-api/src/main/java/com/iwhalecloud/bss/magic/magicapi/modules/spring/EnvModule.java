@@ -14,8 +14,8 @@ public class EnvModule {
 
 	private final Environment environment;
 
-	@Comment("获取配置")
-	public String get(@Comment(name = "key", value = "配置项") String key) {
+	@Comment("Get Configuration")
+	public String get(@Comment(name = "key", value = "Configuration Items") String key) {
 		return environment.getProperty(key);
 	}
 
@@ -23,9 +23,9 @@ public class EnvModule {
 		this.environment = environment;
 	}
 
-	@Comment("获取配置")
-	public String get(@Comment(name = "key", value = "配置项") String key,
-					  @Comment(name = "defaultValue", value = "未配置时的默认值") String defaultValue) {
+	@Comment("Get Configuration")
+	public String get(@Comment(name = "key", value = "Configuration Items") String key,
+					  @Comment(name = "defaultValue", value = "Default Values When Not Configured") String defaultValue) {
 		return environment.getProperty(key, defaultValue);
 	}
 }

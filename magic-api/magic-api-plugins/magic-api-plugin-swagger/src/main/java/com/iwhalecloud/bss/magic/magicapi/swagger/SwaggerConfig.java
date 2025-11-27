@@ -15,7 +15,7 @@ public class SwaggerConfig {
 	/**
 	 * 资源名称
 	 */
-	private String name = "MagicAPI接口";
+	private String name = "MagicAPI Interface";
 
 	/**
 	 * 资源位置
@@ -30,7 +30,7 @@ public class SwaggerConfig {
 	/**
 	 * 文档描述
 	 */
-	private String description = "MagicAPI 接口信息";
+	private String description = "MagicAPI Interface Information";
 
 	@NestedConfigurationProperty
 	private SwaggerEntity.Concat concat = new SwaggerEntity.Concat();

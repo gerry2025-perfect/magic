@@ -96,7 +96,7 @@ public class DefaultMagicAPIService implements MagicAPIService, JsonCodeConstant
 		String mappingKey = Objects.toString(method, "GET").toUpperCase() + ":" + PathUtils.replaceSlash(this.prefix + "/" + Objects.toString(path, ""));
 		ApiInfo info = requestMagicDynamicRegistry.getMapping(mappingKey);
 		if (info == null) {
-			throw new MagicAPIException(String.format("找不到对应接口 [%s:%s]", method, path));
+			throw new MagicAPIException(String.format("Corresponding interface not found [%s:%s]", method, path));
 		}
 		if (context == null) {
 			context = new HashMap<>();
@@ -126,7 +126,7 @@ public class DefaultMagicAPIService implements MagicAPIService, JsonCodeConstant
 	public <T> T invoke(String path, Map<String, Object> context) {
 		FunctionInfo functionInfo = functionMagicDynamicRegistry.getMapping(path);
 		if (functionInfo == null) {
-			throw new MagicAPIException(String.format("找不到对应函数 [%s]", path));
+			throw new MagicAPIException(String.format("Corresponding function not found [%s]", path));
 		}
 		return (T) execute(null, functionInfo, context);
 	}
@@ -179,7 +179,7 @@ public class DefaultMagicAPIService implements MagicAPIService, JsonCodeConstant
 		if (magicNotify == null || instanceId.equals(magicNotify.getFrom())) {
 			return false;
 		}
-		logger.debug("收到通知消息:{}", magicNotify);
+		logger.debug("Notification message received: {}", magicNotify);
 		switch (magicNotify.getAction()) {
 			case WS_C_S:
 				return processWebSocketMessageReceived(magicNotify.getClientId(), magicNotify.getContent());

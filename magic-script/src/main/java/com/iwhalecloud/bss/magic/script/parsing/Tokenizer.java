@@ -101,12 +101,12 @@ public class Tokenizer {
 				tokens.add(new Token(TokenType.Language, language));
 				stream.startSpan();
 				if (!stream.skipUntil("```")) {
-					MagicScriptError.error("```需要以```结尾", stream.endSpan(), new StringLiteralException());
+					MagicScriptError.error("`` must end with ```", stream.endSpan(), new StringLiteralException());
 				}
 				tokens.add(new Token(TokenType.Language, stream.endSpan(-3)));
 				return true;
 			} else {
-				MagicScriptError.error("```后需要标识语言类型", stream.endSpan(), new StringLiteralException());
+				MagicScriptError.error("`` must be followed by the language type", stream.endSpan(), new StringLiteralException());
 			}
 		}
 		return false;
@@ -139,7 +139,7 @@ public class Tokenizer {
 				stream.consume();
 			}
 			if (!matchedEndQuote) {
-				MagicScriptError.error("模板字符串没有结束符`", stream.endSpan(), new StringLiteralException());
+				MagicScriptError.error("Template string has no end-of-line character", stream.endSpan(), new StringLiteralException());
 			}
 			Span stringSpan = stream.endSpan(begin, stream.getPosition());
 			int end = stream.getPosition() - 1;
@@ -304,11 +304,11 @@ public class Tokenizer {
 				}
 				char ch = stream.consume();
 				if (tokenType != TokenType.TripleQuote && (ch == '\r' || ch == '\n')) {
-					MagicScriptError.error(tokenType.getError() + tokenType.getError() + "定义的字符串不能换行", stream.endSpan(), new StringLiteralException());
+					MagicScriptError.error(tokenType.getError() + tokenType.getError() + "Defined string cannot have a newline character", stream.endSpan(), new StringLiteralException());
 				}
 			}
 			if (!matchedEndQuote) {
-				MagicScriptError.error("字符串没有结束符" + tokenType.getError(), stream.endSpan(), new StringLiteralException());
+				MagicScriptError.error("String has no end-of-line character" + tokenType.getError(), stream.endSpan(), new StringLiteralException());
 			}
 			Span stringSpan = stream.endSpan();
 			stringSpan = stream.getSpan(stringSpan.getStart(), stringSpan.getEnd() - tokenType.getLiteral().length());

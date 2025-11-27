@@ -103,8 +103,8 @@ public class RequestHandler extends MagicController {
 				.parameters(parameters);
 		ApiInfo info = requestEntity.getApiInfo();
 		if (info == null) {
-			logger.error("{}找不到对应接口", request.getRequestURI());
-			return afterCompletion(requestEntity, buildResult(requestEntity, API_NOT_FOUND, "接口不存在"));
+			logger.error("{} cannot find the corresponding interface", request.getRequestURI());
+			return afterCompletion(requestEntity, buildResult(requestEntity, API_NOT_FOUND, "Interface does not exist"));
 		}
 		requestEntity.setHeaders(headers);
 		List<Path> paths = new ArrayList<>(info.getPaths());
@@ -121,7 +121,7 @@ public class RequestHandler extends MagicController {
 		try {
 			boolean disabledUnknownParameter = CONST_STRING_TRUE.equalsIgnoreCase(info.getOptionValue(Options.DISABLED_UNKNOWN_PARAMETER));
 			// 验证参数
-			doValidate(scriptName, "参数", info.getParameters(), parameters, PARAMETER_INVALID, disabledUnknownParameter);
+			doValidate(scriptName, "Parameters", info.getParameters(), parameters, PARAMETER_INVALID, disabledUnknownParameter);
 
 			Object wrap = requestEntity.getApiInfo().getOptionValue(Options.WRAP_REQUEST_PARAMETERS.getValue());
 			if (wrap != null && StringUtils.isNotBlank(wrap.toString())) {
@@ -206,11 +206,11 @@ public class RequestHandler extends MagicController {
 			return true;
 		}
 		if (parameter.isRequired() && !BooleanLiteral.isTrue(parameters.get(parameter.getName()))) {
-			throw new ValidateException(jsonCode, StringUtils.defaultIfBlank(parameter.getError(), String.format("%s[%s]为必填项", comment, parameter.getName())));
+			throw new ValidateException(jsonCode, StringUtils.defaultIfBlank(parameter.getError(), String.format("%s[%s] is required", comment, parameter.getName())));
 		}
 		Object value = parameters.get(parameter.getName());
 		if (value != null && !target.isAssignableFrom(value.getClass())) {
-			throw new ValidateException(jsonCode, StringUtils.defaultIfBlank(parameter.getError(), String.format("%s[%s]数据类型错误", comment, parameter.getName())));
+			throw new ValidateException(jsonCode, StringUtils.defaultIfBlank(parameter.getError(), String.format("%s[%s] data type error", comment, parameter.getName())));
 		}
 		return false;
 	}
@@ -254,27 +254,27 @@ public class RequestHandler extends MagicController {
 					if (!parameter.isRequired()) {
 						continue;
 					}
-					throw new ValidateException(jsonCode, StringUtils.defaultIfBlank(parameter.getError(), String.format("%s[%s]为必填项", comment, parameter.getName())));
+					throw new ValidateException(jsonCode, StringUtils.defaultIfBlank(parameter.getError(), String.format("%s[%s] is required", comment, parameter.getName())));
 				}
 				try {
 					Object value = convertValue(parameter.getDataType(), parameter.getName(), requestValue);
 					if (isFile && parameter.isRequired()) {
 						if (value == null || (parameter.getDataType() == DataType.MultipartFiles && ((List<?>) value).isEmpty())) {
-							throw new ValidateException(jsonCode, StringUtils.defaultIfBlank(parameter.getError(), String.format("%s[%s]为必填项", comment, parameter.getName())));
+							throw new ValidateException(jsonCode, StringUtils.defaultIfBlank(parameter.getError(), String.format("%s[%s] is required", comment, parameter.getName())));
 						}
 					}
 					// 正则验证
 					if (VALIDATE_TYPE_PATTERN.equals(parameter.getValidateType())) {
 						String expression = parameter.getExpression();
 						if (StringUtils.isNotBlank(expression) && !PatternUtils.match(Objects.toString(value, Constants.EMPTY), expression)) {
-							throw new ValidateException(jsonCode, StringUtils.defaultIfBlank(parameter.getError(), String.format("%s[%s]不满足正则表达式", comment, parameter.getName())));
+							throw new ValidateException(jsonCode, StringUtils.defaultIfBlank(parameter.getError(), String.format("%s[%s] does not satisfy the regular expression", comment, parameter.getName())));
 						}
 					}
 					parameters.put(parameter.getName(), value);
 				} catch (ValidateException ve) {
 					throw ve;
 				} catch (Exception e) {
-					throw new ValidateException(jsonCode, StringUtils.defaultIfBlank(parameter.getError(), String.format("%s[%s]不合法", comment, parameter.getName())));
+					throw new ValidateException(jsonCode, StringUtils.defaultIfBlank(parameter.getError(), String.format("%s[%s] is invalid", comment, parameter.getName())));
 				}
 			}
 		}
@@ -290,7 +290,7 @@ public class RequestHandler extends MagicController {
 				// 设置自身变量
 				context.set(EXPRESSION_DEFAULT_VAR_NAME, value);
 				if (!BooleanLiteral.isTrue(ScriptManager.executeExpression(parameter.getExpression(), context))) {
-					throw new ValidateException(jsonCode, StringUtils.defaultIfBlank(parameter.getError(), String.format("%s[%s]不满足表达式", comment, parameter.getName())));
+					throw new ValidateException(jsonCode, StringUtils.defaultIfBlank(parameter.getError(), String.format("%s[%s] does not satisfy the expression", comment, parameter.getName())));
 				}
 			}
 		}
@@ -372,7 +372,7 @@ public class RequestHandler extends MagicController {
 			afterCompletion(requestEntity, null, root);
 			throw root;
 		}
-		logger.error("接口{}请求出错", requestEntity.getRequest().getRequestURI(), root);
+		logger.error("Error occurred in API {} request", requestEntity.getRequest().getRequestURI(), root);
 		return afterCompletion(requestEntity, resultProvider.buildException(requestEntity, root), root);
 	}
 
@@ -449,7 +449,7 @@ public class RequestHandler extends MagicController {
 			try {
 				requestInterceptor.afterCompletion(requestEntity, returnValue, throwable);
 			} catch (Exception e) {
-				logger.warn("执行afterCompletion出现出错", e);
+				logger.warn("Error occurred in executing afterCompletion", e);
 			}
 		}
 		Set<String> exposeHeaders = new HashSet<>(16);

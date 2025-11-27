@@ -108,7 +108,7 @@ public class MagicResourceLoader {
 	public static Object loadModule(String moduleName) {
 		Object module = MODULES.get(moduleName);
 		if (module == null){
-			throw new ResourceNotFoundException("找不到模块：" + moduleName);
+			throw new ResourceNotFoundException("Module not found:" + moduleName);
 		}
 		return module;
 	}
@@ -185,7 +185,7 @@ public class MagicResourceLoader {
 			} catch (Exception ignored) {
 			}
 		}
-		throw new ResourceNotFoundException("找不到语言：" + name);
+		throw new ResourceNotFoundException("Language not found:" + name);
 	}
 
 	/**
@@ -203,6 +203,6 @@ public class MagicResourceLoader {
 			} catch (Exception ignored) {
 			}
 		}
-		throw new ResourceNotFoundException("找不到函数：" + name);
+		throw new ResourceNotFoundException("Function not found:" + name);
 	}
 }

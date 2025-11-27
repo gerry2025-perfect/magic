@@ -16,9 +16,9 @@ public class ObjectTypeConditionExtension {
 	/**
 	 * 判断是否是目标类型
 	 */
-	@Comment("判断对象是否为指定类型的对象")
+	@Comment("Determines if an object is of a specified type")
 	public static boolean is(Object target,
-							 @Comment(name = "clazz", value = "目标类型") Class<?> clazz) {
+							 @Comment(name = "clazz", value = "Target type") Class<?> clazz) {
 		if (target == null || clazz == null) {
 			return false;
 		}
@@ -28,7 +28,7 @@ public class ObjectTypeConditionExtension {
 	/**
 	 * 判断是否是数组
 	 */
-	@Comment("判断对象是否是数组")
+	@Comment("Determines if an object is an array")
 	public static boolean isArray(Object target) {
 		if (target instanceof Class) {
 			return ((Class<?>) target).isArray();
@@ -39,7 +39,7 @@ public class ObjectTypeConditionExtension {
 	/**
 	 * 判断是否是集合
 	 */
-	@Comment("判断对象是否是集合")
+	@Comment("Determines if an object is a collection")
 	public static boolean isCollection(Object target) {
 		if (target instanceof Class) {
 			return Collection.class.isAssignableFrom((Class<?>) target);
@@ -50,7 +50,7 @@ public class ObjectTypeConditionExtension {
 	/**
 	 * 判断是否是Map
 	 */
-	@Comment("判断对象是否是Map")
+	@Comment("Determines if an object is a Map")
 	public static boolean isMap(Object target) {
 		if (target instanceof Class) {
 			return Map.class.isAssignableFrom((Class<?>) target);
@@ -61,9 +61,9 @@ public class ObjectTypeConditionExtension {
 	/**
 	 * 判断是否是目标类型
 	 */
-	@Comment("判断对象是否为指定类型的对象，type为null时 返回false，支持类名缩写")
+	@Comment("Determines if an object is of a specified type; returns false if type is null; supports class name abbreviations")
 	public boolean is(Object target,
-					  @Comment(name = "type", value = "类名或全类名或string、int、double、float、long、byte、short、bigdecimal、boolean") String type) {
+					  @Comment(name = "type", value = "Class name or fully qualified class name or string, int, double, float, long, byte, short, bigdecimal, boolean") String type) {
 		if (type == null) {
 			return false;
 		}
@@ -109,7 +109,7 @@ public class ObjectTypeConditionExtension {
 	/**
 	 * 判断是否是String
 	 */
-	@Comment("判断对象是否是String类型")
+	@Comment("Checks if the object is of type String")
 	public boolean isString(Object target) {
 		return is(target, String.class);
 	}
@@ -117,7 +117,7 @@ public class ObjectTypeConditionExtension {
 	/**
 	 * 判断是否是int
 	 */
-	@Comment("判断对象是否是int类型")
+	@Comment("Checks if the object is of type int")
 	public boolean isInt(Object target) {
 		return is(target, Integer.class);
 	}
@@ -125,7 +125,7 @@ public class ObjectTypeConditionExtension {
 	/**
 	 * 判断是否是double
 	 */
-	@Comment("判断对象是否是double类型")
+	@Comment("Checks if the object is of type double")
 	public boolean isDouble(Object target) {
 		return is(target, Double.class);
 	}
@@ -133,7 +133,7 @@ public class ObjectTypeConditionExtension {
 	/**
 	 * 判断是否是long
 	 */
-	@Comment("判断对象是否是long类型")
+	@Comment("Checks if the object is of type long")
 	public boolean isLong(Object target) {
 		return is(target, Long.class);
 	}
@@ -141,7 +141,7 @@ public class ObjectTypeConditionExtension {
 	/**
 	 * 判断是否是byte
 	 */
-	@Comment("判断对象是否是byte类型")
+	@Comment("Checks if the object is of type byte")
 	public boolean isByte(Object target) {
 		return is(target, Byte.class);
 	}
@@ -149,7 +149,7 @@ public class ObjectTypeConditionExtension {
 	/**
 	 * 判断是否是short
 	 */
-	@Comment("判断对象是否是short类型")
+	@Comment("Checks if the object is of type short")
 	public boolean isShort(Object target) {
 		return is(target, Short.class);
 	}
@@ -157,7 +157,7 @@ public class ObjectTypeConditionExtension {
 	/**
 	 * 判断是否是boolean
 	 */
-	@Comment("判断对象是否是boolean类型")
+	@Comment("Checks if the object is of type boolean")
 	public boolean isBoolean(Object target) {
 		return is(target, Boolean.class);
 	}
@@ -165,7 +165,7 @@ public class ObjectTypeConditionExtension {
 	/**
 	 * 判断是否是BigDecimal
 	 */
-	@Comment("判断对象是否是BigDecimal类型")
+	@Comment("Checks if the object is of type BigDecimal")
 	public boolean isDecimal(Object target) {
 		return is(target, BigDecimal.class);
 	}
@@ -173,7 +173,7 @@ public class ObjectTypeConditionExtension {
 	/**
 	 * 判断是否是Date
 	 */
-	@Comment("判断对象是否是Date类型")
+	@Comment("Determines if the object is of type Date")
 	public boolean isDate(Object target) {
 		return is(target, Date.class);
 	}
@@ -181,7 +181,7 @@ public class ObjectTypeConditionExtension {
 	/**
 	 * 判断是否是List
 	 */
-	@Comment("判断对象是否是List")
+	@Comment("Check if an object is a List")
 	public boolean isList(Object target) {
 		if (target instanceof Class) {
 			return List.class.isAssignableFrom((Class<?>) target);

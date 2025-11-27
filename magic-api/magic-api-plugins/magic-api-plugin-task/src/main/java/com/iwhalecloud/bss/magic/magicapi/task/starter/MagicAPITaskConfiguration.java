@@ -1,5 +1,6 @@
 package com.iwhalecloud.bss.magic.magicapi.task.starter;
 
+import com.iwhalecloud.bss.magic.magicapi.redis.RedisModule;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -30,7 +31,7 @@ public class MagicAPITaskConfiguration implements MagicPluginConfiguration {
 
 	@Bean
 	@ConditionalOnMissingBean
-	public TaskMagicDynamicRegistry taskMagicDynamicRegistry(TaskInfoMagicResourceStorage taskInfoMagicResourceStorage) {
+	public TaskMagicDynamicRegistry taskMagicDynamicRegistry(TaskInfoMagicResourceStorage taskInfoMagicResourceStorage, RedisModule redisModule) {
 		MagicTaskConfig.Shutdown shutdown = config.getShutdown();
 		ThreadPoolTaskScheduler poolTaskScheduler = null;
 		if(config.isEnable()){
@@ -43,12 +44,12 @@ public class MagicAPITaskConfiguration implements MagicPluginConfiguration {
 			poolTaskScheduler.setThreadNamePrefix(config.getThreadNamePrefix());
 			poolTaskScheduler.initialize();
 		}
-		return new TaskMagicDynamicRegistry(taskInfoMagicResourceStorage, poolTaskScheduler, config.isLog());
+		return new TaskMagicDynamicRegistry(taskInfoMagicResourceStorage, poolTaskScheduler, config.isLog(), redisModule);
 	}
 
 	@Override
 	public Plugin plugin() {
-		return new Plugin("定时任务", "MagicTask", "magic-task.1.0.0.iife.js");
+		return new Plugin("Scheduled Task", "MagicTask", "magic-task.1.0.0.iife.js");
 	}
 
 	@Override

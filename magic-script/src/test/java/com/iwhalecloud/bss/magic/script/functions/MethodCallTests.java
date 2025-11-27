@@ -101,7 +101,7 @@ public class MethodCallTests extends BaseTest {
 
 	@Test
 	public void method_call_5() {
-		Assert.assertEquals("call_5_User{age=0, weight=0.0, money=0, roles=null, name='法外狂徒'}", execute("functions/method_call_5.ms"));
+		Assert.assertEquals("call_5_User{age=0, weight=0.0, money=0, roles=null, name='Outlaw'}", execute("functions/method_call_5.ms"));
 	}
 
 	@Test
@@ -111,7 +111,7 @@ public class MethodCallTests extends BaseTest {
 
 	@Test
 	public void method_call_7() {
-		Assert.assertEquals("call_7_[User{age=0, weight=0.0, money=0, roles=null, name='法外狂徒'}, User{age=0, weight=0.0, money=0, roles=null, name='张三'}]", execute("functions/method_call_7.ms"));
+		Assert.assertEquals("call_7_[User{age=0, weight=0.0, money=0, roles=null, name='Outlaw'}, User{age=0, weight=0.0, money=0, roles=null, name='Zhang San'}]", execute("functions/method_call_7.ms"));
 	}
 
 	@Test

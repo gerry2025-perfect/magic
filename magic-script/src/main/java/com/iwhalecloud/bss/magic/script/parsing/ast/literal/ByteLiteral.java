@@ -27,7 +27,7 @@ public class ByteLiteral extends NumberLiteral {
 				String text = getText();
 				this.value = Byte.parseByte(text.substring(0, text.length() - 1).replace("_",""));
 			} catch (NumberFormatException e) {
-				MagicScriptError.error("定义byte变量值不合法", getSpan(), e);
+				MagicScriptError.error("Invalid byte variable value definition", getSpan(), e);
 			}
 		}
 		context.bipush(this.value).invoke(INVOKESTATIC, Byte.class, "valueOf", Byte.class, byte.class);

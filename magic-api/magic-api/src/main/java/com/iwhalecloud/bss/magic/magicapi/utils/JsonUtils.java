@@ -39,7 +39,7 @@ public class JsonUtils {
 		try {
 			return MAPPER.writerWithDefaultPrettyPrinter().writeValueAsString(target);
 		} catch (JsonProcessingException e) {
-			logger.error("json序列化失败", e);
+			logger.error("JSON serialization failed", e);
 			return null;
 		}
 	}
@@ -48,7 +48,7 @@ public class JsonUtils {
 		try {
 			return MAPPER.writeValueAsString(target);
 		} catch (JsonProcessingException e) {
-			logger.error("json序列化失败", e);
+			logger.error("JSON serialization failed", e);
 			return null;
 		}
 	}
@@ -65,7 +65,7 @@ public class JsonUtils {
 		try {
 			return MAPPER.readValue(json, typeReference);
 		} catch (IOException e) {
-			logger.error("读取json失败,json:{}", json, e);
+			logger.error("Failed to read JSON, json:{}", json, e);
 			return null;
 		}
 	}
@@ -74,7 +74,7 @@ public class JsonUtils {
 		try {
 			return MAPPER.readValue(json, clazz);
 		} catch (IOException e) {
-			logger.error("读取json失败,json:{}", json, e);
+			logger.error("Failed to read JSON, json:{}", json, e);
 			return null;
 		}
 	}
@@ -83,7 +83,7 @@ public class JsonUtils {
 		try {
 			return MAPPER.readValue(bytes, clazz);
 		} catch (IOException e) {
-			logger.error("读取json失败,json:{}", new String(bytes), e);
+			logger.error("Failed to read JSON, json:{}", new String(bytes), e);
 			return null;
 		}
 	}
@@ -92,7 +92,7 @@ public class JsonUtils {
 		try {
 			return MAPPER.readValue(bytes, javaType);
 		} catch (IOException e) {
-			logger.error("读取json失败,json:{}", new String(bytes), e);
+			logger.error("Failed to read JSON, json:{}", new String(bytes), e);
 			return null;
 		}
 	}

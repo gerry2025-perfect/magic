@@ -23,6 +23,11 @@
             <artifactId>spring-boot-configuration-processor</artifactId>
             <optional>true</optional>
         </dependency>
+        <dependency>
+            <groupId>com.iwhalecloud.bss.magic</groupId>
+            <artifactId>magic-api-plugin-redis</artifactId>
+            <version>2.2.1</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>

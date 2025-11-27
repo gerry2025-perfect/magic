@@ -141,7 +141,7 @@ public class GrammarTests extends BaseTest {
 
 	@Test
 	public void ternary() {
-		Assert.assertEquals("成年", execute("grammar/ternary.ms"));
+		Assert.assertEquals("Adult", execute("grammar/ternary.ms"));
 	}
 
 	@Test

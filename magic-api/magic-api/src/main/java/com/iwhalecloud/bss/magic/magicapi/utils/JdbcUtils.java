@@ -19,18 +19,18 @@ public class JdbcUtils {
 			if (StringUtils.isBlank(driver)) {
 				driver = DatabaseDriver.fromJdbcUrl(url).getDriverClassName();
 				if (StringUtils.isBlank(driver)) {
-					throw new MagicAPIException("无法从url中获得驱动类");
+					throw new MagicAPIException("Unable to Obtain Driver Class from URL");
 				}
 			}
 			Class.forName(driver);
 		} catch (ClassNotFoundException e) {
-			throw new MagicAPIException("找不到驱动：" + driver);
+			throw new MagicAPIException("Driver Not Found:" + driver);
 		}
 		try {
 			return DriverManager.getConnection(url, username, password);
 		} catch (SQLException e) {
-			logger.error("获取Jdbc链接失败", e);
-			throw new MagicAPIException("获取Jdbc链接失败：" + e.getMessage());
+			logger.error("Failed to obtain JDBC connection", e);
+			throw new MagicAPIException("Failed to obtain JDBC connection:" + e.getMessage());
 		}
 	}
 

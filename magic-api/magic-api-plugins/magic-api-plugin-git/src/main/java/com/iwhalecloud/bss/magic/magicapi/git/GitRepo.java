@@ -47,7 +47,7 @@ public class GitRepo {
             repoDir.mkdirs();
         }
         if (!gitFile.exists() && repoDir.list().length > 0) {
-            throw new MagicAPIException("初次项目启动时，请保持文件夹为空。");
+            throw new MagicAPIException("Please keep the folder empty when starting the project for the first time");
         }
     }
 
@@ -125,7 +125,7 @@ public class GitRepo {
                 git = cloneCommand.call();
             }
         } catch (IOException | GitAPIException e) {
-            logger.error("初始化git仓库失败", e);
+            logger.error("Failed to initialize the git repository", e);
             throw e;
         }
     }
@@ -133,7 +133,7 @@ public class GitRepo {
     /**
      * 更新
      * 1.git add .
-     * 2.git commit -m "同步数据"
+     * 2.git commit -m "Synchronize data"
      * 3.git pull
      * 4.git push
      * @param update
@@ -144,19 +144,19 @@ public class GitRepo {
     public boolean update(boolean update) {
         try {
             git.add().setUpdate(update).addFilepattern(".").call();
-            git.commit().setMessage("同步数据").call();
+            git.commit().setMessage("Synchronize data").call();
             PullCommand pull = git.pull();
             this.setSshOrCredentials(pull);
             PullResult pullResult = pull.call();
             if (!pullResult.isSuccessful()) {
-                throw new MagicAPIException("git更新失败, 请重试或尝试手动更新");
+                throw new MagicAPIException("git update failed, please try again or try manual update");
             }
             PushCommand pushCommand = git.push();
             this.setSshOrCredentials(pushCommand);
             pushCommand.call();
         } catch (GitAPIException e) {
-            logger.error("git更新失败", e);
-            throw new MagicAPIException("git更新失败, 请重试或尝试手动更新");
+            logger.error("git update failed", e);
+            throw new MagicAPIException("git update failed, please try again or try manual update");
         }
         return true;
     }

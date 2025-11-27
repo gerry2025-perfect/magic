@@ -174,7 +174,7 @@ public class MagicAPIAutoConfiguration implements WebMvcConfigurer, WebSocketCon
 	public Resource magicDatabaseResource(MagicDynamicDataSource magicDynamicDataSource) {
 		com.iwhalecloud.bss.magic.magicapi.core.config.Resource resourceConfig = properties.getResource();
 		if (magicDynamicDataSource.isEmpty()) {
-			throw new MagicAPIException("当前未配置数据源，如已配置，请引入 spring-boot-starter-jdbc 后在试!");
+			throw new MagicAPIException("No data source is currently configured. If configured, please import spring-boot-starter-jdbc before trying!");
 		}
 		MagicDynamicDataSource.DataSourceNode dataSourceNode = magicDynamicDataSource.getDataSource(resourceConfig.getDatasource());
 		return new DatabaseResource(new JdbcTemplate(dataSourceNode.getDataSource()), resourceConfig.getTableName(), resourceConfig.getPrefix(), resourceConfig.isReadonly());
@@ -219,7 +219,7 @@ public class MagicAPIAutoConfiguration implements WebMvcConfigurer, WebSocketCon
 	@Bean
 	@ConditionalOnMissingBean(MagicNotifyService.class)
 	public MagicNotifyService magicNotifyService() {
-		logger.info("未配置集群通知服务，本实例不会推送通知，集群环境下可能会有问题，如需开启，请引用magic-api-plugin-cluster插件");
+		logger.info("Cluster notification service is not configured. This instance will not push notifications, which may cause issues in a cluster environment. To enable it, please use the magic-api-plugin-cluster plugin");
 		return magicNotify -> {
 		};
 	}
@@ -265,12 +265,12 @@ public class MagicAPIAutoConfiguration implements WebMvcConfigurer, WebSocketCon
 					}
 				}).orElse(null)
 		);
-		logger.info("注册模块:{} -> {}", "log", Logger.class);
+		logger.info("Register module: {} -> {}", "log", Logger.class);
 		MagicResourceLoader.addModule("log", new DynamicModuleImport(Logger.class, context -> LoggerFactory.getLogger(Objects.toString(context.getScriptName(), "Unknown"))));
 		List<String> importModules = properties.getAutoImportModuleList();
 		applicationContext.getBeansWithAnnotation(MagicModule.class).values().forEach(module -> {
 			String moduleName = AnnotationUtils.findAnnotation(module.getClass(), MagicModule.class).value();
-			logger.info("注册模块:{} -> {}", moduleName, module.getClass());
+			logger.info("Register module: {} -> {}", moduleName, module.getClass());
 			if(module instanceof DynamicModule){
 				MagicResourceLoader.addModule(moduleName, new DynamicModuleImport(module.getClass(), ((DynamicModule<?>) module)::getDynamicModule));
 			} else {
@@ -278,15 +278,15 @@ public class MagicAPIAutoConfiguration implements WebMvcConfigurer, WebSocketCon
 			}
 		});
 		MagicResourceLoader.getModuleNames().stream().filter(importModules::contains).forEach(moduleName -> {
-			logger.info("自动导入模块：{}", moduleName);
+			logger.info("Auto-import module: {}", moduleName);
 			MagicScriptEngine.addDefaultImport(moduleName, MagicResourceLoader.loadModule(moduleName));
 		});
 		properties.getAutoImportPackageList().forEach(importPackage -> {
-			logger.info("自动导包：{}", importPackage);
+			logger.info("Auto-import package: {}", importPackage);
 			MagicResourceLoader.addPackage(importPackage);
 		});
 		extensionMethods.forEach(extension -> extension.supports().forEach(support -> {
-			logger.info("注册扩展:{} -> {}", support, extension.getClass());
+			logger.info("Register extension: {} -> {}", support, extension.getClass());
 			JavaReflection.registerMethodExtension(support, extension);
 		}));
 	}
@@ -300,7 +300,7 @@ public class MagicAPIAutoConfiguration implements WebMvcConfigurer, WebSocketCon
                                                  MagicNotifyService magicNotifyService,
                                                  RequestMagicDynamicRegistry requestMagicDynamicRegistry,
                                                  @Autowired(required = false) MagicBackupService magicBackupService) throws NoSuchMethodException {
-		logger.info("magic-api工作目录:{}", magicResource);
+		logger.info("magic-api working directory: {}", magicResource);
 		AsyncCall.setThreadPoolExecutorSize(properties.getThreadPoolExecutorSize());
 		DataType.DATE_PATTERNS = properties.getDatePattern();
 		MagicScript.setCompileCache(properties.getCompileCacheSize());
@@ -352,7 +352,7 @@ public class MagicAPIAutoConfiguration implements WebMvcConfigurer, WebSocketCon
 		}
 		// 设置拦截器信息
 		this.requestInterceptorsProvider.getIfAvailable(Collections::emptyList).forEach(interceptor -> {
-			logger.info("注册请求拦截器：{}", interceptor.getClass());
+			logger.info("Register request interceptor: {}", interceptor.getClass());
 			configuration.addRequestInterceptor(interceptor);
 		});
 		// 打印banner
@@ -360,7 +360,7 @@ public class MagicAPIAutoConfiguration implements WebMvcConfigurer, WebSocketCon
 			configuration.printBanner(plugins.stream().map(Plugin::getName).collect(Collectors.toList()));
 		}
 		if (magicBackupService == null) {
-			logger.error("当前备份设置未配置，强烈建议配置备份设置，以免代码丢失。");
+			logger.error("Current backup settings are not configured. It is strongly recommended to configure backup settings to avoid code loss");
 		}
 		// 备份清理
 		if (properties.getBackup().isEnable() && properties.getBackup().getMaxHistory() > 0 && magicBackupService != null) {
@@ -370,10 +370,10 @@ public class MagicAPIAutoConfiguration implements WebMvcConfigurer, WebSocketCon
 				try {
 					long count = magicBackupService.removeBackupByTimestamp(System.currentTimeMillis() - interval);
 					if (count > 0) {
-						logger.info("已删除备份记录{}条", count);
+						logger.info("{} backup records have been deleted", count);
 					}
 				} catch (Exception e) {
-					logger.error("删除备份记录时出错", e);
+					logger.error("Error occurred while deleting backup record", e);
 				}
 			}, 1, 1, TimeUnit.HOURS);
 		}

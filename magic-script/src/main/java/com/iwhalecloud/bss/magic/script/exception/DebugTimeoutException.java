@@ -3,7 +3,7 @@ package com.iwhalecloud.bss.magic.script.exception;
 public class DebugTimeoutException extends RuntimeException {
 
 	public DebugTimeoutException() {
-		super("debug超时");
+		super("debug timeout");
 	}
 
 	public DebugTimeoutException(Throwable cause) {

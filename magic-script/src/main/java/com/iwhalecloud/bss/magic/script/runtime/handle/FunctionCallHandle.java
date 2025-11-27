@@ -58,7 +58,7 @@ public class FunctionCallHandle {
 			INVOKE_NEW_INSTANCE = lookup.findStatic(FunctionCallHandle.class, "invoke_new_instance", methodType(Object.class, RuntimeContext.class, Object.class, Object[].class));
 			SET_VARIABLE_VALUE = lookup.findStatic(FunctionCallHandle.class, "set_variable_value", methodType(Object.class, RuntimeContext.class, Object.class, Object.class, Object.class));
 		} catch (NoSuchMethodException | IllegalAccessException e) {
-			throw new Error("FunctionCallHandle初始化失败", e);
+			throw new Error("FunctionCallHandle initialization failed", e);
 		}
 	}
 
@@ -118,7 +118,7 @@ public class FunctionCallHandle {
 		if (method != null) {
 			return method.invoke0(target, runtimeContext, args);
 		}
-		throw new NoSuchMethodException(String.format("找不到函数%s(%s)", name, String.join(",", JavaReflection.getStringTypes(args))));
+		throw new NoSuchMethodException(String.format("Function %s(%s) not found", name, String.join(",", JavaReflection.getStringTypes(args))));
 	}
 
 	public static Object invoke_method(RuntimeContext runtimeContext, String name, boolean hasSpread, boolean optional, Object[] args, Object target) throws Throwable {
@@ -130,7 +130,7 @@ public class FunctionCallHandle {
 			args = do_spread(args);
 		}
 		if (target == null) {
-			throw new NullPointerException("对象为空");
+			throw new NullPointerException("Object is null");
 		} else if (target instanceof MagicScriptLambdaFunction) {
 			return ((MagicScriptLambdaFunction) target).apply(runtimeContext.getVariables(), args);
 		} else if (target instanceof Function) {
@@ -153,7 +153,7 @@ public class FunctionCallHandle {
 			}
 		} catch (Exception ignored) {
 		}
-		throw new NoSuchMethodException(String.format("在%s中找不到方法%s(%s)", target.getClass().getName(), name, String.join(",", JavaReflection.getStringTypes(args))));
+		throw new NoSuchMethodException(String.format("Method %s(%s) not found in %s", target.getClass().getName(), name, String.join(",", JavaReflection.getStringTypes(args))));
 	}
 
 	public static Object spread(List<Object> source, List<Object> target) {
@@ -217,7 +217,7 @@ public class FunctionCallHandle {
 		if(optional) {
 			return null;
 		}
-		throw new MagicScriptRuntimeException(String.format("在%s中找不到属性%s或者方法get%s、方法is%s,内部类%s", target, name, methodName, methodName, name));
+		throw new MagicScriptRuntimeException(String.format("Property %s or method get%s, method is%s, inner class %s not found in %s", target, name, methodName, methodName, name));
 	}
 
 	public static Object call_async(MagicScriptLambdaFunction function, Variables variables, Object... args) {
@@ -241,9 +241,9 @@ public class FunctionCallHandle {
 				} else if (res instanceof Collection) {
 					list.addAll(((Collection) res));
 				} else if (res instanceof Map) {
-					throw new MagicScriptRuntimeException("不能在list中展开map");
+					throw new MagicScriptRuntimeException("Cannot expand map in list");
 				} else {
-					throw new MagicScriptRuntimeException("不能展开的类型:" + res.getClass());
+					throw new MagicScriptRuntimeException("Types that cannot be expanded:" + res.getClass());
 				}
 			} else {
 				list.add(item);
@@ -262,7 +262,7 @@ public class FunctionCallHandle {
 		} else if (target.getClass().isArray()) {
 			return new ArrayValueIterator(target);
 		} else {
-			throw new MagicScriptRuntimeException("不支持循环" + target.getClass());
+			throw new MagicScriptRuntimeException("Loops are not supported" + target.getClass());
 		}
 	}
 
@@ -276,7 +276,7 @@ public class FunctionCallHandle {
 		} else if (target.getClass().isArray()) {
 			return new ArrayKeyValueIterator(target);
 		} else {
-			throw new MagicScriptRuntimeException("不支持循环" + target.getClass());
+			throw new MagicScriptRuntimeException("Loops are not supported" + target.getClass());
 		}
 	}
 
@@ -298,7 +298,7 @@ public class FunctionCallHandle {
 							map.put(String.valueOf(index++), obj);
 						}
 					} else {
-						throw new MagicScriptRuntimeException("不能展开的类型:" + res.getClass());
+						throw new MagicScriptRuntimeException("Types that cannot be expanded:" + res.getClass());
 					}
 					continue;
 				}
@@ -324,14 +324,14 @@ public class FunctionCallHandle {
 				// TODO NEW EXCEPTION
 				((List) target).set(((Number) name).intValue(), value);
 			} else {
-				throw new MagicScriptRuntimeException("不支持此赋值操作");
+				throw new MagicScriptRuntimeException("This assignment operation is not supported");
 			}
 		} else if (target.getClass().isArray()){
 			if (name instanceof Number) {
 				// TODO NEW EXCEPTION
 				Array.set(target, ((Number) name).intValue(), value);
 			} else {
-				throw new MagicScriptRuntimeException("不支持此赋值操作");
+				throw new MagicScriptRuntimeException("This assignment operation is not supported");
 			}
 		} else {
 			String text = name.toString();
@@ -347,7 +347,7 @@ public class FunctionCallHandle {
 				}
 				JavaInvoker<Method> invoker = JavaReflection.getMethod(target, "set" + methodName, value);
 				if (invoker == null) {
-					throw new MagicScriptRuntimeException(String.format("在%s中找不到属性%s或者方法set%s", target.getClass(), name, methodName));
+					throw new MagicScriptRuntimeException(String.format("Property %s or method set%s not found in %s", target.getClass(), name, methodName));
 				}
 				invoker.invoke0(target, runtimeContext, new Object[]{value});
 			}

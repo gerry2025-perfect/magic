@@ -57,7 +57,7 @@ public abstract class KeyValueResource implements Resource {
 			return true;
 		}
 		if (!(resource instanceof KeyValueResource)) {
-			throw new IllegalArgumentException("无法将" + this.getAbsolutePath() + "重命名为:" + resource.getAbsolutePath());
+			throw new IllegalArgumentException("Unable to rename" + this.getAbsolutePath() + "Renamed to:" + resource.getAbsolutePath());
 		}
 		KeyValueResource targetResource = (KeyValueResource) resource;
 		// 判断移动的是否是文件夹

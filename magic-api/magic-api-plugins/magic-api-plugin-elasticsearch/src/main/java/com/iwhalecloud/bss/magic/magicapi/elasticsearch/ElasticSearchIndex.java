@@ -24,28 +24,28 @@ public class ElasticSearchIndex {
 		this.type = type;
 	}
 
-	@Comment("根据`_id`保存，当存在时更新，不存在时插入")
-	public Object save(@Comment(value = "_id", name = "_id")String _id, @Comment(value = "保存对象", name = "data")Object data) throws IOException {
+	@Comment("Save based on `_id`, update if it exists, insert if it does not exist")
+	public Object save(@Comment(value = "_id", name = "_id")String _id, @Comment(value = "Save object", name = "data")Object data) throws IOException {
 		return connect("/%s/%s/%s", this.name, this.type, _id).post(data);
 	}
 
-	@Comment("不指定`_id`插入")
-	public Object insert(@Comment(value = "插入对象", name = "data")Object data) throws IOException {
+	@Comment("Insert without specifying `_id`")
+	public Object insert(@Comment(value = "Insert object", name = "data")Object data) throws IOException {
 		return connect("/%s/%s", this.name, this.type).post(data);
 	}
 
-	@Comment("指定`_id`插入，当`_id`存在时不会更新")
-	public Object insert(@Comment(value = "_id", name = "_id")String _id, @Comment(value = "插入对象", name = "data")Object data) throws IOException {
+	@Comment("Insert by specifying `_id`; will not update if `_id` already exists")
+	public Object insert(@Comment(value = "_id", name = "_id")String _id, @Comment(value = "Insert object", name = "data")Object data) throws IOException {
 		return connect("/%s/%s/%s/_create", this.name, this.type, _id).post(data);
 	}
 
-	@Comment("根据`id`删除")
+	@Comment("Delete by `id`")
 	public Object delete(@Comment(value = "id", name = "id")String id) throws IOException {
 		return connect("/%s/%s/%s", this.name, this.type, id).delete();
 	}
 
-	@Comment("批量保存，当包含`id`时，则使用该列值匹配保存")
-	public Object bulkSave(@Comment(value = "保存内容", name = "list") List<Map<String, Object>> list) throws IOException {
+	@Comment("Batch save; when `id` is included, this column value will be used to match and save")
+	public Object bulkSave(@Comment(value = "Saved content", name = "list") List<Map<String, Object>> list) throws IOException {
 		StringBuilder builder = new StringBuilder();
 		list.forEach(item -> {
 			Object id = item.get("id");
@@ -60,13 +60,13 @@ public class ElasticSearchIndex {
 		return connect("/%s/%s/_bulk", this.name, this.type).post(builder.toString());
 	}
 
-	@Comment("根据`_id`修改")
-	public Object update(@Comment(value = "_id", name = "_id")String _id, @Comment(value = "修改项", name = "data")Object data) throws IOException {
+	@Comment("Modify by `_id`")
+	public Object update(@Comment(value = "_id", name = "_id")String _id, @Comment(value = "Modified items", name = "data")Object data) throws IOException {
 		return connect("/%s/%s/%s", this.name, this.type, _id).post(Collections.singletonMap("doc", data));
 	}
 
-	@Comment("搜索")
-	public Object search(@Comment(value = "搜索`DSL`语句", name = "dsl")Map<String, Object> dsl) throws IOException {
+	@Comment("Search")
+	public Object search(@Comment(value = "Search for `DSL` statements", name = "dsl")Map<String, Object> dsl) throws IOException {
 		return connect("/%s/_search", this.name).post(dsl);
 	}
 

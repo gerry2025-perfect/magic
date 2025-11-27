@@ -211,7 +211,7 @@ public class MagicScript extends CompiledScript {
 				MagicScriptContext rootContext = (MagicScriptContext) root;
 				return execute(rootContext);
 			} else {
-				throw new MagicScriptException("参数不正确！");
+				throw new MagicScriptException("Incorrect parameter!");
 			}
 		}
 		MagicScriptContext magicScriptContext = new MagicScriptContext();

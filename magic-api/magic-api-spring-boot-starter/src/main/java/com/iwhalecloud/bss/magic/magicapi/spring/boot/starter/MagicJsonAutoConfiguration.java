@@ -40,7 +40,7 @@ public class MagicJsonAutoConfiguration {
 			} else if (value instanceof InputStream) {
 				return processInputStream.apply((InputStream) value);
 			}
-			throw new MagicScriptException(String.format("不支持的类型:%s", value.getClass()));
+			throw new MagicScriptException(String.format("Unsupported type: %s", value.getClass()));
 		});
 		ClassConverter.register("stringify", (value, params) -> {
 			if (value == null) {

@@ -48,7 +48,7 @@ public abstract class AbstractMagicDynamicRegistry<T extends MagicEntity> implem
 			mappings.remove(entity.getId());
 			unregister(oldMappingNode);
 		} else if (mappings.containsKey(newMappingKey)) {
-			throw new MagicAPIException(newMappingKey + " 已注册，请更换名称或路径");
+			throw new MagicAPIException(newMappingKey + " If you are registered, please change the name or path");
 		}
 		if (register(mappingNode)) {
 			mappings.put(entity.getId(), mappingNode);

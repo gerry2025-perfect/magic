@@ -5,6 +5,6 @@ import com.iwhalecloud.bss.magic.script.compile.MagicScriptCompiler;
 public interface VariableSetter {
 
 	default void compile_visit_variable(MagicScriptCompiler compiler) {
-		throw new UnsupportedOperationException("暂不支持编译" + this.getClass().getSimpleName());
+		throw new UnsupportedOperationException("Compilation not supported at this time" + this.getClass().getSimpleName());
 	}
 }

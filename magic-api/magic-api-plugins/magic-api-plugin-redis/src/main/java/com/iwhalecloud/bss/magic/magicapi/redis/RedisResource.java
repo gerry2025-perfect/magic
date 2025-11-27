@@ -108,7 +108,7 @@ public class RedisResource extends KeyValueResource {
 					returnKeys.add(new String(cursor.next()));
 				}
 			} catch (Exception e) {
-				logger.error("扫描key出错", e);
+				logger.error("Error scanning key", e);
 			}
 			return returnKeys;
 		});

@@ -24,13 +24,13 @@ public class BaseTest {
 		long t = System.currentTimeMillis();
 		MagicScript script = MagicScript.create(str, null);
 		script.compile();
-		System.out.println("编译耗时：" + (System.currentTimeMillis() - t) + "ms");
+		System.out.println("Compilation time:" + (System.currentTimeMillis() - t) + "ms");
 		t = System.currentTimeMillis();
 		MagicScriptContext context = new MagicScriptContext();
 		context.setScriptName(filename);
 		Object value = script.execute(context);
-		System.out.println("执行耗时：" + (System.currentTimeMillis() - t) + "ms");
-		System.out.println("执行结果：" + value);
+		System.out.println("Execution time:" + (System.currentTimeMillis() - t) + "ms");
+		System.out.println("Execution result:" + value);
 		return value;
 	}
 }

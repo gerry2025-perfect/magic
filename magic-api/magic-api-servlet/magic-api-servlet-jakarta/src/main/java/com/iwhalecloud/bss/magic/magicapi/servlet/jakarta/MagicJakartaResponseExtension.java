@@ -16,8 +16,8 @@ public class MagicJakartaResponseExtension implements ExtensionMethod {
 	/**
 	 * 添加cookie
 	 */
-	@Comment("添加Cookie")
-	public ResponseModule addCookie(ResponseModule module, @Comment(name = "cookie", value = "Cookie对象") Cookie cookie) {
+	@Comment("Add Cookie")
+	public ResponseModule addCookie(ResponseModule module, @Comment(name = "cookie", value = "Cookie Object") Cookie cookie) {
 		if (cookie != null) {
 			MagicHttpServletResponse response = RequestContext.getHttpServletResponse();
 			if (response != null) {
@@ -30,7 +30,7 @@ public class MagicJakartaResponseExtension implements ExtensionMethod {
 	/**
 	 * 批量添加cookie
 	 */
-	@Comment("批量添加Cookie")
+	@Comment("Batch Add Cookies")
 	public ResponseModule addCookies(ResponseModule module, @Comment(name = "cookies", value = "Cookies") Map<String, String> cookies) {
 		return addCookies(module, cookies, null);
 
@@ -39,10 +39,10 @@ public class MagicJakartaResponseExtension implements ExtensionMethod {
 	/**
 	 * 添加cookie
 	 */
-	@Comment("添加Cookie")
-	public ResponseModule addCookie(ResponseModule module, @Comment(name = "name", value = "Cookie名") String name,
-									@Comment(name = "value", value = "Cookie值") String value,
-									@Comment(name = "options", value = "Cookie选项，如`path`、`httpOnly`、`domain`、`maxAge`") Map<String, Object> options) {
+	@Comment("Add Cookie")
+	public ResponseModule addCookie(ResponseModule module, @Comment(name = "name", value = "Cookie Name") String name,
+									@Comment(name = "value", value = "Cookie Value") String value,
+									@Comment(name = "options", value = "Cookie Options, such as `path`, `httpOnly`, `domain`, `maxAge`") Map<String, Object> options) {
 		if (StringUtils.isNotBlank(name)) {
 			Cookie cookie = new Cookie(name, value);
 			if (options != null) {
@@ -73,9 +73,9 @@ public class MagicJakartaResponseExtension implements ExtensionMethod {
 	/**
 	 * 添加cookie
 	 */
-	@Comment("添加Cookie")
-	public ResponseModule addCookie(ResponseModule module, @Comment(name = "name", value = "cookie名") String name,
-									@Comment(name = "value", value = "cookie值") String value) {
+	@Comment("Add Cookie")
+	public ResponseModule addCookie(ResponseModule module, @Comment(name = "name", value = "Cookie Name") String name,
+									@Comment(name = "value", value = "Cookie Value") String value) {
 		if (StringUtils.isNotBlank(name)) {
 			addCookie(module, new Cookie(name, value));
 		}
@@ -85,10 +85,10 @@ public class MagicJakartaResponseExtension implements ExtensionMethod {
 	/**
 	 * 批量添加cookie
 	 */
-	@Comment("批量添加Cookie")
+	@Comment("Batch Add Cookies")
 	public ResponseModule addCookies(ResponseModule module,
 									 @Comment(name = "cookies", value = "Cookies") Map<String, String> cookies,
-									 @Comment(name = "options", value = "Cookie选项，如`path`、`httpOnly`、`domain`、`maxAge`") Map<String, Object> options) {
+									 @Comment(name = "options", value = "Cookie Options, such as `path`, `httpOnly`, `domain`, `maxAge`") Map<String, Object> options) {
 		if (cookies != null) {
 			for (Map.Entry<String, String> entry : cookies.entrySet()) {
 				addCookie(module, entry.getKey(), entry.getValue(), options);

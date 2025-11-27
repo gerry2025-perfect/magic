@@ -28,7 +28,7 @@ public class OperatorHandle {
 			MethodHandles.Lookup lookup = MethodHandles.lookup();
 			FALLBACK = lookup.findStatic(OperatorHandle.class, "fallback", methodType(Object.class, MethodCallSite.class, Object[].class));
 		} catch (NoSuchMethodException | IllegalAccessException e) {
-			throw new Error("OperatorHandle初始化失败", e);
+			throw new Error("OperatorHandle initialization failed", e);
 		}
 	}
 
@@ -1234,7 +1234,7 @@ public class OperatorHandle {
 	}
 
 	private static Object reject(Object a, Object b, String symbol) throws IllegalArgumentException {
-		throw new IllegalArgumentException(String.format("操作符 `%s` 不支持 (%s,%s) 类型", symbol, a.getClass().getName(), b.getClass().getName()));
+		throw new IllegalArgumentException(String.format("Operator `%s` does not support type (%s,%s)", symbol, a.getClass().getName(), b.getClass().getName()));
 	}
 
 	public static Object map_or_array_access(int[] target, Number key) {
@@ -1295,6 +1295,6 @@ public class OperatorHandle {
 		} else if (target instanceof DynamicAttribute && key instanceof String) {
 			return ((DynamicAttribute<?, ?>) target).getDynamicAttribute((String) key);
 		}
-		return reject(target, key, ".或[]");
+		return reject(target, key, ".or []");
 	}
 }

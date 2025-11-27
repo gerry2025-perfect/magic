@@ -45,7 +45,7 @@ public class AsyncCall extends Expression {
 
 	public static FutureTask<Object> execute(MagicScriptLambdaFunction function, Variables variables, Object[] args) {
 		FutureTask<Object> futureTask = new FutureTask<>(() -> function.apply(variables, args));
-		//	判断当前是否在线程池中，如果是的话，则直接运行，防止线程嵌套造成的"死锁"
+		//	判断当前是否在线程池中，如果是的话，则直接运行，防止线程嵌套造成的"Deadlock"
 		if (Thread.currentThread().getThreadGroup() == AsyncThreadFactory.ASYNC_THREAD_GROUP) {
 			futureTask.run();
 		} else {

@@ -99,7 +99,7 @@ public class MagicWorkbenchController extends MagicController implements MagicEx
 			try {
 				allClassTxt = ClassScanner.compress(ClassScanner.scan());
 			} catch (Throwable t) {
-				logger.warn("扫描Class失败", t);
+				logger.warn("Failed to scan Class", t);
 				allClassTxt = "";
 			}
 		}
@@ -276,7 +276,7 @@ public class MagicWorkbenchController extends MagicController implements MagicEx
 					bytes = Files.readAllBytes(Paths.get(file.toURI()));
 				}
 			} catch (IOException e) {
-				logger.warn("读取编辑器配置文件{}失败", configuration.getEditorConfig());
+				logger.warn("Failed to read the editor configuration file {}", configuration.getEditorConfig());
 			}
 		}
 		try (OutputStream stream = response.getOutputStream()) {
@@ -311,7 +311,7 @@ public class MagicWorkbenchController extends MagicController implements MagicEx
 		notNull(file, FILE_IS_REQUIRED);
 		isTrue(allowVisit(request, Authorization.UPLOAD), PERMISSION_INVALID);
 		if (configuration.getMagicBackupService() != null) {
-			configuration.getMagicBackupService().doBackupAll("上传前，系统自动全量备份", WebUtils.currentUserName());
+			configuration.getMagicBackupService().doBackupAll("System automatically performs a full backup before uploading", WebUtils.currentUserName());
 		}
 		return new JsonBean<>(magicAPIService.upload(file.getInputStream(), mode));
 	}
@@ -336,7 +336,7 @@ public class MagicWorkbenchController extends MagicController implements MagicEx
 		byte[] bytes = IoUtils.bytes(file.getInputStream());
 		isTrue(sign.equals(SignUtils.sign(timestamp, secretKey, mode, bytes)), SIGN_IS_INVALID);
 		if (configuration.getMagicBackupService() != null) {
-			configuration.getMagicBackupService().doBackupAll("推送前，系统自动全量备份", WebUtils.currentUserName());
+			configuration.getMagicBackupService().doBackupAll("System automatically performs a full backup before pushing", WebUtils.currentUserName());
 		}
 		magicAPIService.upload(new ByteArrayInputStream(bytes), mode);
 		return new JsonBean<>();

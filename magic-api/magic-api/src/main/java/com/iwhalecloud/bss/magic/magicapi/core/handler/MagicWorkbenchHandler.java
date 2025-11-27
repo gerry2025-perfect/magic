@@ -28,7 +28,7 @@ public class MagicWorkbenchHandler {
 
 	private final AuthorizationInterceptor authorizationInterceptor;
 
-	private final static MagicUser guest = new MagicUser("guest","游客", "unauthorization");
+	private final static MagicUser guest = new MagicUser("guest","Guest", "unauthorization");
 
 	private final static Logger logger = LoggerFactory.getLogger(MagicWorkbenchHandler.class);
 

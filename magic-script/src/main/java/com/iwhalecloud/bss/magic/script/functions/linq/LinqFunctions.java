@@ -14,47 +14,47 @@ import java.util.Date;
 public class LinqFunctions {
 
 	@Function
-	@Comment("判断值是否为空")
-	public Object ifnull(@Comment(name = "target", value = "目标值") Object target,
-						 @Comment(name = "trueValue", value = "为空的值") Object trueValue) {
+	@Comment("Checking if a value is empty")
+	public Object ifnull(@Comment(name = "target", value = "Target value") Object target,
+						 @Comment(name = "trueValue", value = "Empty values") Object trueValue) {
 		return target == null ? trueValue : target;
 	}
 
 	@Function
-	@Comment("日期格式化")
-	public String date_format(@Comment(name = "target", value = "目标日期") Date target,
-							  @Comment(name = "pattern", value = "格式") String pattern) {
+	@Comment("Date formatting")
+	public String date_format(@Comment(name = "target", value = "Target date") Date target,
+							  @Comment(name = "pattern", value = "Format") String pattern) {
 		return target == null ? null : DateExtension.format(target, pattern);
 	}
 
 	@Function
-	@Comment("日期格式化")
-	public String date_format(@Comment(name = "target", value = "目标日期") Date target) {
+	@Comment("Date formatting")
+	public String date_format(@Comment(name = "target", value = "Target date") Date target) {
 		return target == null ? null : DateExtension.format(target, "yyyy-MM-dd HH:mm:ss");
 	}
 
 
 	@Function
-	@Comment("日期格式化")
-	public String date_format(@Comment(name = "target", value = "目标日期") TemporalAccessor target,
-							  @Comment(name = "pattern", value = "格式") String pattern) {
+	@Comment("Date formatting")
+	public String date_format(@Comment(name = "target", value = "Target date") TemporalAccessor target,
+							  @Comment(name = "pattern", value = "Format") String pattern) {
 		return target == null ? null : TemporalAccessorExtension.format(target, pattern);
 	}
 
 	@Function
-	@Comment("取当前时间")
+	@Comment("Get current time")
 	public Date now() {
 		return new Date();
 	}
 
 	@Function
-	@Comment("取当前时间戳(秒)")
+	@Comment("Get current timestamp (seconds)")
 	public long current_timestamp() {
 		return System.currentTimeMillis() / 1000;
 	}
 
 	@Function
-	@Comment("取当前时间戳(毫秒)")
+	@Comment("Get current timestamp (milliseconds)")
 	public long current_timestamp_millis() {
 		return System.currentTimeMillis();
 	}

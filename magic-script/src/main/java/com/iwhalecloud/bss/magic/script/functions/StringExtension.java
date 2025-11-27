@@ -9,14 +9,14 @@ import java.util.regex.Pattern;
  */
 public class StringExtension {
 
-	@Comment("校验文本是否符合正则")
-	public boolean match(String source, @Comment(name = "pattern", value = "正则表达式") Pattern pattern) {
+	@Comment("Validate text for regular expressions")
+	public boolean match(String source, @Comment(name = "pattern", value = "Regular expression") Pattern pattern) {
 		return pattern.matcher(source).find();
 	}
 
-	@Comment("正则替换字符串")
-	public String replace(String source, @Comment(name = "pattern", value = "正则表达式") Pattern pattern,
-						  @Comment(name = "replacement", value = "替换字符串") String replacement){
+	@Comment("Regular expression replacement of a string")
+	public String replace(String source, @Comment(name = "pattern", value = "Regular expression") Pattern pattern,
+						  @Comment(name = "replacement", value = "Replace strings") String replacement){
 		return pattern.matcher(source).replaceAll(replacement);
 	}
 }

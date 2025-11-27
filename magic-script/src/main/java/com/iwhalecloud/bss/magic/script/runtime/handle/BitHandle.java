@@ -29,7 +29,7 @@ public class BitHandle {
 			MethodHandles.Lookup lookup = MethodHandles.lookup();
 			FALLBACK = lookup.findStatic(BitHandle.class, "fallback", methodType(Object.class, MethodCallSite.class, Object[].class));
 		} catch (NoSuchMethodException | IllegalAccessException e) {
-			throw new Error("BitHandle初始化失败", e);
+			throw new Error("BitHandle initialization failed", e);
 		}
 	}
 
@@ -760,11 +760,11 @@ public class BitHandle {
 		}else if(object instanceof BigDecimal){
 			return ~((BigDecimal)object).longValue();
 		}
-		throw new IllegalArgumentException(String.format("操作符 `~` 不支持 (%s) 类型", object.getClass().getName()));
+		throw new IllegalArgumentException(String.format("Operator `~` does not support type (%s)", object.getClass().getName()));
 	}
 
 	private static Object reject(Object a, Object b, String symbol) throws IllegalArgumentException {
-		throw new IllegalArgumentException(String.format("操作符 `%s` 不支持 (%s,%s) 类型", symbol, a.getClass().getName(), b.getClass().getName()));
+		throw new IllegalArgumentException(String.format("Operator `%s` does not support type (%s,%s)", symbol, a.getClass().getName(), b.getClass().getName()));
 	}
 
 }

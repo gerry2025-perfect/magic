@@ -42,10 +42,10 @@ public class DialectAdapter {
 					return dialect;
 				}
 			} catch (SQLException e) {
-				logger.debug("方言{}匹配失败", dialect, e);
+				logger.debug("Dialect {} matching failed", dialect, e);
 			}
 		}
-		logger.warn("magic-api在{}中无法获取dialect", connection);
+		logger.warn("magic-api cannot retrieve dialect in {}", connection);
 		return null;
 	}
 

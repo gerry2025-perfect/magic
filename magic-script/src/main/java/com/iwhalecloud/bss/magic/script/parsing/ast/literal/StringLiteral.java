@@ -89,7 +89,7 @@ public class StringLiteral extends Literal {
 
 	public String getValue() {
 		if (token.getTokenStream() != null) {
-			MagicScriptError.error("此处不支持模板字符串", getSpan());
+			MagicScriptError.error("Template strings are not supported here", getSpan());
 		}
 		return transferString(getSpan().getText());
 	}

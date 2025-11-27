@@ -50,7 +50,7 @@ public class DataSourceMagicDynamicRegistry extends AbstractMagicDynamicRegistry
 		try {
 			processEvent(event);
 		} catch (Exception e) {
-			logger.error("注册数据源失败", e);
+			logger.error("Failed to register data source", e);
 		}
 	}
 
@@ -115,7 +115,7 @@ public class DataSourceMagicDynamicRegistry extends AbstractMagicDynamicRegistry
 	public List<DataSourceInfo> defaultMappings() {
 		return magicDynamicDataSource.datasourceNodes().stream().filter(it -> it.getId() == null).map(it -> {
 			DataSourceInfo dataSourceInfo = new DataSourceInfo();
-			dataSourceInfo.setName(StringUtils.defaultIfBlank(it.getName(), StringUtils.defaultIfBlank(it.getKey(), "默认数据源")));
+			dataSourceInfo.setName(StringUtils.defaultIfBlank(it.getName(), StringUtils.defaultIfBlank(it.getKey(), "Default data source")));
 			dataSourceInfo.setKey(it.getKey());
 			return dataSourceInfo;
 		}).collect(Collectors.toList());

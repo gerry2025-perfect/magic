@@ -38,14 +38,14 @@ public class NebulaModule {
      * @param script
      * @return
      */
-    @Comment("执行ngsl脚本, 返回json格式结果")
+    @Comment("Executed the ngsl script, returned JSON format results")
     public Object executeJson(String script) {
         Session session = getNebulaSession();
         try {
             String json = session.executeJson(script);
             return json;
         } catch (Exception e) {
-            logger.error("执行Nebula脚本异常, script: {}", script, e);
+            logger.error("Nebula script execution error, script: {}", script, e);
             throw new RuntimeException(e);
         } finally {
             Optional.ofNullable(session).ifPresent(Session::release);
@@ -59,14 +59,14 @@ public class NebulaModule {
      * @param script
      * @return
      */
-    @Comment("执行ngsl脚本, 返回json格式结果, 并解析为可视化格式")
+    @Comment("Executed the ngsl script, returned JSON format results, and parsed them into a visual format")
     public NebulaModel executeNebulaModel(String script) {
         Session session = getNebulaSession();
         try {
             String json = session.executeJson(script);
             return convert(json);
         } catch (Exception e) {
-            logger.error("执行Nebula脚本异常, script: {}", script, e);
+            logger.error("Nebula script execution error, script: {}", script, e);
             throw new RuntimeException(e);
         } finally {
             Optional.ofNullable(session).ifPresent(Session::release);
@@ -80,14 +80,14 @@ public class NebulaModule {
      * @param script
      * @return
      */
-    @Comment("执行ngsl脚本, 返回ResultSet格式结果, 无法直接使用")
+    @Comment("Executed the ngsl script, returned ResultSet format results, which cannot be used directly")
     public Object execute(String script) {
         Session session = getNebulaSession();
         try {
             ResultSet resultSet = session.execute(script);
             return resultSet;
         } catch (Exception e) {
-            logger.error("执行Nebula脚本异常, script: {}", script, e);
+            logger.error("Nebula script execution error, script: {}", script, e);
             throw new RuntimeException(e);
         } finally {
             Optional.ofNullable(session).ifPresent(Session::release);
@@ -98,21 +98,21 @@ public class NebulaModule {
         try {
             return nebulaPool.getSession(nebulaPoolProperties.getUserName(), nebulaPoolProperties.getPassword(), nebulaPoolProperties.isReconnect());
         } catch (NoSuchBeanDefinitionException e) {
-            throw new RuntimeException(String.format("NebulaPool 未初始化, 或初始化异常, 请检查配置文件"));
+            throw new RuntimeException(String.format("NebulaPool not initialized, or initialization error, please check the configuration file"));
         } catch (Exception e) {
-            logger.error("获取nebula session 异常", e);
+            logger.error("Error retrieving Nebula session", e);
             throw new RuntimeException(e);
         }
     }
 
-    @Comment("解析nebula结果为可视化格式")
+    @Comment("Parsing Nebula results into a visual format")
     public NebulaModel convert(String json) throws Exception {
         ObjectMapper objectMapper = new ObjectMapper();
         NebulaJsonBody response = objectMapper.readValue(json, NebulaJsonBody.class);
 
         //状态码不为0则为异常, 解析提示异常信息
         if (response.getErrorCode() != 0) {
-            logger.error("执行Nebula脚本异常, script: {}, errorMsg: {}", json, response.getErrorMsg());
+            logger.error("Error executing Nebula script, script: {}, errorMsg: {}", json, response.getErrorMsg());
             throw new RuntimeException(response.getErrorMsg());
         }
 

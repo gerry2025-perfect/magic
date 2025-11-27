@@ -24,7 +24,7 @@ public class LongLiteral extends NumberLiteral {
 				String text = getText();
 				this.value = Long.parseLong(text.substring(0, text.length() - 1).replace("_", ""));
 			} catch (NumberFormatException e) {
-				MagicScriptError.error("定义long变量值不合法", getSpan(), e);
+				MagicScriptError.error("Invalid long variable value definition", getSpan(), e);
 			}
 		}
 		context.ldc(value).invoke(INVOKESTATIC, Long.class, "valueOf", Long.class, long.class);

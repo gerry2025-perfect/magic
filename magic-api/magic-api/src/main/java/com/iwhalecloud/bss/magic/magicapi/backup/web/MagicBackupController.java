@@ -56,7 +56,7 @@ public class MagicBackupController extends MagicController implements MagicExcep
 		notNull(service, BACKUP_NOT_ENABLED);
 		Backup backup = service.backupInfo(id, timestamp);
 		if("full".equals(id)){
-			service.doBackupAll("还原全量备份前，系统自动全量备份", WebUtils.currentUserName());
+			service.doBackupAll("The system automatically performed a full backup before restoring the full backup", WebUtils.currentUserName());
 			configuration.getMagicAPIService().upload(new ByteArrayInputStream(backup.getContent()), Constants.UPLOAD_MODE_FULL);
 			return new JsonBean<>(true);
 		}
@@ -91,7 +91,7 @@ public class MagicBackupController extends MagicController implements MagicExcep
 	@ResponseBody
 	public JsonBean<Boolean> doBackup() throws IOException {
 		notNull(service, BACKUP_NOT_ENABLED);
-		service.doBackupAll("主动全量备份", WebUtils.currentUserName());
+		service.doBackupAll("Active full backup", WebUtils.currentUserName());
 		return new JsonBean<>(true);
 	}
 }

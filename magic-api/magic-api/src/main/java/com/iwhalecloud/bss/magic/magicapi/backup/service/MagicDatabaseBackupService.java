@@ -83,7 +83,7 @@ public class MagicDatabaseBackupService implements MagicBackupService {
 			}
 			template.update(INSERT_SQL, backup.getId(), backup.getCreateDate(), backup.getTag(), backup.getType(), backup.getName(), backup.getCreateBy(), backup.getContent());
 		} catch (Exception e) {
-			logger.warn("备份失败", e);
+			logger.warn("Backup failed", e);
 		}
 	}
 
@@ -117,7 +117,7 @@ public class MagicDatabaseBackupService implements MagicBackupService {
 		try {
 			return template.update(DELETE_BY_TIMESTAMP, timestamp);
 		} catch (Exception e) {
-			logger.warn("删除备份失败", e);
+			logger.warn("Backup deletion failed", e);
 			return -1;
 		}
 	}

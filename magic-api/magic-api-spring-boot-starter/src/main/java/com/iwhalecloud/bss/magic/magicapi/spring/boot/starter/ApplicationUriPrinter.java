@@ -37,29 +37,29 @@ public class ApplicationUriPrinter implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		System.out.println("********************************************当前服务相关地址********************************************");
+		System.out.println("********************************************Current Service Related Address************************************************");
 		String ip = "IP";
 		try {
 			ip = InetAddress.getLocalHost().getHostAddress();
 		} catch (UnknownHostException e) {
-			System.out.println("当前服务地址获取失败");
+			System.out.println("Failed to Retrieve Current Service Address");
 		}
 		String magicWebPath = properties.getWeb();
 		String schema = "http://";
 		String localUrl = schema + PathUtils.replaceSlash(String.format("localhost:%s/%s/%s/", port, contextPath, Objects.toString(properties.getPrefix(), "")));
 		String externUrl = schema + PathUtils.replaceSlash(String.format("%s:%s/%s/%s/", ip, port, contextPath, Objects.toString(properties.getPrefix(), "")));
 		System.out.printf(
-				"服务启动成功，magic-api已内置启动! Access URLs:" +
-				"\n\t接口本地地址: \t\t%s" +
-				"\n\t接口外部地址: \t\t%s\n"
+				"Service started successfully, magic-api is now built-in! Access URLs:" +
+				"\n\tLocal interface address:\t\t%s" +
+				"\n\tExternal interface address:\t\t%s\n"
 				, localUrl
 				, externUrl
 		);
 		if (!StringUtils.isEmpty(magicWebPath)) {
 			String webPath = schema + PathUtils.replaceSlash(String.format("%s:%s/%s/%s/index.html", ip, port, contextPath, magicWebPath));
-			System.out.println("\t接口配置平台: \t\t" + webPath);
+			System.out.println("\tInterface configuration platform:\t\t" + webPath);
 		}
-		System.out.println("\t可通过配置关闭输出: \tmagic-api.show-url=false");
-		System.out.println("********************************************当前服务相关地址********************************************");
+		System.out.println("\tOutput can be disabled via configuration:\tmagic-api.show-url=false");
+		System.out.println("********************************************Current Service Related Address************************************************");
 	}
 }

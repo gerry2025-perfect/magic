@@ -18,14 +18,14 @@ public class NebulaModel {
     /**
      * 包含的节点集合
      */
-    @Comment("包含的节点集合")
+    @Comment("Contains the set of nodes")
     private List<Node> nodes = new ArrayList<>();
 
     /**
      * 包含的边集合
      */
 
-    @Comment("包含的边集合")
+    @Comment("Contains the set of edges")
     private List<Edge> edges = new ArrayList<>();
 
     public List<String> getNodeIds() {
@@ -56,7 +56,7 @@ public class NebulaModel {
      * 添加节点, 根据id去重
      * @param node
      */
-    @Comment("添加节点, 根据id去重")
+    @Comment("Added a node, deduplicated by ID")
     public void addNode(Node node) {
         String nodeId = Objects.toString(node.getId(), null);
         if (nodeIds.contains(nodeId)) {

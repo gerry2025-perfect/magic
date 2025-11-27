@@ -40,7 +40,7 @@ public abstract class Node implements Opcodes {
 	}
 
 	public void compile(MagicScriptCompiler compiler) {
-		throw new UnsupportedOperationException(this.getClass().getSimpleName() + "不支持编译");
+		throw new UnsupportedOperationException(this.getClass().getSimpleName() + "Compilation not supported");
 	}
 
 }

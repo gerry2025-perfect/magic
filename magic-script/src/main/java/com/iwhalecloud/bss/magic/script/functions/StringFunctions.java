@@ -6,14 +6,14 @@ import com.iwhalecloud.bss.magic.script.annotation.Function;
 public class StringFunctions {
 
 	@Function
-	@Comment("判断字符串是否不是空")
-	public boolean not_blank(@Comment(name = "str", value = "目标字符串") CharSequence cs) {
+	@Comment("Checks if a string is not empty")
+	public boolean not_blank(@Comment(name = "str", value = "Target string") CharSequence cs) {
 		return !is_blank(cs);
 	}
 
 	@Function
-	@Comment("判断字符串是否不是空")
-	public boolean is_blank(@Comment(name = "str", value = "目标字符串") CharSequence cs) {
+	@Comment("Checks if a string is not empty")
+	public boolean is_blank(@Comment(name = "str", value = "Target string") CharSequence cs) {
 		if (cs == null) {
 			return true;
 		}

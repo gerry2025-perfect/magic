@@ -24,7 +24,7 @@ public class MybatisParser {
 			parseNodeList(sqlNode, new NodeStream(document.getDocumentElement().getChildNodes()));
 			return sqlNode;
 		} catch (Exception e) {
-			throw new MagicAPIException("SQL解析错误", e);
+			throw new MagicAPIException("SQL parsing error", e);
 		}
 	}
 

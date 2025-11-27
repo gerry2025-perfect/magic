@@ -85,7 +85,7 @@ public class NamedTable extends Attributes<Object> {
 	}
 
 	@Override
-	@Comment("克隆")
+	@Comment("Clone")
 	public NamedTable clone() {
 		NamedTable namedTable = new NamedTable();
 		namedTable.tableName = this.tableName;
@@ -108,54 +108,54 @@ public class NamedTable extends Attributes<Object> {
 		return namedTable;
 	}
 
-	@Comment("使用逻辑删除")
+	@Comment("Logical deletion")
 	public NamedTable logic() {
 		this.useLogic = true;
 		return this;
 	}
 
-	@Comment("更新空值")
+	@Comment("Update null values")
 	public NamedTable withBlank() {
 		this.withBlank = true;
 		return this;
 	}
 
-	@Comment("设置主键名，update时使用")
-	public NamedTable primary(@Comment(name = "primary", value = "主键列") String primary) {
+	@Comment("Set primary key name, used in update")
+	public NamedTable primary(@Comment(name = "primary", value = "Primary key column") String primary) {
 		this.primary = rowMapColumnMapper.apply(primary);
 		return this;
 	}
 
-	@Comment("设置主键名，并设置默认主键值(主要用于insert)")
-	public NamedTable primary(@Comment(name = "primary", value = "主键列") String primary,
-							  @Comment(name = "defaultPrimaryValue", value = "默认值") Serializable defaultPrimaryValue) {
-		this.primary = rowMapColumnMapper.apply(primary);
-		this.defaultPrimaryValue = defaultPrimaryValue;
-		return this;
-	}
-
-	@Comment("设置主键名，并设置默认主键值(主要用于insert)")
-	public NamedTable primary(@Comment(name = "primary", value = "主键列") String primary,
-							  @Comment(name = "defaultPrimaryValue", value = "默认值") Supplier<Object> defaultPrimaryValue) {
+	@Comment("Set primary key name and default primary key value (mainly used for insert)")
+	public NamedTable primary(@Comment(name = "primary", value = "Primary key column") String primary,
+							  @Comment(name = "defaultPrimaryValue", value = "Default value") Serializable defaultPrimaryValue) {
 		this.primary = rowMapColumnMapper.apply(primary);
 		this.defaultPrimaryValue = defaultPrimaryValue;
 		return this;
 	}
 
-	@Comment("拼接where")
+	@Comment("Set primary key name and default primary key value (mainly used for insert)")
+	public NamedTable primary(@Comment(name = "primary", value = "Primary key column") String primary,
+							  @Comment(name = "defaultPrimaryValue", value = "Default value") Supplier<Object> defaultPrimaryValue) {
+		this.primary = rowMapColumnMapper.apply(primary);
+		this.defaultPrimaryValue = defaultPrimaryValue;
+		return this;
+	}
+
+	@Comment("Concatenate WHERE clause")
 	public Where where() {
 		return where;
 	}
 
-	@Comment("设置单列的值")
-	public NamedTable column(@Comment(name = "property", value = "列名") String property,
-							 @Comment(name = "value", value = "值") Object value) {
+	@Comment("Set value of a single column")
+	public NamedTable column(@Comment(name = "property", value = "Column name") String property,
+							 @Comment(name = "value", value = "Value") Object value) {
 		this.columns.put(rowMapColumnMapper.apply(property), value);
 		return this;
 	}
 
-	@Comment("设置查询的列，如`columns('a','b','c')`")
-	public NamedTable columns(@Comment(name = "properties", value = "各项列") String... properties) {
+	@Comment("Set columns for query, such as `columns('a','b','c')`")
+	public NamedTable columns(@Comment(name = "properties", value = "Columns") String... properties) {
 		if (properties != null) {
 			for (String property : properties) {
 				column(property);
@@ -164,77 +164,77 @@ public class NamedTable extends Attributes<Object> {
 		return this;
 	}
 
-	@Comment("设置要排除的列")
-	public NamedTable exclude(@Comment(name = "property", value = "排除的列") String property) {
+	@Comment("Set the columns to exclude")
+	public NamedTable exclude(@Comment(name = "property", value = "Excluded columns") String property) {
 		if (property != null) {
 			excludeColumns.add(property);
 		}
 		return this;
 	}
 
-	@Comment("设置要排除的列")
-	public NamedTable excludes(@Comment(name = "properties", value = "排除的列") String... properties) {
+	@Comment("Set the columns to exclude")
+	public NamedTable excludes(@Comment(name = "properties", value = "Excluded columns") String... properties) {
 		if (columns != null) {
 			excludeColumns.addAll(Arrays.asList(properties));
 		}
 		return this;
 	}
 
-	@Comment("设置要排除的列")
-	public NamedTable excludes(@Comment(name = "properties", value = "排除的列") List<String> properties) {
+	@Comment("Set the columns to exclude")
+	public NamedTable excludes(@Comment(name = "properties", value = "Excluded columns") List<String> properties) {
 		if (columns != null) {
 			excludeColumns.addAll(properties);
 		}
 		return this;
 	}
 
-	@Comment("设置查询的列，如`columns(['a','b','c'])`")
-	public NamedTable columns(@Comment(name = "properties", value = "查询的列") Collection<String> properties) {
+	@Comment("Set the columns to query, such as `columns(['a','b','c'])`")
+	public NamedTable columns(@Comment(name = "properties", value = "Query columns") Collection<String> properties) {
 		if (properties != null) {
 			properties.stream().filter(StringUtils::isNotBlank).map(rowMapColumnMapper).forEach(this.fields::add);
 		}
 		return this;
 	}
 
-	@Comment("设置查询的列，如`column('a')`")
-	public NamedTable column(@Comment(name = "property", value = "查询的列") String property) {
+	@Comment("Set the query columns, such as `column('a')`")
+	public NamedTable column(@Comment(name = "property", value = "Query columns") String property) {
 		if (StringUtils.isNotBlank(property)) {
 			this.fields.add(this.rowMapColumnMapper.apply(property));
 		}
 		return this;
 	}
 
-	@Comment("拼接`order by xxx asc/desc`")
-	public NamedTable orderBy(@Comment(name = "property", value = "要排序的列") String property,
-							  @Comment(name = "sort", value = "`asc`或`desc`") String sort) {
+	@Comment("Concatenate `order by xxx asc/desc`")
+	public NamedTable orderBy(@Comment(name = "property", value = "Columns to sort") String property,
+							  @Comment(name = "sort", value = "`asc` or `desc`") String sort) {
 		this.orders.add(rowMapColumnMapper.apply(property) + " " + sort);
 		return this;
 	}
 
-	@Comment("拼接`order by xxx asc`")
-	public NamedTable orderBy(@Comment(name = "property", value = "要排序的列") String property) {
+	@Comment("Concatenate `order by xxx asc`")
+	public NamedTable orderBy(@Comment(name = "property", value = "Columns to sort") String property) {
 		return orderBy(property, "asc");
 	}
 
-	@Comment("拼接`order by xxx desc`")
-	public NamedTable orderByDesc(@Comment(name = "property", value = "要排序的列") String property) {
+	@Comment("Concatenate `order by xxx desc`")
+	public NamedTable orderByDesc(@Comment(name = "property", value = "Columns to sort") String property) {
 		return orderBy(property, "desc");
 	}
 
-	@Comment("拼接`group by`")
-	public NamedTable groupBy(@Comment(name = "properties", value = "要分组的列") String... properties) {
+	@Comment("Concatenate `group by`")
+	public NamedTable groupBy(@Comment(name = "properties", value = "Columns to group") String... properties) {
 		this.groups.addAll(Arrays.stream(properties).map(rowMapColumnMapper).collect(Collectors.toList()));
 		return this;
 	}
 
-	@Comment("执行插入,返回主键")
+	@Comment("Execute INSERT, return primary key")
 	public Object insert(RuntimeContext runtimeContext) {
 		return insert(runtimeContext, null);
 	}
 
-	@Comment("执行插入,返回主键")
+	@Comment("Execute INSERT, return primary key")
 	public Object insert(RuntimeContext runtimeContext,
-						 @Comment(name = "data", value = "各项列和值") Map<String, Object> data) {
+						 @Comment(name = "data", value = "Sum of each column") Map<String, Object> data) {
 		if (data != null) {
 			data.forEach((key, value) -> this.columns.put(rowMapColumnMapper.apply(key), value));
 		}
@@ -248,7 +248,7 @@ public class NamedTable extends Attributes<Object> {
 		preHandle(SqlMode.INSERT);
 		Collection<Map.Entry<String, Object>> entries = filterNotBlanks();
 		if (entries.isEmpty()) {
-			throw new MagicAPIException("参数不能为空");
+			throw new MagicAPIException("Parameter cannot be empty");
 		}
 		StringBuilder builder = new StringBuilder();
 		builder.append("insert into ");
@@ -265,7 +265,7 @@ public class NamedTable extends Attributes<Object> {
 		return value;
 	}
 
-	@Comment("执行delete语句")
+	@Comment("Execute DELETE statement")
 	public int delete(RuntimeContext runtimeContext) {
 		preHandle(SqlMode.DELETE);
 		if (useLogic) {
@@ -274,7 +274,7 @@ public class NamedTable extends Attributes<Object> {
 			return update(runtimeContext, dataMap);
 		}
 		if (where.isEmpty()) {
-			throw new MagicAPIException("delete语句不能没有条件");
+			throw new MagicAPIException("DELETE statement cannot be without a condition");
 		}
 		StringBuilder builder = new StringBuilder();
 		builder.append("delete from ");
@@ -283,17 +283,17 @@ public class NamedTable extends Attributes<Object> {
 		return sqlModule.update(new BoundSql(runtimeContext, builder.toString(), where.getParams(), sqlModule));
 	}
 
-	@Comment("保存到表中，当主键有值时则修改，否则插入")
+	@Comment("Save to table, modify if primary key has a value, otherwise insert")
 	public Object save(RuntimeContext runtimeContext) {
 		return this.save(runtimeContext, null, false);
 	}
 
-	@Comment("保存到表中，当主键有值时则修改，否则插入")
+	@Comment("Save to table, modify if primary key has a value, otherwise insert")
 	public Object save(RuntimeContext runtimeContext,
-					   @Comment(name = "data", value = "各项列和值") Map<String, Object> data,
-					   @Comment(name = "beforeQuery", value = "是否根据id查询有没有数据") boolean beforeQuery) {
+					   @Comment(name = "data", value = "Sum of each column") Map<String, Object> data,
+					   @Comment(name = "beforeQuery", value = "Whether to query for data by id") boolean beforeQuery) {
 		if (StringUtils.isBlank(this.primary)) {
-			throw new MagicAPIException("请设置主键");
+			throw new MagicAPIException("Please set the primary key");
 		}
 		if (data != null) {
 			data.forEach((key, value) -> this.columns.put(rowMapColumnMapper.apply(key), value));
@@ -322,24 +322,24 @@ public class NamedTable extends Attributes<Object> {
 		return insert(runtimeContext, data);
 	}
 
-	@Comment("保存到表中，当主键有值时则修改，否则插入")
+	@Comment("Save to table, modify if primary key has a value, otherwise insert")
 	public Object save(RuntimeContext runtimeContext,
-					   @Comment(name = "beforeQuery", value = "是否根据id查询有没有数据") boolean beforeQuery) {
+					   @Comment(name = "beforeQuery", value = "Whether to query for data by id") boolean beforeQuery) {
 		return this.save(runtimeContext, null, beforeQuery);
 	}
 
-	@Comment("保存到表中，当主键有值时则修改，否则插入")
+	@Comment("Save to table, modify if primary key has a value, otherwise insert")
 	public Object save(RuntimeContext runtimeContext,
-					   @Comment(name = "data", value = "各项列和值") Map<String, Object> data) {
+					   @Comment(name = "data", value = "Sum of each column") Map<String, Object> data) {
 		return this.save(runtimeContext, data, false);
 	}
 
-	@Comment("批量插入")
+	@Comment("Batch insert")
 	public int batchInsert(RuntimeContext runtimeContext,
-						   @Comment(name = "collection", value = "各项列和值") Collection<Map<String, Object>> collection, @Comment("batchSize") int batchSize) {
+						   @Comment(name = "collection", value = "Sum of each column") Collection<Map<String, Object>> collection, @Comment("batchSize") int batchSize) {
 		Set<String> keys = collection.stream().flatMap(it -> it.keySet().stream()).collect(Collectors.toSet());
 		if (keys.isEmpty()) {
-			throw new MagicAPIException("要插入的列不能为空");
+			throw new MagicAPIException("Columns to be inserted cannot be empty");
 		}
 		StringBuilder builder = new StringBuilder();
 		builder.append("insert into ");
@@ -354,46 +354,46 @@ public class NamedTable extends Attributes<Object> {
 				.collect(Collectors.toList()));
 	}
 
-	@Comment("批量插入")
-	public int batchInsert(RuntimeContext runtimeContext, @Comment(name = "collection", value = "各项列和值") Collection<Map<String, Object>> collection) {
+	@Comment("Batch insert")
+	public int batchInsert(RuntimeContext runtimeContext, @Comment(name = "collection", value = "Sum of each column") Collection<Map<String, Object>> collection) {
 		return batchInsert(runtimeContext, collection, 100);
 	}
 
-	@Comment("执行`select`查询")
+	@Comment("Execute a `SELECT` query")
 	public List<Map<String, Object>> select(RuntimeContext runtimeContext) {
 		preHandle(SqlMode.SELECT);
 		return sqlModule.select(buildSelect(runtimeContext));
 	}
 
-	@Comment("执行`selectOne`查询")
+	@Comment("Execute a `SELECTOne` query")
 	public Map<String, Object> selectOne(RuntimeContext runtimeContext) {
 		preHandle(SqlMode.SELECT_ONE);
 		return sqlModule.selectOne(buildSelect(runtimeContext));
 	}
 
-	@Comment("执行分页查询")
+	@Comment("Execute a paginated query")
 	public Object page(RuntimeContext runtimeContext) {
 		preHandle(SqlMode.PAGE);
 		return sqlModule.page(buildSelect(runtimeContext));
 	}
 
-	@Comment("执行分页查询，分页条件手动传入")
+	@Comment("Execute paginated query, pagination conditions are manually passed")
 	public Object page(RuntimeContext runtimeContext,
-					   @Comment(name = "limit", value = "限制条数") long limit,
-					   @Comment(name = "offset", value = "跳过条数") long offset) {
+					   @Comment(name = "limit", value = "Limit the number of rows") long limit,
+					   @Comment(name = "offset", value = "Skip the number of rows") long offset) {
 		preHandle(SqlMode.PAGE);
 		return sqlModule.page(buildSelect(runtimeContext), new Page(limit, offset));
 	}
 
-	@Comment("执行update语句")
+	@Comment("Execute an UPDATE statement")
 	public int update(RuntimeContext runtimeContext) {
 		return update(runtimeContext, null);
 	}
 
-	@Comment("执行update语句")
+	@Comment("Execute an UPDATE statement")
 	public int update(RuntimeContext runtimeContext,
-					  @Comment(name = "data", value = "各项列和值") Map<String, Object> data,
-					  @Comment(name = "isUpdateBlank", value = "是否更新空值字段") boolean isUpdateBlank) {
+					  @Comment(name = "data", value = "Sum of each column") Map<String, Object> data,
+					  @Comment(name = "isUpdateBlank", value = "Update null fields?") boolean isUpdateBlank) {
 		if (null != data) {
 			data.forEach((key, value) -> this.columns.put(rowMapColumnMapper.apply(key), value));
 		}
@@ -405,7 +405,7 @@ public class NamedTable extends Attributes<Object> {
 		this.withBlank = isUpdateBlank;
 		List<Map.Entry<String, Object>> entries = new ArrayList<>(filterNotBlanks());
 		if (entries.isEmpty()) {
-			throw new MagicAPIException("要修改的列不能为空");
+			throw new MagicAPIException("Columns to be modified cannot be empty");
 		}
 		StringBuilder builder = new StringBuilder();
 		builder.append("update ");
@@ -427,18 +427,18 @@ public class NamedTable extends Attributes<Object> {
 			builder.append(" where ").append(this.primary).append(" = ?");
 			params.add(String.valueOf(primaryValue));
 		} else {
-			throw new MagicAPIException("主键值不能为空");
+			throw new MagicAPIException("Primary key values cannot be empty");
 		}
 		return sqlModule.update(new BoundSql(runtimeContext, builder.toString(), params, sqlModule));
 	}
 
-	@Comment("执行update语句")
+	@Comment("Execute an UPDATE statement")
 	public int update(RuntimeContext runtimeContext,
-					  @Comment(name = "data", value = "各项列和值") Map<String, Object> data) {
+					  @Comment(name = "data", value = "Sum of each column") Map<String, Object> data) {
 		return update(runtimeContext, data, this.withBlank);
 	}
 
-	@Comment("查询条数")
+	@Comment("Number of rows to query")
 	public int count(RuntimeContext runtimeContext) {
 		preHandle(SqlMode.COUNT);
 		StringBuilder builder = new StringBuilder();
@@ -447,7 +447,7 @@ public class NamedTable extends Attributes<Object> {
 		return sqlModule.selectInt(new BoundSql(runtimeContext, builder.toString(), params, sqlModule));
 	}
 
-	@Comment("判断是否存在")
+	@Comment("Check if it exists")
 	public boolean exists(RuntimeContext runtimeContext) {
 		return count(runtimeContext) > 0;
 	}

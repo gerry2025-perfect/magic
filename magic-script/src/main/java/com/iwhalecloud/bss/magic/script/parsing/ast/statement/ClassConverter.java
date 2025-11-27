@@ -28,7 +28,7 @@ public class ClassConverter extends Expression {
 		register("string", (target, params) -> process(target::toString, params));
 		register("date", (target, params) -> {
 			if (params.length == 0) {
-				throw new IllegalArgumentException("::date需要日期格式，如::date('yyyy-mm-dd')");
+				throw new IllegalArgumentException("::date requires date format, such as ::date('yyyy-mm-dd')");
 			}
 			try {
 				return ObjectConvertExtension.asDate(target, params[0].toString());
@@ -78,7 +78,7 @@ public class ClassConverter extends Expression {
 		try {
 			BiFunction<Object, Object[], Object> function = CONVERTERS.get(target);
 			if (function == null) {
-				throw new MagicScriptException(String.format("找不到转换器[%s]", target));
+				throw new MagicScriptException(String.format("Transformer [%s] not found", target));
 			}
 			return function.apply(object, params);
 		} catch (Exception e) {

@@ -23,22 +23,22 @@ public class LinqTests extends BaseTest {
 
 	@Test
 	public void linq_4() {
-		Assert.assertEquals("[{sex=0, name=小明}]", execute("grammar/linq/linq_4.ms"));
+		Assert.assertEquals("[{sex=0, name=XiaoMing}]", execute("grammar/linq/linq_4.ms"));
 	}
 
 	@Test
 	public void linq_5() {
-		Assert.assertEquals("{sex=0, name=小明}", execute("grammar/linq/linq_5.ms"));
+		Assert.assertEquals("{sex=0, name=XiaoMing}", execute("grammar/linq/linq_5.ms"));
 	}
 
 	@Test
 	public void linq_6() {
-		Assert.assertEquals("[{sex=1, name=小花}]", execute("grammar/linq/linq_6.ms"));
+		Assert.assertEquals("[{sex=1, name=XiaoHua}]", execute("grammar/linq/linq_6.ms"));
 	}
 
 	@Test
 	public void linq_7() {
-		Assert.assertEquals("[{id=100, group_name=组1, names=A,B}, {id=101, group_name=组2, names=C}]", execute("grammar/linq/linq_7.ms"));
+		Assert.assertEquals("[{id=100, group_name=Group1, names=A,B}, {id=101, group_name=Group2, names=C}]", execute("grammar/linq/linq_7.ms"));
 	}
 
 	@Test

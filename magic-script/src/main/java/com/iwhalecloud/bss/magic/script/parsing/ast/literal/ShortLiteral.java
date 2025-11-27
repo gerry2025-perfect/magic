@@ -21,7 +21,7 @@ public class ShortLiteral extends NumberLiteral {
 				String text = getText();
 				setValue(Short.parseShort(text.substring(0, text.length() - 1).replace("_","")));
 			} catch (NumberFormatException e) {
-				MagicScriptError.error("定义short变量值不合法", getSpan(), e);
+				MagicScriptError.error("Definition of short variable value is invalid", getSpan(), e);
 			}
 		}
 		context.ldc(value).invoke(INVOKESTATIC, Short.class, "valueOf", Short.class, short.class);

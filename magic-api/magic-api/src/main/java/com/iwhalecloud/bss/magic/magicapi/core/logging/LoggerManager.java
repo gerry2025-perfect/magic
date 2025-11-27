@@ -31,7 +31,7 @@ public class LoggerManager {
 			magicLoggerContext = new Log4jLoggerContext();
 		}
 		if (magicLoggerContext == null) {
-			logger.error("无法识别LoggerContext:{}", loggerFactoryClassName);
+			logger.error("Unable to recognize LoggerContext:{}", loggerFactoryClassName);
 		} else {
 			magicLoggerContext.generateAppender();
 		}

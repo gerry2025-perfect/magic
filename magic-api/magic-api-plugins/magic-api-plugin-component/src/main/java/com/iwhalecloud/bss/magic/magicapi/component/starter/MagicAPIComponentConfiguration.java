@@ -25,7 +25,7 @@ public class MagicAPIComponentConfiguration implements MagicPluginConfiguration 
 
 	@Override
 	public Plugin plugin() {
-		 return new Plugin("组件", "MagicComponent", "magic-component.1.0.0.iife.js");
+		 return new Plugin("Component", "MagicComponent", "magic-component.1.0.0.iife.js");
 	}
 
 }

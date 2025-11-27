@@ -83,17 +83,17 @@ public class DatabaseResource extends KeyValueResource {
 				try (InputStream is = blob.getBinaryStream()) {
 					content = new String(IoUtils.bytes(is), StandardCharsets.UTF_8);
 				} catch (SQLException | IOException ex) {
-					logger.error("读取content失败", ex);
+					logger.error("Failed to read content", ex);
 				}
 			} else if (object instanceof Clob) {
 				Clob clob = (Clob) object;
 				try {
 					content = clob.getSubString(1, (int) clob.length());
 				} catch (SQLException ex) {
-					logger.error("读取content失败", ex);
+					logger.error("Failed to read content", ex);
 				}
 			}
-			Assert.isNotNull(content, "读取content失败，请检查列类型是否正确");
+			Assert.isNotNull(content, "Failed to read content. Please check if the column type is correct");
 			this.cachedContent.put(sqlRowSet.getString(1), content);
 		}
 	}

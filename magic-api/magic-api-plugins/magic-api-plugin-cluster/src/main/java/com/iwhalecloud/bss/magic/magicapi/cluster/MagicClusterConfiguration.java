@@ -64,7 +64,7 @@ public class MagicClusterConfiguration implements MagicPluginConfiguration {
 	 */
 	@Bean
 	public RedisMessageListenerContainer magicRedisMessageListenerContainer(RedisConnectionFactory redisConnectionFactory, MagicAPIService magicAPIService) {
-		logger.info("开启集群通知监听， Redis channel: {}", config.getChannel());
+		logger.info("Enable cluster notification listening, Redis channel: {}", config.getChannel());
 		RedisMessageListenerContainer redisMessageListenerContainer = new RedisMessageListenerContainer();
 		redisMessageListenerContainer.setConnectionFactory(redisConnectionFactory);
 		redisMessageListenerContainer.addMessageListener((message, pattern) -> magicAPIService.processNotify(JsonUtils.readValue(message.getBody(), MagicNotify.class)), ChannelTopic.of(config.getChannel()));

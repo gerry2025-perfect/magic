@@ -9,8 +9,8 @@ import java.util.regex.Pattern;
  */
 public class PatternExtension {
 
-	@Comment("校验文本是否符合正则")
-	public boolean test(Pattern pattern, @Comment(name = "source", value = "目标字符串") String source) {
+	@Comment("Validate text for regular expressions")
+	public boolean test(Pattern pattern, @Comment(name = "source", value = "Target string") String source) {
 		return source != null && pattern.matcher(source).find();
 	}
 }

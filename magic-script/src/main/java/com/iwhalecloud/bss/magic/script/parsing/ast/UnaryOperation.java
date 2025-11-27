@@ -27,7 +27,7 @@ public class UnaryOperation extends Expression {
 	public UnaryOperation(Token operator, Expression operand, boolean atAfter) {
 		super(operator.getSpan());
 		if(operator.getType().isModifiable() && operand instanceof VariableAccess && ((VariableAccess) operand).getVarIndex().isReadonly()){
-			MagicScriptError.error("const修饰的变量不能被修改", getSpan());
+			MagicScriptError.error("Variables modified by const cannot be modified", getSpan());
 		}
 		this.operator = UnaryOperator.getOperator(operator);
 		this.operand = operand;
@@ -93,7 +93,7 @@ public class UnaryOperation extends Expression {
 					}
 					break;
 				}
-				throw new MagicScriptCompileException("此处不支持++/--操作");
+				throw new MagicScriptCompileException("++/-- operations are not supported here");
 			case Negate:
 				compiler.visit(operand)
 						.insn(ACONST_NULL)
@@ -153,7 +153,7 @@ public class UnaryOperation extends Expression {
 			if (op.getType() == TokenType.BitNot) {
 				return UnaryOperator.BitNot;
 			}
-			MagicScriptError.error("不支持的一元操作符：" + op, op.getSpan());
+			MagicScriptError.error("Unary operators not supported:" + op, op.getSpan());
 			return null; // not reached
 		}
 	}

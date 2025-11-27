@@ -347,7 +347,7 @@ public class Parser {
 						result = parseVarDefine();
 					} else {
 						if (stream.match(false, KEYWORDS.toArray(new String[0]))) {
-							MagicScriptError.error("try 括号中只允许写赋值语句", stream.consume().getSpan());
+							MagicScriptError.error("Only assignment statements are allowed within the try block", stream.consume().getSpan());
 						}
 						int index = stream.makeIndex();
 						if (matchTypeDefine()) {
@@ -356,7 +356,7 @@ public class Parser {
 						}
 						if (result == null) {
 							stream.resetIndex(index);
-							MagicScriptError.error("try 括号中只允许写赋值语句", stream.consume().getSpan());
+							MagicScriptError.error("Only assignment statements are allowed within the try block", stream.consume().getSpan());
 						}
 					}
 					tryResources.add(result);
@@ -452,14 +452,14 @@ public class Parser {
 			defines.add(variableName);
 			return new VariableDefine(addSpan(opening, stream.getPrev().getSpan()), varIndex, parseExpression());
 		} else if (isConst) {
-			MagicScriptError.error("const修饰的变量需要给初始值", stream.getPrev().getSpan());
+			MagicScriptError.error("Variables modified by const need to be initialized", stream.getPrev().getSpan());
 		}
 		return new VariableDefine(addSpan(opening, stream.getPrev().getSpan()), forceAdd(variableName), null);
 	}
 
 	private void checkKeyword(Span span) {
 		if (KEYWORDS.contains(span.getText())) {
-			MagicScriptError.error("变量名不能定义为关键字", span);
+			MagicScriptError.error("Variable names cannot be defined as keywords", span);
 		}
 	}
 
@@ -587,7 +587,7 @@ public class Parser {
 		while (stream.hasMore() && stream.match(false, operators)) {
 			Token operator = stream.consume();
 			if (operator.getType().isInLinq() && linqLevel == 0) {
-				MagicScriptError.error(operator.getText() + " 只能在Linq中使用", stream);
+				MagicScriptError.error(operator.getText() + "Can only be used in LINQ", stream);
 			}
 			Expression right = nextLevel == precedence.length ? parseUnaryOperator(expectRightCurly) : parseBinaryOperator(nextLevel, expectRightCurly);
 			left = BinaryOperation.create(left, operator, right, linqLevel);
@@ -767,9 +767,9 @@ public class Parser {
 
 			if (stream.match(Identifier, false) && !stream.match(LINQ_KEYWORDS, false, true)) {
 				if (expression instanceof WholeLiteral) {
-					MagicScriptError.error("* 后边不能跟别名", stream);
+					MagicScriptError.error("* cannot be followed by an alias", stream);
 				} else if (expression instanceof MemberAccess && ((MemberAccess) expression).isWhole()) {
-					MagicScriptError.error(expression.getSpan().getText() + " 后边不能跟别名", stream);
+					MagicScriptError.error(expression.getSpan().getText() + "* cannot be followed by an alias", stream);
 				}
 				Span alias = stream.consume().getSpan();
 				fields.add(new LinqField(addSpan(expression.getSpan(), alias), expression, add(alias.getText())));
@@ -778,7 +778,7 @@ public class Parser {
 			}
 		} while (stream.match(Comma, true));    //,
 		if (fields.isEmpty()) {
-			MagicScriptError.error("至少要查询一个字段", stream);
+			MagicScriptError.error("At least one field must be queried", stream);
 		}
 		return fields;
 	}

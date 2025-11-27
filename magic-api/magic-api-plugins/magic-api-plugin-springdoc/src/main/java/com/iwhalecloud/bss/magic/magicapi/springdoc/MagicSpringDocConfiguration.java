@@ -75,7 +75,7 @@ public class MagicSpringDocConfiguration implements MagicPluginConfiguration {
 					try {
 						createSwaggerProvider(requestMagicDynamicRegistryObjectProvider, magicResourceService, servletContext);
 					} catch (NoSuchMethodException e) {
-						logger.error("注册springdoc接口失败", e);
+						logger.error("Failed to register Springdoc interface", e);
 						return params;
 					}
 				}

@@ -34,7 +34,7 @@ public class DefaultAuthorizationInterceptor implements AuthorizationInterceptor
 		if (requireLogin && Objects.equals(validToken, token)) {
 			return configMagicUser;
 		}
-		throw new MagicLoginException("token无效");
+		throw new MagicLoginException("Invalid token");
 	}
 
 	@Override
@@ -42,6 +42,6 @@ public class DefaultAuthorizationInterceptor implements AuthorizationInterceptor
 		if (requireLogin && Objects.equals(MD5Utils.encrypt(String.format("%s||%s", username, password)), this.validToken)) {
 			return configMagicUser;
 		}
-		throw new MagicLoginException("用户名或密码不正确");
+		throw new MagicLoginException("Incorrect username or password");
 	}
 }

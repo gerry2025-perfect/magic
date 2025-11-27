@@ -11,6 +11,6 @@ public interface DynamicAttribute<T, R> {
 
 	@Transient
 	default R setDynamicAttribute(String key, T value) {
-		throw new MagicScriptRuntimeException("不支持此赋值操作");
+		throw new MagicScriptRuntimeException("This assignment operation is not supported");
 	}
 }

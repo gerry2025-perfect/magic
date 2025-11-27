@@ -24,6 +24,6 @@ public class ExitTests extends BaseTest {
 	}
 	@Test
 	public void exit_3() {
-		Assert.assertArrayEquals(new Object[]{400, "参数填写有误"}, ((ExitValue) doExecute("grammar/exit/exit_3.ms")).getValues());
+		Assert.assertArrayEquals(new Object[]{400, "Parameter entered incorrectly"}, ((ExitValue) doExecute("grammar/exit/exit_3.ms")).getValues());
 	}
 }

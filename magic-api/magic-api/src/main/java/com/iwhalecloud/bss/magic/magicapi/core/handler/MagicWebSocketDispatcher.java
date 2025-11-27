@@ -83,7 +83,7 @@ public class MagicWebSocketDispatcher extends TextWebSocketHandler {
 				}
 				return returnValue;
 			} catch (Throwable e) {
-				logger.error("WebSocket消息处理出错", e);
+				logger.error("WebSocket message processing error", e);
 			}
 		}
 		return null;

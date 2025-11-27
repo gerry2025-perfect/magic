@@ -24,7 +24,7 @@ public abstract class BinaryOperation extends Expression {
 
 	public static Expression create(Expression left, Token operator, Expression right, int linqLevel) {
 		if(operator.getType().isModifiable() && left instanceof VariableAccess && ((VariableAccess) left).getVarIndex().isReadonly()){
-			MagicScriptError.error("const定义的变量不能被修改", new Span(left.getSpan(), right.getSpan()));
+			MagicScriptError.error("Variables defined with const cannot be modified", new Span(left.getSpan(), right.getSpan()));
 		}
 		Expression expression = null;
 		Span span = new Span(left.getSpan(), right.getSpan());
@@ -135,7 +135,7 @@ public abstract class BinaryOperation extends Expression {
 				expression = new InstanceofOperation(left, span, right);
 				break;
 			default:
-				MagicScriptError.error("[" + operator.getText() + "]操作符未实现", span);
+				MagicScriptError.error("[" + operator.getText() + "] operator not implemented", span);
 		}
 		return expression;
 	}

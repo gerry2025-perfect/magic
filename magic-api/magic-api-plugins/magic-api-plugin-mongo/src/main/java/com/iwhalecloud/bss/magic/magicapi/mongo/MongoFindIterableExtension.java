@@ -16,7 +16,7 @@ import java.util.Map;
  */
 public class MongoFindIterableExtension {
 
-	@Comment("结果转为List")
+	@Comment("Convert results to List")
 	public List<Map<String, Object>> list(FindIterable<Document> iterable) {
 		MongoCursor<Document> cursor = iterable.iterator();
 		List<Map<String, Object>> result = new ArrayList<>();

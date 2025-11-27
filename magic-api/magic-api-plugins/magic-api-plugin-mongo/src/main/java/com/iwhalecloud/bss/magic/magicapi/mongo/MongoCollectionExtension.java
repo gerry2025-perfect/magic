@@ -18,43 +18,43 @@ import java.util.stream.Collectors;
  */
 public class MongoCollectionExtension {
 
-	@Comment("执行批量插入操作")
+	@Comment("Perform batch insert operation")
 	public void insert(MongoCollection<Document> collection,
-					   @Comment(name = "maps", value = "要插入的集合") List<Map<String, Object>> maps) {
+					   @Comment(name = "maps", value = "Collection to insert") List<Map<String, Object>> maps) {
 		collection.insertMany(maps.stream().map(Document::new).collect(Collectors.toList()));
 	}
 
-	@Comment("执行单条插入操作")
+	@Comment("Perform single insert operation")
 	public void insert(MongoCollection<Document> collection,
-					   @Comment(name = "map", value = "执行插入数据") Map<String, Object> map) {
+					   @Comment(name = "map", value = "Perform insert data") Map<String, Object> map) {
 		insert(collection, Collections.singletonList(map));
 	}
 
-	@Comment("执行查询操作")
+	@Comment("Perform query operation")
 	public FindIterable<Document> find(MongoCollection<Document> collection,
-									   @Comment(name = "query", value = "查询条件") Map<String, Object> query) {
+									   @Comment(name = "query", value = "Query conditions") Map<String, Object> query) {
 		return collection.find(new Document(query));
 	}
 
-	@Comment("修改操作，返回修改数量")
+	@Comment("Modification operation, returns the number of modifications")
 	public long update(MongoCollection<Document> collection,
-					   @Comment(name = "query", value = "查询条件") Map<String, Object> query,
-					   @Comment(name = "update", value = "修改值") Map<String, Object> update) {
+					   @Comment(name = "query", value = "Query conditions") Map<String, Object> query,
+					   @Comment(name = "update", value = "Modified values") Map<String, Object> update) {
 		return collection.updateOne(new Document(query), new Document(update)).getModifiedCount();
 	}
 
-	@Comment("批量修改，返回修改数量")
+	@Comment("Batch edits, returns the number of edits")
 	public long updateMany(MongoCollection<Document> collection,
-						   @Comment(name = "query", value = "修改条件") Map<String, Object> query,
-						   @Comment(name = "update", value = "修改值") Map<String, Object> update) {
+						   @Comment(name = "query", value = "Editing criteria") Map<String, Object> query,
+						   @Comment(name = "update", value = "Modified values") Map<String, Object> update) {
 		return collection.updateMany(new Document(query), new Document(update)).getModifiedCount();
 	}
 
-	@Comment("批量修改，返回修改数量")
+	@Comment("Batch edits, returns the number of edits")
 	public long updateMany(MongoCollection<Document> collection,
-						   @Comment(name = "query", value = "查询条件") Map<String, Object> query,
-						   @Comment(name = "update", value = "修改值") Map<String, Object> update,
-						   @Comment(name = "filters", value = "过滤条件") Map<String, Object> filters) {
+						   @Comment(name = "query", value = "Query conditions") Map<String, Object> query,
+						   @Comment(name = "update", value = "Modified values") Map<String, Object> update,
+						   @Comment(name = "filters", value = "Filtering criteria") Map<String, Object> filters) {
 		UpdateOptions updateOptions = new UpdateOptions();
 		if (filters != null && !filters.isEmpty()) {
 			Object upsert = filters.get("upsert");
@@ -73,21 +73,21 @@ public class MongoCollectionExtension {
 		return collection.updateMany(new Document(query), new Document(update), updateOptions).getModifiedCount();
 	}
 
-	@Comment("查询数量")
+	@Comment("Number of queries")
 	public long count(MongoCollection<Document> collection,
-					  @Comment(name = "query", value = "查询") Map<String, Object> query) {
+					  @Comment(name = "query", value = "Query") Map<String, Object> query) {
 		return collection.countDocuments(new Document(query));
 	}
 
-	@Comment("批量删除，返回删除条数")
+	@Comment("Batch deletion, returns the number of deleted records")
 	public long remove(MongoCollection<Document> collection,
-					   @Comment(name = "query", value = "删除条件") Map<String, Object> query) {
+					   @Comment(name = "query", value = "Delete criteria") Map<String, Object> query) {
 		return collection.deleteMany(new Document(query)).getDeletedCount();
 	}
 
-	@Comment("删除一条，返回删除条数")
+	@Comment("Delete one record, returns the number of deleted records")
 	public long removeOne(MongoCollection<Document> collection,
-						  @Comment(name = "query", value = "删除条件") Map<String, Object> query) {
+						  @Comment(name = "query", value = "Delete criteria") Map<String, Object> query) {
 		return collection.deleteOne(new Document(query)).getDeletedCount();
 	}
 }

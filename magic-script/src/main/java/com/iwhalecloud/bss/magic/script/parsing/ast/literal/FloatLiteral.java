@@ -19,7 +19,7 @@ public class FloatLiteral extends NumberLiteral {
 			try {
 				setValue(Float.parseFloat(getText().replace("_", "")));
 			} catch (NumberFormatException e) {
-				MagicScriptError.error("定义float变量值不合法", getSpan(), e);
+				MagicScriptError.error("Invalid float variable value definition", getSpan(), e);
 			}
 		}
 		context.ldc(value).invoke(INVOKESTATIC, Float.class, "valueOf", Float.class, float.class);

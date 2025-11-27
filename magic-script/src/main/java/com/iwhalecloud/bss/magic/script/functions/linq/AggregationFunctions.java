@@ -16,8 +16,8 @@ import java.util.function.BinaryOperator;
 public class AggregationFunctions {
 
 	@Function
-	@Comment("聚合函数-count")
-	public int count(@Comment(name = "value", value = "集合") Object target) {
+	@Comment("Aggregate function - count")
+	public int count(@Comment(name = "value", value = "Set") Object target) {
 		if (target == null) {
 			return 0;
 		} else if (target instanceof Map) {
@@ -31,8 +31,8 @@ public class AggregationFunctions {
 	}
 
 	@Function
-	@Comment("聚合函数-max")
-	public Object max(@Comment(name = "value", value = "集合") Object target) {
+	@Comment("Aggregate function - max")
+	public Object max(@Comment(name = "value", value = "Set") Object target) {
 		if (target == null) {
 			return null;
 		} else if (target instanceof Map) {
@@ -48,8 +48,8 @@ public class AggregationFunctions {
 	}
 
 	@Function
-	@Comment("聚合函数-sum")
-	public Number sum(@Comment(name = "value", value = "集合") Object target) {
+	@Comment("Aggregate function - SUM")
+	public Number sum(@Comment(name = "value", value = "Set") Object target) {
 		if (target == null) {
 			return null;
 		} else if (target instanceof Map) {
@@ -67,8 +67,8 @@ public class AggregationFunctions {
 	}
 
 	@Function
-	@Comment("聚合函数-min")
-	public Object min(@Comment(name = "value", value = "集合") Object target) {
+	@Comment("Aggregate function - MIN")
+	public Object min(@Comment(name = "value", value = "Set") Object target) {
 		if (target == null) {
 			return null;
 		} else if (target instanceof Map) {
@@ -84,8 +84,8 @@ public class AggregationFunctions {
 	}
 
 	@Function
-	@Comment("聚合函数-avg")
-	public Object avg(@Comment(name = "value", value = "集合") Object target) {
+	@Comment("Aggregate function - AVG")
+	public Object avg(@Comment(name = "value", value = "Set") Object target) {
 		if (target == null) {
 			return null;
 		} else if (target instanceof Map) {
@@ -103,9 +103,9 @@ public class AggregationFunctions {
 	}
 
 	@Function
-	@Comment("分组后按指定字符串拼接")
-	public String group_concat(@Comment(name = "target", value = "列，如t.a") Object target,
-							   @Comment(name = "separator", value = "分隔符，如`|`") String separator) {
+	@Comment("Grouping and concatenating by a specified string")
+	public String group_concat(@Comment(name = "target", value = "Column, e.g., t.a") Object target,
+							   @Comment(name = "separator", value = "Delimiter, e.g., `|`") String separator) {
 		if (target == null) {
 			return null;
 		}
@@ -113,8 +113,8 @@ public class AggregationFunctions {
 	}
 
 	@Function
-	@Comment("分组后使用`,`拼接")
-	public String group_concat(@Comment(name = "target", value = "列，如t.a") Object target) {
+	@Comment("Grouping and concatenating using `,`")
+	public String group_concat(@Comment(name = "target", value = "Column, e.g., t.a") Object target) {
 		return group_concat(target, ",");
 	}
 }

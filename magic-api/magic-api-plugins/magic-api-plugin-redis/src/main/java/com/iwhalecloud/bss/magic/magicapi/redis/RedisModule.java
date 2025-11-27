@@ -6,6 +6,7 @@ import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.RedisPipelineException;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.script.DefaultRedisScript;
 import org.springframework.util.ReflectionUtils;
 import com.iwhalecloud.bss.magic.magicapi.core.annotation.MagicModule;
 import com.iwhalecloud.bss.magic.script.functions.DynamicMethod;
@@ -14,6 +15,7 @@ import com.iwhalecloud.bss.magic.script.reflection.JavaReflection;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 /**
  * redis模块
@@ -127,6 +129,44 @@ public class RedisModule implements DynamicMethod {
 			return ReflectionUtils.invokeMethod(method, connection);
 		}
 		return ReflectionUtils.invokeMethod(method, connection, parameters.stream().map(this::serializerForRedisson).toArray());
+	}
+
+	// LUA脚本：用于原子解锁（判断value是你存的UUID才删除）
+	private static final String UNLOCK_SCRIPT =
+			"if redis.call('get', KEYS[1]) == ARGV[1] then " +
+					"   return redis.call('del', KEYS[1]) " +
+					"else " +
+					"   return 0 " +
+					"end";
+
+	/**
+	 * 加锁
+	 * @param key 锁的Key
+	 * @param value 锁的唯一标识（通常是 UUID，用于解锁校验）
+	 * @param timeout 过期时间（秒）
+	 * @return 是否加锁成功
+	 */
+	public boolean tryLock(String key, String value, long timeout) {
+		// 对应 Redis 命令：SET key value EX timeout NX
+		// Spring Data Redis 2.1+ 支持此原子方法
+		Boolean success = redisTemplate.opsForValue()
+				.setIfAbsent(key, value, timeout, TimeUnit.SECONDS);
+
+		return Boolean.TRUE.equals(success);
+	}
+
+	/**
+	 * 解锁
+	 * @param key 锁的Key
+	 * @param value 加锁时使用的唯一标识
+	 * @return 是否解锁成功
+	 */
+	public boolean unlock(String key, String value) {
+		// 使用 Lua 脚本保证原子性
+		DefaultRedisScript<Long> script = new DefaultRedisScript<>(UNLOCK_SCRIPT, Long.class);
+		// 执行脚本
+		Long result = redisTemplate.execute(script, Collections.singletonList(key), value);
+		return Long.valueOf(1).equals(result);
 	}
 
 }

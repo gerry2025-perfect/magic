@@ -11,13 +11,13 @@ import java.math.RoundingMode;
  */
 public class NumberExtension {
 
-	@Comment("四舍五入保留N位小数")
+	@Comment("Round to N decimal places")
 	public static double round(Number number,
-							   @Comment(name = "num", value = "规定小数的位数") int num) {
+							   @Comment(name = "num", value = "Specify the number of decimal places") int num) {
 		return new BigDecimal("" + number.doubleValue()).setScale(num, RoundingMode.HALF_UP).doubleValue();
 	}
 
-	@Comment("向下取整")
+	@Comment("Round down")
 	public static Number floor(Number number) {
 		if (number instanceof Double || number instanceof Float) {
 			return fixed(Math.floor(number.floatValue()));
@@ -27,7 +27,7 @@ public class NumberExtension {
 		return number;
 	}
 
-	@Comment("向上取整")
+	@Comment("Round up")
 	public static Number ceil(Number number) {
 		if (number instanceof Double || number instanceof Float) {
 			return fixed(Math.ceil(number.doubleValue()));
@@ -37,9 +37,9 @@ public class NumberExtension {
 		return number;
 	}
 
-	@Comment("转为百分比")
+	@Comment("Convert to percentage")
 	public static String asPercent(Number number,
-								   @Comment(name = "num", value = "规定小数的位数") int num) {
+								   @Comment(name = "num", value = "Specify the number of decimal places") int num) {
 		return new BigDecimal(number.doubleValue() * 100).setScale(num, RoundingMode.HALF_UP).toString() + "%";
 	}
 
@@ -50,9 +50,9 @@ public class NumberExtension {
 		return value;
 	}
 
-	@Comment("四舍五入保留N位小数,仿JS的toFixed")
+	@Comment("Rounds to N decimal places, similar to JavaScript's toFixed")
 	public String toFixed(Number number,
-						  @Comment(name = "num", value = "规定小数的位数") int num) {
+						  @Comment(name = "num", value = "Specify the number of decimal places") int num) {
 		return new BigDecimal("" + number.doubleValue()).setScale(num, RoundingMode.HALF_UP).toString();
 	}
 }

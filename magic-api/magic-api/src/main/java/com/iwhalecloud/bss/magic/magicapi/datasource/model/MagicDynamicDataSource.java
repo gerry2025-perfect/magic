@@ -64,7 +64,7 @@ public class MagicDynamicDataSource {
 		if (dataSourceKey == null) {
 			dataSourceKey = "";
 		}
-		logger.info("注册数据源：{}", StringUtils.isNotBlank(dataSourceKey) ? dataSourceKey : "default");
+		logger.info("Registered data source: {}", StringUtils.isNotBlank(dataSourceKey) ? dataSourceKey : "default");
 		DataSourceNode node = this.dataSourceMap.put(dataSourceKey, new DataSourceNode(dataSource, dataSourceKey, datasourceName, id, maxRows));
 		if (node != null) {
 			node.close();
@@ -75,7 +75,7 @@ public class MagicDynamicDataSource {
 					.filter(it -> id.equals(it.getValue().getId()) && !finalDataSourceKey.equals(it.getValue().getKey()))
 					.findFirst()
 					.ifPresent(it -> {
-						logger.info("移除旧数据源:{}", it.getValue().getKey());
+						logger.info("Removed old data source: {}", it.getValue().getKey());
 						this.dataSourceMap.remove(it.getValue().getKey()).close();
 					});
 		}
@@ -114,7 +114,7 @@ public class MagicDynamicDataSource {
 				node.close();
 			}
 		}
-		logger.info("删除数据源：{}:{}", datasourceKey, result ? "成功" : "失败");
+		logger.info("Deleted data source: {}:{}", datasourceKey, result ? "Success" : "Failed");
 		return result;
 	}
 
@@ -135,7 +135,7 @@ public class MagicDynamicDataSource {
 			datasourceKey = "";
 		}
 		MagicDynamicDataSource.DataSourceNode dataSourceNode = dataSourceMap.get(datasourceKey);
-		Assert.isNotNull(dataSourceNode, String.format("找不到数据源%s", datasourceKey));
+		Assert.isNotNull(dataSourceNode, String.format("Data source %s not found", datasourceKey));
 		return dataSourceNode;
 	}
 
@@ -220,10 +220,10 @@ public class MagicDynamicDataSource {
 					connection = this.dataSource.getConnection();
 					this.dialect = dialectAdapter.getDialectFromConnection(connection);
 					if (this.dialect == null) {
-						throw new MagicAPIException("自动获取数据库方言失败");
+						throw new MagicAPIException("Failed to automatically obtain database dialect");
 					}
 				} catch (Exception e) {
-					throw new MagicAPIException("自动获取数据库方言失败", e);
+					throw new MagicAPIException("Failed to automatically obtain database dialect", e);
 				} finally {
 					DataSourceUtils.releaseConnection(connection, this.dataSource);
 				}

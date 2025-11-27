@@ -48,15 +48,15 @@ public class MongoModule implements ClassImplicitConvert, DynamicAttribute<Mongo
 					invoker = JavaReflection.getMethod(factory, "getMongoDatabase", StringUtils.EMPTY);
 				}
 			} catch (Throwable e) {
-				logger.error("mongo模块初始化失败", e);
+				logger.error("mongo module initialization failed", e);
 			}
 		} else {
-			logger.error("mongo模块初始化失败");
+			logger.error("mongo module initialization failed");
 		}
 		JavaReflection.registerImplicitConvert(this);
 	}
 
-	@Comment("获取`database`")
+	@Comment("Get `database`")
 	public MongoDataBaseGetter database(String databaseName){
 		return getDynamicAttribute(databaseName);
 	}
@@ -100,7 +100,7 @@ public class MongoModule implements ClassImplicitConvert, DynamicAttribute<Mongo
 		}
 
 
-		@Comment("获取`Collection`")
+		@Comment("Get `Collection`")
 		public MongoCollection<Document> collection(String key){
 			return  getDynamicAttribute(key);
 		}

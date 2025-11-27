@@ -11,9 +11,9 @@ import java.util.Iterator;
 public class CollectionFunctions {
 
 	@Function
-	@Comment("区间迭代器")
-	public Iterator<Integer> range(@Comment(name = "from", value = "起始编号") int from,
-								   @Comment(name = "to", value = "结束编号") int to) {
+	@Comment("Range iterator")
+	public Iterator<Integer> range(@Comment(name = "from", value = "Starting number") int from,
+								   @Comment(name = "to", value = "Ending number") int to) {
 		return new Iterator<Integer>() {
 			int idx = from;
 

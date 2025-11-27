@@ -99,7 +99,7 @@ public class MagicModuleConfiguration {
 		if (dataSource != null) {
 			dynamicDataSource.put(dataSource);
 		} else {
-			logger.warn("当前数据源未配置");
+			logger.warn("Current data source not configured");
 		}
 		return dynamicDataSource;
 	}
@@ -108,7 +108,7 @@ public class MagicModuleConfiguration {
 	@ConditionalOnMissingBean(PageProvider.class)
 	public PageProvider pageProvider() {
 		Page pageConfig = properties.getPage();
-		logger.info("未找到分页实现,采用默认分页实现,分页配置:(页码={},页大小={},默认首页={},默认页大小={},最大页大小={})", pageConfig.getPage(), pageConfig.getSize(), pageConfig.getDefaultPage(), pageConfig.getDefaultSize(), pageConfig.getMaxPageSize());
+		logger.info("Pagination implementation not found, default pagination implementation used, pagination configuration: (page number={}, page size={}, default first page={}, default page size={}, maximum page size={})", pageConfig.getPage(), pageConfig.getSize(), pageConfig.getDefaultPage(), pageConfig.getDefaultSize(), pageConfig.getMaxPageSize());
 		return new DefaultPageProvider(pageConfig.getPage(), pageConfig.getSize(), pageConfig.getDefaultPage(), pageConfig.getDefaultSize(), pageConfig.getMaxPageSize());
 	}
 
@@ -119,7 +119,7 @@ public class MagicModuleConfiguration {
 	@ConditionalOnMissingBean(SqlCache.class)
 	public SqlCache sqlCache() {
 		Cache cacheConfig = properties.getCache();
-		logger.info("未找到SQL缓存实现，采用默认缓存实现(LRU+TTL)，缓存配置:(容量={},TTL={})", cacheConfig.getCapacity(), cacheConfig.getTtl());
+		logger.info("SQL cache implementation not found, default cache implementation (LRU+TTL) used, cache configuration: (capacity={}, TTL={})", cacheConfig.getCapacity(), cacheConfig.getTtl());
 		return new DefaultSqlCache(cacheConfig.getCapacity(), cacheConfig.getTtl());
 	}
 

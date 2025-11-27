@@ -65,7 +65,7 @@ public class IoUtils {
 		try {
 			return Files.readAllBytes(file.toPath());
 		} catch (IOException e) {
-			logger.error("读取文件失败", e);
+			logger.error("Failed to Read File", e);
 			return new byte[0];
 		}
 	}
@@ -84,7 +84,7 @@ public class IoUtils {
 			}
 			return baos.toByteArray();
 		} catch (IOException e) {
-			logger.error("读取InputStream失败", e);
+			logger.error("Failed to Read InputStream", e);
 			return new byte[0];
 		}
 	}
@@ -103,7 +103,7 @@ public class IoUtils {
 			}
 			return result.toString();
 		} catch (IOException e) {
-			logger.error("读取InputStream失败", e);
+			logger.error("Failed to Read InputStream", e);
 			return "";
 		}
 	}
@@ -113,7 +113,7 @@ public class IoUtils {
 			Files.write(file.toPath(), bytes);
 			return true;
 		} catch (IOException e) {
-			logger.error("写文件失败", e);
+			logger.error("Failed to Write File", e);
 			return false;
 		}
 	}

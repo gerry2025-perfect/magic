@@ -23,7 +23,7 @@ public class IntegerLiteral extends NumberLiteral {
 			try {
 				this.value = Integer.parseInt(getText().replace("_",""));
 			} catch (NumberFormatException e) {
-				MagicScriptError.error("定义int变量值不合法", getSpan(), e);
+				MagicScriptError.error("Invalid int variable value definition", getSpan(), e);
 			}
 		}
 		context.visitInt((Integer) value)

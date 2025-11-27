@@ -211,8 +211,8 @@ public class SQLModule implements DynamicAttribute<SQLModule, SQLModule>, Dynami
 	 *
 	 * @param function 回调函数
 	 */
-	@Comment("开启事务，并在回调中处理")
-	public Object transaction(@Comment(name = "function", value = "回调函数，如：()=>{....}") Function<?, ?> function) {
+	@Comment("Starts a transaction and handles it in the callback")
+	public Object transaction(@Comment(name = "function", value = "Callback function, such as: ()=>{....}") Function<?, ?> function) {
 		// 创建事务
 		Transaction transaction = transaction();
 		try {
@@ -228,7 +228,7 @@ public class SQLModule implements DynamicAttribute<SQLModule, SQLModule>, Dynami
 	/**
 	 * 开启事务，手动提交和回滚
 	 */
-	@Comment("开启事务，返回事务对象")
+	@Comment("Starts a transaction and returns the transaction object")
 	public Transaction transaction() {
 		return new Transaction(this.dataSourceNode.getDataSourceTransactionManager());
 	}
@@ -239,9 +239,9 @@ public class SQLModule implements DynamicAttribute<SQLModule, SQLModule>, Dynami
 	 * @param cacheName 缓存名
 	 * @param ttl       过期时间
 	 */
-	@Comment("使用缓存")
-	public SQLModule cache(@Comment(name = "cacheName", value = "缓存名") String cacheName,
-						   @Comment(name = "ttl", value = "过期时间") long ttl) {
+	@Comment("Uses a cache")
+	public SQLModule cache(@Comment(name = "cacheName", value = "Cache name") String cacheName,
+						   @Comment(name = "ttl", value = "Expiration time") long ttl) {
 		if (cacheName == null) {
 			return this;
 		}
@@ -256,37 +256,37 @@ public class SQLModule implements DynamicAttribute<SQLModule, SQLModule>, Dynami
 	 *
 	 * @param cacheName 缓冲名
 	 */
-	@Comment("使用缓存，过期时间采用默认配置")
-	public SQLModule cache(@Comment(name = "cacheName", value = "缓存名") String cacheName) {
+	@Comment("Uses a cache, with the expiration time using the default configuration")
+	public SQLModule cache(@Comment(name = "cacheName", value = "Cache name") String cacheName) {
 		return cache(cacheName, 0);
 	}
 
-	@Comment("采用驼峰列名")
+	@Comment("Uses camelCase column names")
 	public SQLModule camel() {
 		return columnCase("camel");
 	}
 
-	@Comment("采用帕斯卡列名")
+	@Comment("Uses PascalCase column names")
 	public SQLModule pascal() {
 		return columnCase("pascal");
 	}
 
-	@Comment("采用全小写列名")
+	@Comment("Uses all lowercase column names")
 	public SQLModule lower() {
 		return columnCase("lower");
 	}
 
-	@Comment("采用全大写列名")
+	@Comment("Use all uppercase column names")
 	public SQLModule upper() {
 		return columnCase("upper");
 	}
 
-	@Comment("列名保持原样")
+	@Comment("Keep column names as they are")
 	public SQLModule normal() {
 		return columnCase("default");
 	}
 
-	@Comment("指定列名转换")
+	@Comment("Specify column name conversion")
 	public SQLModule columnCase(String name) {
 		SQLModule sqlModule = cloneSQLModule();
 		sqlModule.setColumnMapRowMapper(this.columnMapperAdapter.getColumnMapRowMapper(name));
@@ -313,19 +313,19 @@ public class SQLModule implements DynamicAttribute<SQLModule, SQLModule>, Dynami
 	/**
 	 * 查询List
 	 */
-	@Comment("查询SQL，返回List类型结果")
+	@Comment("Query SQL, return List type results")
 	public List<Map<String, Object>> select(RuntimeContext runtimeContext,
-											@Comment(name = "sqlOrXml", value = "`SQL`语句或`xml`") String sqlOrXml) {
+											@Comment(name = "sqlOrXml", value = "`SQL` statement or `xml`") String sqlOrXml) {
 		return select(runtimeContext, sqlOrXml, null);
 	}
 
 	/**
 	 * 查询List，并传入变量信息
 	 */
-	@Comment("查询SQL，并传入变量信息，返回List类型结果")
+	@Comment("Query SQL, pass variable information, return List type results")
 	public List<Map<String, Object>> select(RuntimeContext runtimeContext,
-											@Comment(name = "sqlOrXml", value = "`SQL`语句或`xml`") String sqlOrXml,
-											@Comment(name = "params", value = "变量信息") Map<String, Object> params) {
+											@Comment(name = "sqlOrXml", value = "`SQL` statement or `xml`") String sqlOrXml,
+											@Comment(name = "params", value = "Variable information") Map<String, Object> params) {
 		return select(new BoundSql(runtimeContext, sqlOrXml, params, this));
 	}
 
@@ -345,26 +345,26 @@ public class SQLModule implements DynamicAttribute<SQLModule, SQLModule>, Dynami
 
 	private void assertDatasourceNotNull() {
 		if (dataSourceNode == null) {
-			throw new NullPointerException("当前数据源未设置");
+			throw new NullPointerException("Current data source not set");
 		}
 	}
 
 	/**
 	 * 执行update
 	 */
-	@Comment("执行update操作，返回受影响行数")
+	@Comment("Execute update operation, return number of affected rows")
 	public int update(RuntimeContext runtimeContext,
-					  @Comment(name = "sqlOrXml", value = "`SQL`语句或`xml`") String sqlOrXml) {
+					  @Comment(name = "sqlOrXml", value = "`SQL` statement or `xml`") String sqlOrXml) {
 		return update(runtimeContext, sqlOrXml, null);
 	}
 
 	/**
 	 * 执行update，并传入变量信息
 	 */
-	@Comment("执行update操作，并传入变量信息，返回受影响行数")
+	@Comment("Execute update operation, pass variable information, return number of affected rows")
 	public int update(RuntimeContext runtimeContext,
-					  @Comment(name = "sqlOrXml", value = "`SQL`语句或`xml`") String sqlOrXml,
-					  @Comment(name = "params", value = "变量信息") Map<String, Object> params) {
+					  @Comment(name = "sqlOrXml", value = "`SQL` statement or `xml`") String sqlOrXml,
+					  @Comment(name = "params", value = "Variable information") Map<String, Object> params) {
 		return update(new BoundSql(runtimeContext, sqlOrXml, params, this));
 	}
 
@@ -381,40 +381,40 @@ public class SQLModule implements DynamicAttribute<SQLModule, SQLModule>, Dynami
 	/**
 	 * 插入并返回主键
 	 */
-	@Comment("执行insert操作，返回插入主键")
+	@Comment("Executes an insert operation and returns the inserted primary key")
 	public Object insert(RuntimeContext runtimeContext,
-						 @Comment(name = "sqlOrXml", value = "`SQL`语句或`xml`") String sqlOrXml) {
+						 @Comment(name = "sqlOrXml", value = "`SQL` statement or `xml`") String sqlOrXml) {
 		return insert(runtimeContext, sqlOrXml, null, null);
 	}
 
 	/**
 	 * 插入并返回主键，并传入变量信息
 	 */
-	@Comment("执行insert操作，并传入变量信息，返回插入主键")
+	@Comment("Executes an insert operation, passes in variable information, and returns the inserted primary key")
 	public Object insert(RuntimeContext runtimeContext,
-						 @Comment(name = "sqlOrXml", value = "`SQL`语句或`xml`") String sqlOrXml,
-						 @Comment(name = "params", value = "变量信息") Map<String, Object> params) {
+						 @Comment(name = "sqlOrXml", value = "`SQL` statement or `xml`") String sqlOrXml,
+						 @Comment(name = "params", value = "Variable information") Map<String, Object> params) {
 		return insert(runtimeContext, sqlOrXml, null, params);
 	}
 
 	/**
 	 * 插入并返回主键
 	 */
-	@Comment("执行insert操作，返回插入主键")
+	@Comment("Executes an insert operation and returns the inserted primary key")
 	public Object insert(RuntimeContext runtimeContext,
-						 @Comment(name = "sqlOrXml", value = "`SQL`语句或`xml`") String sqlOrXml,
-						 @Comment(name = "primary", value = "主键列") String primary) {
+						 @Comment(name = "sqlOrXml", value = "`SQL` statement or `xml`") String sqlOrXml,
+						 @Comment(name = "primary", value = "Primary key column") String primary) {
 		return insert(runtimeContext, sqlOrXml, primary, null);
 	}
 
 	/**
 	 * 插入并返回主键
 	 */
-	@Comment("执行insert操作，并传入主键和变量信息，返回插入主键")
+	@Comment("Executes an insert operation, passes in primary key and variable information")
 	public Object insert(RuntimeContext runtimeContext,
-						 @Comment(name = "sqlOrXml", value = "`SQL`语句或`xml`") String sqlOrXml,
-						 @Comment(name = "primary", value = "主键列") String primary,
-						 @Comment(name = "params", value = "变量信息") Map<String, Object> params) {
+						 @Comment(name = "sqlOrXml", value = "`SQL` statement or `xml`") String sqlOrXml,
+						 @Comment(name = "primary", value = "Primary key column") String primary,
+						 @Comment(name = "params", value = "Variable information") Map<String, Object> params) {
 		return insert(new BoundSql(runtimeContext, sqlOrXml, params, this), primary);
 	}
 
@@ -431,7 +431,7 @@ public class SQLModule implements DynamicAttribute<SQLModule, SQLModule>, Dynami
 	/**
 	 * 插入并返回主键
 	 */
-	@Comment("批量执行操作，返回受影响的行数")
+	@Comment("Batch execution operation, returns the number of rows affected")
 	public int batchUpdate(RuntimeContext runtimeContext, String sql, List<Object[]> args) {
 		assertDatasourceNotNull();
 		BoundSql boundSql = new BoundSql(runtimeContext, sql, new ArrayList<>(args), this);
@@ -448,8 +448,8 @@ public class SQLModule implements DynamicAttribute<SQLModule, SQLModule>, Dynami
 		return dataSourceNode.getJdbcTemplate();
 	}
 
-	@Comment("删除`SQL`缓存")
-	public SQLModule deleteCache(@Comment("缓存名称") String name) {
+	@Comment("Delete `SQL` cache")
+	public SQLModule deleteCache(@Comment("Cache name") String name) {
 		if (StringUtils.isNotBlank(name)) {
 			sqlCache.delete(name);
 		}
@@ -460,7 +460,7 @@ public class SQLModule implements DynamicAttribute<SQLModule, SQLModule>, Dynami
 	/**
 	 * 插入并返回主键
 	 */
-	@Comment("批量执行操作，返回受影响的行数")
+	@Comment("Batch execution operation, returns the number of rows affected")
 	public int batchUpdate(RuntimeContext runtimeContext, String sql, int batchSize, List<Object[]> args) {
 		assertDatasourceNotNull();
 		BoundSql boundSql = new BoundSql(runtimeContext, sql, new ArrayList<>(args), this);
@@ -489,8 +489,8 @@ public class SQLModule implements DynamicAttribute<SQLModule, SQLModule>, Dynami
 	/**
 	 * 插入并返回主键
 	 */
-	@Comment("批量执行操作，返回受影响的行数")
-	public int batchUpdate(@Comment(name = "sqls", value = "`SQL`语句") List<String> sqls) {
+	@Comment("Batch execution operation, returns the number of rows affected")
+	public int batchUpdate(@Comment(name = "sqls", value = "`SQL` statement") List<String> sqls) {
 		assertDatasourceNotNull();
 		int[] values = dataSourceNode.getJdbcTemplate().batchUpdate(sqls.toArray(new String[0]));
 		deleteCache(this.cacheName);
@@ -510,42 +510,42 @@ public class SQLModule implements DynamicAttribute<SQLModule, SQLModule>, Dynami
 	/**
 	 * 分页查询
 	 */
-	@Comment("执行分页查询，分页条件自动获取")
+	@Comment("Execute paginated query, pagination conditions are automatically obtained")
 	public Object page(RuntimeContext runtimeContext,
-					   @Comment(name = "sqlOrXml", value = "`SQL`语句或`xml`") String sqlOrXml,
-					   @Comment(name = "params", value = "变量信息") Map<String, Object> params) {
+					   @Comment(name = "sqlOrXml", value = "`SQL` statement or `xml`") String sqlOrXml,
+					   @Comment(name = "params", value = "Variable information") Map<String, Object> params) {
 		return page(new BoundSql(runtimeContext, sqlOrXml, params, this));
 	}
 
 	/**
 	 * 分页查询,并传入变量信息
 	 */
-	@Comment("执行分页查询，并传入变量信息，分页条件自动获取")
+	@Comment("Execute paginated query, passing in variable information, pagination conditions are automatically obtained")
 	public Object page(RuntimeContext runtimeContext,
-					   @Comment(name = "sqlOrXml", value = "`SQL`语句或`xml`") String sqlOrXml) {
+					   @Comment(name = "sqlOrXml", value = "`SQL` statement or `xml`") String sqlOrXml) {
 		return page(runtimeContext, sqlOrXml, (Map<String, Object>) null);
 	}
 
 	/**
 	 * 分页查询（手动传入limit和offset参数）
 	 */
-	@Comment("执行分页查询，分页条件手动传入")
+	@Comment("Execute paginated query, pagination conditions are manually passed")
 	public Object page(RuntimeContext runtimeContext,
-					   @Comment(name = "sqlOrXml", value = "`SQL`语句或`xml`") String sqlOrXml,
-					   @Comment(name = "limit", value = "限制条数") long limit,
-					   @Comment(name = "offset", value = "跳过条数") long offset) {
+					   @Comment(name = "sqlOrXml", value = "`SQL` statement or `xml`") String sqlOrXml,
+					   @Comment(name = "limit", value = "Limit the number of rows") long limit,
+					   @Comment(name = "offset", value = "Skip the number of rows") long offset) {
 		return page(runtimeContext, sqlOrXml, limit, offset, null);
 	}
 
 	/**
 	 * 分页查询（手动传入limit和offset参数）
 	 */
-	@Comment("执行分页查询，并传入变量信息，分页条件手动传入")
+	@Comment("Execute paginated query, passing in variable information, pagination conditions are manually passed")
 	public Object page(RuntimeContext runtimeContext,
-					   @Comment(name = "sqlOrXml", value = "`SQL`语句或`xml`") String sqlOrXml,
-					   @Comment(name = "limit", value = "限制条数") long limit,
-					   @Comment(name = "offset", value = "跳过条数") long offset,
-					   @Comment(name = "params", value = "变量信息") Map<String, Object> params) {
+					   @Comment(name = "sqlOrXml", value = "`SQL` statement or `xml`") String sqlOrXml,
+					   @Comment(name = "limit", value = "Limit the number of rows") long limit,
+					   @Comment(name = "offset", value = "Skip the number of rows") long offset,
+					   @Comment(name = "params", value = "Variable information") Map<String, Object> params) {
 		BoundSql boundSql = new BoundSql(runtimeContext, sqlOrXml, params, this);
 		return page(boundSql, new Page(limit, offset));
 	}
@@ -564,21 +564,21 @@ public class SQLModule implements DynamicAttribute<SQLModule, SQLModule>, Dynami
 	/**
 	 * 分页查询（手动传入分页SQL语句）
 	 */
-	@Comment("执行分页查询，分页`SQL`语句手动传入")
+	@Comment("Executes a paginated query, manually entering the pagination `SQL` statement")
 	public Object page(RuntimeContext runtimeContext,
-					   @Comment(name = "countSqlOrXml", value = "count语句") String countSqlOrXml,
-					   @Comment(name = "sqlOrXml", value = "查询语句") String sqlOrXml) {
+					   @Comment(name = "countSqlOrXml", value = "Count statement") String countSqlOrXml,
+					   @Comment(name = "sqlOrXml", value = "Query statement") String sqlOrXml) {
 		return page(runtimeContext, countSqlOrXml, sqlOrXml, null);
 	}
 
 	/**
 	 * 分页查询（手动传入分页SQL语句）
 	 */
-	@Comment("执行分页查询，并传入变量信息，分页`SQL`countSqlOrXml")
+	@Comment("Executes a paginated query, passing in variable information, pagination `SQL`countSqlOrXml")
 	public Object page(RuntimeContext runtimeContext,
-					   @Comment(name = "countSqlOrXml", value = "count语句") String countSqlOrXml,
-					   @Comment(name = "sqlOrXml", value = "查询语句") String sqlOrXml,
-					   @Comment(name = "params", value = "变量信息") Map<String, Object> params) {
+					   @Comment(name = "countSqlOrXml", value = "Count statement") String countSqlOrXml,
+					   @Comment(name = "sqlOrXml", value = "Query statement") String sqlOrXml,
+					   @Comment(name = "params", value = "Variable information") Map<String, Object> params) {
 		int count = selectInt(new BoundSql(runtimeContext, countSqlOrXml, params, this));
 		Page page = pageProvider.getPage(runtimeContext);
 		BoundSql boundSql = new BoundSql(runtimeContext, sqlOrXml, params, this);
@@ -588,13 +588,13 @@ public class SQLModule implements DynamicAttribute<SQLModule, SQLModule>, Dynami
 	/**
 	 * 分页查询（手动传入count）
 	 */
-	@Comment("执行分页查询，并传入变量信息，分页`SQL`count")
+	@Comment("Executes a paginated query, passing in variable information, pagination `SQL`count")
 	public Object page(RuntimeContext runtimeContext,
-					   @Comment(name = "count", value = "总条数") int count,
-					   @Comment(name = "sqlOrXml", value = "查询语句") String sqlOrXml,
-					   @Comment(name = "limit", value = "限制条数") long limit,
-					   @Comment(name = "offset", value = "跳过条数") long offset,
-					   @Comment(name = "params", value = "变量信息") Map<String, Object> params) {
+					   @Comment(name = "count", value = "Total number of rows") int count,
+					   @Comment(name = "sqlOrXml", value = "Query statement") String sqlOrXml,
+					   @Comment(name = "limit", value = "Limit the number of rows") long limit,
+					   @Comment(name = "offset", value = "Skip the number of rows") long offset,
+					   @Comment(name = "params", value = "Variable information") Map<String, Object> params) {
 		BoundSql boundSql = new BoundSql(runtimeContext, sqlOrXml, params, this);
 		return page(count, boundSql, new Page(limit, offset), null);
 	}
@@ -624,19 +624,19 @@ public class SQLModule implements DynamicAttribute<SQLModule, SQLModule>, Dynami
 	/**
 	 * 查询总条目数
 	 */
-	@Comment("查询总条目数")
+	@Comment("Query the total number of entries")
 	public Integer count(RuntimeContext runtimeContext,
-							 @Comment(name = "sqlOrXml", value = "`SQL`语句或`xml`") String sqlOrXml) {
+							 @Comment(name = "sqlOrXml", value = "`SQL` statement or `xml`") String sqlOrXml) {
 		return count(runtimeContext, sqlOrXml, null);
 	}
 
 	/**
 	 * 查询总条目数
 	 */
-	@Comment("查询总条目数，并传入变量信息")
+	@Comment("Query the total number of entries, passing in variable information")
 	public Integer count(RuntimeContext runtimeContext,
-							 @Comment(name = "sqlOrXml", value = "`SQL`语句或`xml`") String sqlOrXml,
-							 @Comment(name = "params", value = "变量信息") Map<String, Object> params) {
+							 @Comment(name = "sqlOrXml", value = "`SQL` statement or `xml`") String sqlOrXml,
+							 @Comment(name = "params", value = "Variable information") Map<String, Object> params) {
 		BoundSql boundSql = new BoundSql(runtimeContext, sqlOrXml, params, this);
 		Dialect dialect = dataSourceNode.getDialect(dialectAdapter);
 		BoundSql countBoundSql = boundSql.copy(dialect.getCountSql(boundSql.getSql()));
@@ -646,19 +646,19 @@ public class SQLModule implements DynamicAttribute<SQLModule, SQLModule>, Dynami
 	/**
 	 * 查询int值
 	 */
-	@Comment("查询int值，适合单行单列int的结果")
+	@Comment("Query for int values, suitable for single-row, single-column int results")
 	public Integer selectInt(RuntimeContext runtimeContext,
-							 @Comment(name = "sqlOrXml", value = "`SQL`语句或`xml`") String sqlOrXml) {
+							 @Comment(name = "sqlOrXml", value = "`SQL` statement or `xml`") String sqlOrXml) {
 		return selectInt(runtimeContext, sqlOrXml, null);
 	}
 
 	/**
 	 * 查询int值
 	 */
-	@Comment("查询int值，并传入变量信息，适合单行单列int的结果")
+	@Comment("Query for an integer value, passing in variable information; suitable for single-row, single-column integer results")
 	public Integer selectInt(RuntimeContext runtimeContext,
-							 @Comment(name = "sqlOrXml", value = "`SQL`语句或`xml`") String sqlOrXml,
-							 @Comment(name = "params", value = "变量信息") Map<String, Object> params) {
+							 @Comment(name = "sqlOrXml", value = "`SQL` statement or `xml`") String sqlOrXml,
+							 @Comment(name = "params", value = "Variable information") Map<String, Object> params) {
 		return selectInt(new BoundSql(runtimeContext, sqlOrXml, params, this));
 	}
 
@@ -671,19 +671,19 @@ public class SQLModule implements DynamicAttribute<SQLModule, SQLModule>, Dynami
 	/**
 	 * 查询Map
 	 */
-	@Comment("查询单条结果，查不到返回null")
+	@Comment("Query for a single result; returns null if not found")
 	public Map<String, Object> selectOne(RuntimeContext runtimeContext,
-										 @Comment(name = "sqlOrXml", value = "`SQL`语句或`xml`") String sqlOrXml) {
+										 @Comment(name = "sqlOrXml", value = "`SQL` statement or `xml`") String sqlOrXml) {
 		return selectOne(runtimeContext, sqlOrXml, null);
 	}
 
 	/**
 	 * 查询Map,并传入变量信息
 	 */
-	@Comment("查询单条结果，并传入变量信息，查不到返回null")
+	@Comment("Query for a single result, passing in variable information; returns null if not found")
 	public Map<String, Object> selectOne(RuntimeContext runtimeContext,
-										 @Comment(name = "sqlOrXml", value = "`SQL`语句或`xml`") String sqlOrXml,
-										 @Comment(name = "params", value = "变量信息") Map<String, Object> params) {
+										 @Comment(name = "sqlOrXml", value = "`SQL` statement or `xml`") String sqlOrXml,
+										 @Comment(name = "params", value = "Variable information") Map<String, Object> params) {
 		return selectOne(new BoundSql(runtimeContext, sqlOrXml, params, this));
 	}
 
@@ -702,26 +702,26 @@ public class SQLModule implements DynamicAttribute<SQLModule, SQLModule>, Dynami
 	/**
 	 * 查询单行单列的值
 	 */
-	@Comment("查询单行单列的值")
+	@Comment("Query for a single row, single column value")
 	public Object selectValue(RuntimeContext runtimeContext,
-							  @Comment(name = "sqlOrXml", value = "`SQL`语句或`xml`") String sqlOrXml) {
+							  @Comment(name = "sqlOrXml", value = "`SQL` statement or `xml`") String sqlOrXml) {
 		return selectValue(runtimeContext, sqlOrXml, null);
 	}
 
 	/**
 	 * 查询单行单列的值，并传入变量信息
 	 */
-	@Comment("查询单行单列的值，并传入变量信息")
+	@Comment("Query for a single row, single column value, passing in variable information")
 	public Object selectValue(RuntimeContext runtimeContext,
-							  @Comment(name = "sqlOrXml", value = "`SQL`语句或`xml`") String sqlOrXml,
-							  @Comment(name = "params", value = "变量信息") Map<String, Object> params) {
+							  @Comment(name = "sqlOrXml", value = "`SQL` statement or `xml`") String sqlOrXml,
+							  @Comment(name = "params", value = "Variable information") Map<String, Object> params) {
 		assertDatasourceNotNull();
 		BoundSql boundSql = new BoundSql(runtimeContext, sqlOrXml, params, this);
 		return boundSql.execute(this.sqlInterceptors, () -> dataSourceNode.getJdbcTemplate().query(boundSql.getSql(), new SingleRowResultSetExtractor<>(Object.class), boundSql.getParameters()));
 	}
 
-	@Comment("指定table，进行单表操作")
-	public NamedTable table(@Comment(name = "tableName", value = "表名") String tableName) {
+	@Comment("Specify a table for single-table operations")
+	public NamedTable table(@Comment(name = "tableName", value = "Table name") String tableName) {
 		return new NamedTable(tableName, this, rowMapColumnMapper, namedTableInterceptors);
 	}
 
@@ -776,9 +776,9 @@ public class SQLModule implements DynamicAttribute<SQLModule, SQLModule>, Dynami
 		}
 	}
 
-    @Comment("调用存储过程")
+    @Comment("Call a stored procedure")
     public Object call(RuntimeContext runtimeContext,
-                                            @Comment(name = "sqlOrXml", value = "`SQL`语句或`xml`") String sqlOrXml) {
+                                            @Comment(name = "sqlOrXml", value = "`SQL` statement or `xml`") String sqlOrXml) {
 		assertDatasourceNotNull();
 		BoundSql boundSql = new BoundSql(runtimeContext, sqlOrXml, Collections.emptyMap(), this);
 		return boundSql.execute(this.sqlInterceptors, () -> this.dataSourceNode.getJdbcTemplate().call(

@@ -206,7 +206,7 @@ public class MagicConfiguration {
 		System.out.println(" |_|  |_| \\__,_| \\__, ||_| \\___|/_/   \\_\\|_|   |___|");
 		System.out.println("                  |___/                        " + Objects.toString(RequestHandler.class.getPackage().getImplementationVersion(), ""));
 		if(!plugins.isEmpty()){
-			System.out.println("集成插件：");
+			System.out.println("Integrated plugin:");
 			plugins.stream().peek(it -> System.out.print("- ")).forEach(System.out::println);
 		}
 	}

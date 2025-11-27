@@ -28,12 +28,12 @@ public class DefaultSqlInterceptor implements SQLInterceptor {
 			return it + "(" + it.getClass().getSimpleName() + ")";
 		}).collect(Collectors.joining(", "));
 		String dataSourceName = boundSql.getSqlModule().getDataSourceName();
-		logger.info("执行SQL：{}", boundSql.getSql().trim());
+		logger.info("Executed SQL: {}", boundSql.getSql().trim());
 		if (dataSourceName != null) {
-			logger.info("数据源：{}", dataSourceName);
+			logger.info("Data source: {}", dataSourceName);
 		}
 		if (parameters.length() > 0) {
-			logger.info("SQL参数：{}", parameters);
+			logger.info("SQL parameters: {}", parameters);
 		}
 	}
 

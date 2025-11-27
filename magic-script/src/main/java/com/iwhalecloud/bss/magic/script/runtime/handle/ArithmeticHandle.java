@@ -29,7 +29,7 @@ public class ArithmeticHandle {
 			MethodHandles.Lookup lookup = MethodHandles.lookup();
 			FALLBACK = lookup.findStatic(ArithmeticHandle.class, "fallback", methodType(Object.class, MethodCallSite.class, Object[].class));
 		} catch (NoSuchMethodException | IllegalAccessException e) {
-			throw new Error("ArithmeticHandle初始化失败", e);
+			throw new Error("ArithmeticHandle initialization failed", e);
 		}
 	}
 
@@ -1533,6 +1533,6 @@ public class ArithmeticHandle {
 	}
 
 	private static Object reject(Object a, Object b, String symbol) throws IllegalArgumentException {
-		throw new IllegalArgumentException(String.format("`%s` 运算不支持 (%s,%s) 类型", symbol, a == null ? "null" : a.getClass().getName(), b == null ? "null" : b.getClass().getName()));
+		throw new IllegalArgumentException(String.format("`%s` operation does not support (%s,%s) type", symbol, a == null ? "null" : a.getClass().getName(), b == null ? "null" : b.getClass().getName()));
 	}
 }

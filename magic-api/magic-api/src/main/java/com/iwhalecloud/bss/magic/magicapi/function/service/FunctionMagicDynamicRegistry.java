@@ -63,12 +63,12 @@ public class FunctionMagicDynamicRegistry extends AbstractMagicDynamicRegistry<F
 
 	@Override
 	protected boolean register(MappingNode<FunctionInfo> mappingNode) {
-		logger.debug("注册函数：{}", mappingNode.getMappingKey());
+		logger.debug("Registered function: {}", mappingNode.getMappingKey());
 		return true;
 	}
 
 	@Override
 	protected void unregister(MappingNode<FunctionInfo> mappingNode) {
-		logger.debug("取消注册函数：{}", mappingNode.getMappingKey());
+		logger.debug("Unregistered function: {}", mappingNode.getMappingKey());
 	}
 }

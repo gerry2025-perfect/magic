@@ -38,7 +38,7 @@ public class Where {
 	}
 
 	@Override
-	@Comment("克隆")
+	@Comment("Clone")
 	public Where clone() {
 		Where where = new Where(this.namedTable, this.needWhere);
 		where.tokens.addAll(this.tokens);
@@ -48,38 +48,38 @@ public class Where {
 		return where;
 	}
 
-	@Comment("过滤`null`的参数")
+	@Comment("Filter null parameters")
 	public Where notNull() {
 		return notNull(true);
 	}
 
-	@Comment("过滤`blank`的参数")
+	@Comment("Filter blank parameters")
 	public Where notBlank() {
 		return notBlank(true);
 	}
 
-	@Comment("是否过滤`null`的参数")
+	@Comment("Whether to filter null parameters")
 	public Where notNull(boolean flag) {
 		this.notNull = flag;
 		return this;
 	}
 
-	@Comment("是否过滤`blank`的参数")
+	@Comment("Whether to filter blank parameters")
 	public Where notBlank(boolean flag) {
 		this.notBlank = flag;
 		return this;
 	}
 
-	@Comment("等于`=`,如：`eq('name', '老王') ---> name = '老王'`")
-	public Where eq(@Comment(name = "column", value = "数据库中的列名") String column,
-					@Comment(name = "value", value = "值") Object value) {
+	@Comment("Equal to =, e.g., `eq('name', 'LaoWang') ---> name = 'LaoWang'`")
+	public Where eq(@Comment(name = "column", value = "Column name in the database") String column,
+					@Comment(name = "value", value = "Value") Object value) {
 		return eq(true, column, value);
 	}
 
-	@Comment("等于`=`,如：`eq('name', '老王') ---> name = '老王'`")
-	public Where eq(@Comment(name = "condition", value = "判断表达式，当为true时拼接条件") boolean condition,
-					@Comment(name = "column", value = "数据库中的列名") String column,
-					@Comment(name = "value", value = "值") Object value) {
+	@Comment("Equal to =, e.g., `eq('name', 'LaoWang') ---> name = 'LaoWang'`")
+	public Where eq(@Comment(name = "condition", value = "Evaluation expression; appends the condition if it is true") boolean condition,
+					@Comment(name = "column", value = "Column name in the database") String column,
+					@Comment(name = "value", value = "Value") Object value) {
 		if (condition && filterNullAndBlank(value)) {
 			tokens.add(namedTable.rowMapColumnMapper.apply(column));
 			if (value == null) {
@@ -93,16 +93,16 @@ public class Where {
 		return this;
 	}
 
-	@Comment("不等于`<>`,如：`ne('name', '老王') ---> name <> '老王'`")
-	public Where ne(@Comment(name = "column", value = "数据库中的列名") String column,
-					@Comment(name = "value", value = "值") Object value) {
+	@Comment("Not equal to `<>`, e.g., `ne('name', 'LaoWang') ---> name <> 'LaoWang'`")
+	public Where ne(@Comment(name = "column", value = "Column name in the database") String column,
+					@Comment(name = "value", value = "Value") Object value) {
 		return ne(true, column, value);
 	}
 
-	@Comment("不等于`<>`,如：`ne('name', '老王') ---> name <> '老王'`")
-	public Where ne(@Comment(name = "condition", value = "判断表达式，当为true时拼接条件") boolean condition,
-					@Comment(name = "column", value = "数据库中的列名") String column,
-					@Comment(name = "value", value = "值") Object value) {
+	@Comment("Not equal to `<>`, e.g., `ne('name', 'LaoWang') ---> name <> 'LaoWang'`")
+	public Where ne(@Comment(name = "condition", value = "Evaluation expression; appends the condition if it is true") boolean condition,
+					@Comment(name = "column", value = "Column name in the database") String column,
+					@Comment(name = "value", value = "Value") Object value) {
 		if (condition && filterNullAndBlank(value)) {
 			append(namedTable.rowMapColumnMapper.apply(column));
 			if (value == null) {
@@ -116,68 +116,68 @@ public class Where {
 		return this;
 	}
 
-	@Comment("小于`<`,如：`lt('age', 18) ---> age < 18")
-	public Where lt(@Comment(name = "column", value = "数据库中的列名") String column,
-					@Comment(name = "value", value = "值") Object value) {
+	@Comment("Less than `<`, e.g., `lt('age', 18) ---> age < 18")
+	public Where lt(@Comment(name = "column", value = "Column name in the database") String column,
+					@Comment(name = "value", value = "Value") Object value) {
 		return lt(true, column, value);
 	}
 
-	@Comment("小于`<`,如：`lt('age', 18) ---> age < 18")
-	public Where lt(@Comment(name = "condition", value = "判断表达式，当为true时拼接条件") boolean condition,
-					@Comment(name = "column", value = "数据库中的列名") String column,
-					@Comment(name = "value", value = "值") Object value) {
+	@Comment("Less than `<`, e.g., `lt('age', 18) ---> age < 18")
+	public Where lt(@Comment(name = "condition", value = "Evaluation expression; appends the condition if it is true") boolean condition,
+					@Comment(name = "column", value = "Column name in the database") String column,
+					@Comment(name = "value", value = "Value") Object value) {
 		return append(condition, column, " < ?", value);
 	}
 
-	@Comment("小于等于`<=`,如：`lte('age', 18) ---> age <= 18")
-	public Where lte(@Comment(name = "column", value = "数据库中的列名") String column,
-					 @Comment(name = "value", value = "值") Object value) {
+	@Comment("Less than or equal to `<=`, e.g., `lte('age', 18) ---> age <= 18")
+	public Where lte(@Comment(name = "column", value = "Column name in the database") String column,
+					 @Comment(name = "value", value = "Value") Object value) {
 		return lte(true, column, value);
 	}
 
-	@Comment("小于等于`<=`,如：`lte('age', 18) ---> age <= 18")
-	public Where lte(@Comment(name = "condition", value = "判断表达式，当为true时拼接条件") boolean condition,
-					 @Comment(name = "column", value = "数据库中的列名") String column,
-					 @Comment(name = "value", value = "值") Object value) {
+	@Comment("Less than or equal to `<=`, e.g., `lte('age', 18) ---> age <= 18")
+	public Where lte(@Comment(name = "condition", value = "Evaluation expression; appends the condition if it is true") boolean condition,
+					 @Comment(name = "column", value = "Column name in the database") String column,
+					 @Comment(name = "value", value = "Value") Object value) {
 		return append(condition, column, " <= ?", value);
 	}
 
-	@Comment("大于`>`,如：`get('age', 18) ---> age > 18")
-	public Where gt(@Comment(name = "column", value = "数据库中的列名") String column,
-					@Comment(name = "value", value = "值") Object value) {
+	@Comment("Greater than `>`, e.g., `get('age', 18) ---> age > 18")
+	public Where gt(@Comment(name = "column", value = "Column name in the database") String column,
+					@Comment(name = "value", value = "Value") Object value) {
 		return gt(true, column, value);
 	}
 
-	@Comment("大于`>`,如：`get('age', 18) ---> age > 18")
-	public Where gt(@Comment(name = "condition", value = "判断表达式，当为true时拼接条件") boolean condition,
-					@Comment(name = "column", value = "数据库中的列名") String column,
-					@Comment(name = "value", value = "值") Object value) {
+	@Comment("Greater than `>`, e.g., `get('age', 18) ---> age > 18")
+	public Where gt(@Comment(name = "condition", value = "Evaluation expression; appends the condition if it is true") boolean condition,
+					@Comment(name = "column", value = "Column name in the database") String column,
+					@Comment(name = "value", value = "Value") Object value) {
 		return append(condition, column, " > ?", value);
 	}
 
-	@Comment("大于等于`>=`,如：`get('age', 18) ---> age >= 18")
-	public Where gte(@Comment(name = "column", value = "数据库中的列名") String column,
-					 @Comment(name = "value", value = "值") Object value) {
+	@Comment("Greater than or equal to `>=`, e.g., `get('age', 18) ---> age >= 18")
+	public Where gte(@Comment(name = "column", value = "Column name in the database") String column,
+					 @Comment(name = "value", value = "Value") Object value) {
 		return gte(true, column, value);
 	}
 
-	@Comment("大于等于`>=`,如：`get('age', 18) ---> age >= 18")
-	public Where gte(@Comment(name = "condition", value = "判断表达式，当为true时拼接条件") boolean condition,
-					 @Comment(name = "column", value = "数据库中的列名") String column,
-					 @Comment(name = "value", value = "值") Object value) {
+	@Comment("Greater than or equal to `>=`, e.g., `get('age', 18) ---> age >= 18")
+	public Where gte(@Comment(name = "condition", value = "Evaluation expression; appends the condition if it is true") boolean condition,
+					 @Comment(name = "column", value = "Column name in the database") String column,
+					 @Comment(name = "value", value = "Value") Object value) {
 		return append(condition, column, " >= ?", value);
 	}
 
-	@Comment("`in`,如：`in('age', [1,2,3]) ---> age in (1,2,3)")
-	public Where in(@Comment(name = "column", value = "数据库中的列名") String column,
-					@Comment(name = "value", value = "值") Object value) {
+	@Comment("`in`, e.g., `in('age', [1,2,3]) ---> age in (1,2,3)")
+	public Where in(@Comment(name = "column", value = "Column name in the database") String column,
+					@Comment(name = "value", value = "Value") Object value) {
 		return in(true, column, value);
 	}
 
-	@Comment("`in`,如：`in('age', [1,2,3]) ---> age in (1,2,3)")
-	public Where in(@Comment(name = "condition", value = "判断表达式，当为true时拼接条件") boolean condition,
-					@Comment(name = "column", value = "数据库中的列名") String column,
-					@Comment(name = "value", value = "值") Object value) {
+	@Comment("`in`, e.g., `in('age', [1,2,3]) ---> age in (1,2,3)")
+	public Where in(@Comment(name = "condition", value = "Evaluation expression; appends the condition if it is true") boolean condition,
+					@Comment(name = "column", value = "Column name in the database") String column,
+					@Comment(name = "value", value = "Value") Object value) {
 		if (condition && value != null) {
 			List<Object> objects = StreamExtension.arrayLikeToList(value);
 			if (objects.size() > 0) {
@@ -192,16 +192,16 @@ public class Where {
 		return this;
 	}
 
-	@Comment("`not in`,如：`notIn('age', [1,2,3]) ---> age not in (1,2,3)")
-	public Where notIn(@Comment(name = "column", value = "数据库中的列名") String column,
-					   @Comment(name = "value", value = "值") Object value) {
+	@Comment("`not in`, e.g., `notIn('age', [1,2,3]) ---> age not in (1,2,3)")
+	public Where notIn(@Comment(name = "column", value = "Column name in the database") String column,
+					   @Comment(name = "value", value = "Value") Object value) {
 		return notIn(true, column, value);
 	}
 
-	@Comment("`not in`,如：`notIn('age', [1,2,3]) ---> age not in (1,2,3)")
-	public Where notIn(@Comment(name = "condition", value = "判断表达式，当为true时拼接条件") boolean condition,
-					   @Comment(name = "column", value = "数据库中的列名") String column,
-					   @Comment(name = "value", value = "值") Object value) {
+	@Comment("`not in`, e.g., `notIn('age', [1,2,3]) ---> age not in (1,2,3)")
+	public Where notIn(@Comment(name = "condition", value = "Evaluation expression; appends the condition if it is true") boolean condition,
+					   @Comment(name = "column", value = "Column name in the database") String column,
+					   @Comment(name = "value", value = "Value") Object value) {
 		if (condition && value != null) {
 			List<Object> objects = StreamExtension.arrayLikeToList(value);
 			if (objects.size() > 0) {
@@ -216,40 +216,40 @@ public class Where {
 		return this;
 	}
 
-	@Comment("`like`,如：`like('name', '%王%') ---> name like '%王%'")
-	public Where like(@Comment(name = "column", value = "数据库中的列名") String column,
-					  @Comment(name = "value", value = "值") Object value) {
+	@Comment("`like`, e.g., `like('name', '%王%') ---> name like '%王%'")
+	public Where like(@Comment(name = "column", value = "Column name in the database") String column,
+					  @Comment(name = "value", value = "Value") Object value) {
 		return like(true, column, value);
 	}
 
-	@Comment("`like`,如：`like('name', '%王%') ---> name like '%王%'")
-	public Where like(@Comment(name = "condition", value = "判断表达式，当为true时拼接条件") boolean condition,
-					  @Comment(name = "column", value = "数据库中的列名") String column,
-					  @Comment(name = "value", value = "值") Object value) {
+	@Comment("`like`, e.g., `like('name', '%王%') ---> name like '%王%'")
+	public Where like(@Comment(name = "condition", value = "Evaluation expression; appends the condition if it is true") boolean condition,
+					  @Comment(name = "column", value = "Column name in the database") String column,
+					  @Comment(name = "value", value = "Value") Object value) {
 		return append(condition, column, "like ?", value);
 	}
 
-	@Comment("`not like`,如：`notLike('name', '%王%') ---> name not like '%王%'")
-	public Where notLike(@Comment(name = "column", value = "数据库中的列名") String column,
-						 @Comment(name = "value", value = "值") Object value) {
+	@Comment("`not like`, e.g., `notLike('name', '%王%') ---> name not like '%王%'")
+	public Where notLike(@Comment(name = "column", value = "Column name in the database") String column,
+						 @Comment(name = "value", value = "Value") Object value) {
 		return notLike(true, column, value);
 	}
 
-	@Comment("`not like` ,如：`notLike('name', '%王%') ---> name not like '%王%'")
-	public Where notLike(@Comment(name = "condition", value = "判断表达式，当为true时拼接条件") boolean condition,
-						 @Comment(name = "column", value = "数据库中的列名") String column,
-						 @Comment(name = "value", value = "值") Object value) {
+	@Comment("`not like` , e.g., `notLike('name', '%王%') ---> name not like '%王%'")
+	public Where notLike(@Comment(name = "condition", value = "Evaluation expression; appends the condition if it is true") boolean condition,
+						 @Comment(name = "column", value = "Column name in the database") String column,
+						 @Comment(name = "value", value = "Value") Object value) {
 		return append(condition, column, "not like ?", value);
 	}
 
-	@Comment("`is null`,如：`isNull('name') ---> name is null")
-	public Where isNull(@Comment(name = "column", value = "数据库中的列名") String column) {
+	@Comment("`is null`, e.g., `isNull('name') ---> name is null")
+	public Where isNull(@Comment(name = "column", value = "Column name in the database") String column) {
 		return isNull(true, column);
 	}
 
-	@Comment("`is null`,如：`isNull('name') ---> name is null")
-	public Where isNull(@Comment(name = "condition", value = "判断表达式，当为true时拼接条件") boolean condition,
-						@Comment(name = "column", value = "数据库中的列名") String column) {
+	@Comment("`is null`, e.g., `isNull('name') ---> name is null")
+	public Where isNull(@Comment(name = "condition", value = "Evaluation expression; appends the condition if it is true") boolean condition,
+						@Comment(name = "column", value = "Column name in the database") String column) {
 		if (condition) {
 			append(namedTable.rowMapColumnMapper.apply(column));
 			append("is null");
@@ -258,14 +258,14 @@ public class Where {
 		return this;
 	}
 
-	@Comment("`is not null`,如：`isNotNull('name') ---> name is not null")
-	public Where isNotNull(@Comment(name = "column", value = "数据库中的列名") String column) {
+	@Comment("`is not null`, e.g., `isNotNull('name') ---> name is not null")
+	public Where isNotNull(@Comment(name = "column", value = "Column name in the database") String column) {
 		return isNotNull(true, column);
 	}
 
-	@Comment("`is not null`,如：`isNotNull('name') ---> name is not null")
-	public Where isNotNull(@Comment(name = "condition", value = "判断表达式，当为true时拼接条件") boolean condition,
-						   @Comment(name = "column", value = "数据库中的列名") String column) {
+	@Comment("`is not null`, e.g., `isNotNull('name') ---> name is not null")
+	public Where isNotNull(@Comment(name = "condition", value = "Evaluation expression; appends the condition if it is true") boolean condition,
+						   @Comment(name = "column", value = "Column name in the database") String column) {
 		if (condition) {
 			append(namedTable.rowMapColumnMapper.apply(column));
 			append("is not null");
@@ -274,26 +274,26 @@ public class Where {
 		return this;
 	}
 
-	@Comment("拼接`or`")
+	@Comment("Concatenation of `or`")
 	public Where or() {
 		appendOr();
 		return this;
 	}
 
-	@Comment("拼接`and`")
+	@Comment("Concatenation of `and`")
 	public Where and() {
 		appendAnd();
 		return this;
 	}
 
-	@Comment("`and`嵌套，如and(it => it.eq('name','李白').ne('status','正常') --> and (name = '李白' and status <> '正常')")
-	public Where and(@Comment(name = "function", value = "回调函数") Function<Object[], Where> function) {
+	@Comment("Nested `and`, e.g., and(it => it.eq('name','李白').ne('status','正常') --> and (name = '李白' and status <> '正常')")
+	public Where and(@Comment(name = "function", value = "Callback function") Function<Object[], Where> function) {
 		return and(true, function);
 	}
 
-	@Comment("`and`嵌套，如and(it => it.eq('name','李白').ne('status','正常') --> and (name = '李白' and status <> '正常')")
-	public Where and(@Comment(name = "condition", value = "判断表达式，当为true时拼接条件") boolean condition,
-					 @Comment(name = "function", value = "回调函数") Function<Object[], Where> function) {
+	@Comment("Nested `and`, e.g., and(it => it.eq('name','李白').ne('status','正常') --> and (name = '李白' and status <> '正常')")
+	public Where and(@Comment(name = "condition", value = "Evaluation expression; appends the condition if it is true") boolean condition,
+					 @Comment(name = "function", value = "Callback function") Function<Object[], Where> function) {
 		if (condition) {
 			Where expr = function.apply(new Object[]{new Where(this.namedTable, false)});
 			this.params.addAll(expr.params);
@@ -305,115 +305,115 @@ public class Where {
 		return this;
 	}
 
-	@Comment("拼接`order by xxx asc/desc`")
-	public Where orderBy(@Comment(name = "column", value = "要排序的列") String column,
-						 @Comment(name = "sort", value = "`asc`或`desc`") String sort) {
+	@Comment("Concatenate `order by xxx asc/desc`")
+	public Where orderBy(@Comment(name = "column", value = "Columns to sort") String column,
+						 @Comment(name = "sort", value = "`asc` or `desc`") String sort) {
 		this.namedTable.orderBy(column, sort);
 		return this;
 	}
 
-	@Comment("拼接`order by xxx asc`")
-	public Where orderBy(@Comment(name = "column", value = "要排序的列") String column) {
+	@Comment("Concatenate `order by xxx asc`")
+	public Where orderBy(@Comment(name = "column", value = "Columns to sort") String column) {
 		return orderBy(column, "asc");
 	}
 
-	@Comment("拼接`order by xxx desc`")
-	public Where orderByDesc(@Comment(name = "column", value = "要排序的列") String column) {
+	@Comment("Concatenate `order by xxx desc`")
+	public Where orderByDesc(@Comment(name = "column", value = "Columns to sort") String column) {
 		return orderBy(column, "desc");
 	}
 
-	@Comment("拼接`group by`")
-	public Where groupBy(@Comment("要分组的列") String... columns) {
+	@Comment("Concatenate `group by`")
+	public Where groupBy(@Comment("Columns to group") String... columns) {
 		this.namedTable.groupBy(columns);
 		return this;
 	}
 
-	@Comment("保存到表中，当主键有值时则修改，否则插入")
+	@Comment("Save to table, modify if primary key has a value, otherwise insert")
 	public Object save(RuntimeContext runtimeContext) {
 		return namedTable.save(runtimeContext);
 	}
 
-	@Comment("保存到表中，当主键有值时则修改，否则插入")
+	@Comment("Save to table, modify if primary key has a value, otherwise insert")
 	public Object save(RuntimeContext runtimeContext,
-					   @Comment(name = "beforeQuery", value = "是否根据id查询有没有数据") boolean beforeQuery) {
+					   @Comment(name = "beforeQuery", value = "Whether to query for data by id") boolean beforeQuery) {
 		return namedTable.save(runtimeContext, beforeQuery);
 	}
 
-	@Comment("保存到表中，当主键有值时则修改，否则插入")
+	@Comment("Save to table, modify if primary key has a value, otherwise insert")
 	public Object save(RuntimeContext runtimeContext,
-					   @Comment(name = "data", value = "各项列和值") Map<String, Object> data) {
+					   @Comment(name = "data", value = "Sum of each column") Map<String, Object> data) {
 		return namedTable.save(runtimeContext, data);
 	}
 
-	@Comment("保存到表中，当主键有值时则修改，否则插入")
+	@Comment("Save to table, modify if primary key has a value, otherwise insert")
 	public Object save(RuntimeContext runtimeContext,
-					   @Comment(name = "data", value = "各项列和值") Map<String, Object> data,
-					   @Comment(name = "beforeQuery", value = "是否根据id查询有没有数据") boolean beforeQuery) {
+					   @Comment(name = "data", value = "Sum of each column") Map<String, Object> data,
+					   @Comment(name = "beforeQuery", value = "Whether to query for data by id") boolean beforeQuery) {
 		return namedTable.save(runtimeContext, data, beforeQuery);
 	}
 
-	@Comment("执行插入语句，返回主键")
+	@Comment("Execute INSERT statement, return primary key")
 	public Object insert(RuntimeContext runtimeContext) {
 		return namedTable.insert(runtimeContext);
 	}
 
-	@Comment("执行插入语句，返回主键")
+	@Comment("Execute INSERT statement, return primary key")
 	public Object insert(RuntimeContext runtimeContext,
-						 @Comment(name = "data", value = "各项列和值") Map<String, Object> data) {
+						 @Comment(name = "data", value = "Sum of each column") Map<String, Object> data) {
 		return namedTable.insert(runtimeContext, data);
 	}
 
-	@Comment("执行update语句")
+	@Comment("Execute an UPDATE statement")
 	public int update(RuntimeContext runtimeContext) {
 		return namedTable.update(runtimeContext);
 	}
 
-	@Comment("执行delete语句")
+	@Comment("Execute DELETE statement")
 	public int delete(RuntimeContext runtimeContext) {
 		return namedTable.delete(runtimeContext);
 	}
 
-	@Comment("执行update语句")
+	@Comment("Execute an UPDATE statement")
 	public int update(RuntimeContext runtimeContext,
-					  @Comment(name = "data", value = "各项列和值") Map<String, Object> data) {
+					  @Comment(name = "data", value = "Sum of each column") Map<String, Object> data) {
 		return namedTable.update(runtimeContext, data);
 	}
 
-	@Comment("执行update语句")
+	@Comment("Execute an UPDATE statement")
 	public int update(RuntimeContext runtimeContext,
-					  @Comment(name = "data", value = "各项列和值") Map<String, Object> data,
-					  @Comment(name = "isUpdateBlank", value = "是否更新空值字段") boolean isUpdateBlank) {
+					  @Comment(name = "data", value = "Sum of each column") Map<String, Object> data,
+					  @Comment(name = "isUpdateBlank", value = "Update null fields?") boolean isUpdateBlank) {
 		return namedTable.update(runtimeContext, data, isUpdateBlank);
 	}
 
-	@Comment("执行分页查询")
+	@Comment("Execute a paginated query")
 	public Object page(RuntimeContext runtimeContext) {
 		return namedTable.page(runtimeContext);
 	}
 
-	@Comment("执行分页查询，分页条件手动传入")
+	@Comment("Execute paginated query, pagination conditions are manually passed")
 	public Object page(RuntimeContext runtimeContext,
-					   @Comment(name = "limit", value = "限制条数") long limit,
-					   @Comment(name = "offset", value = "跳过条数") long offset) {
+					   @Comment(name = "limit", value = "Limit the number of rows") long limit,
+					   @Comment(name = "offset", value = "Skip the number of rows") long offset) {
 		return namedTable.page(runtimeContext, limit, offset);
 	}
 
-	@Comment("执行select查询")
+	@Comment("Execute SELECT query")
 	public List<Map<String, Object>> select(RuntimeContext runtimeContext) {
 		return namedTable.select(runtimeContext);
 	}
 
-	@Comment("执行selectOne查询")
+	@Comment("Execute SELECT One query")
 	public Map<String, Object> selectOne(RuntimeContext runtimeContext) {
 		return namedTable.selectOne(runtimeContext);
 	}
 
-	@Comment("查询条数")
+	@Comment("Number of rows to query")
 	public int count(RuntimeContext runtimeContext) {
 		return namedTable.count(runtimeContext);
 	}
 
-	@Comment("查询是否存在")
+	@Comment("Check if exists")
 	public boolean exists(RuntimeContext runtimeContext) {
 		return namedTable.exists(runtimeContext);
 	}

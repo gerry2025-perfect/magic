@@ -44,7 +44,7 @@ public class LinqSelect extends Expression {
 		this.limit = limit;
 		this.offset = offset;
 		if(from.getVarIndex() == null){
-			MagicScriptError.error("LINQ中，别名是必须的", from.getSpan());
+			MagicScriptError.error("Aliases are required in LINQ", from.getSpan());
 		}
 	}
 

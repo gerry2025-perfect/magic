@@ -43,7 +43,7 @@ public interface ResultProvider {
 				se = (MagicScriptException) parent;
 			}
 		} while ((parent = parent.getCause()) != null);
-		logger.error("调用接口出错", root);
+		logger.error("Error calling interface", root);
 		if (se != null) {
 			return buildException(requestEntity, se);
 		}
@@ -86,7 +86,7 @@ public interface ResultProvider {
 	 * @since 1.2.2
 	 */
 	default Object buildException(RequestEntity requestEntity, Throwable throwable) {
-		return buildResult(requestEntity, RESPONSE_CODE_EXCEPTION, "系统内部出现错误");
+		return buildResult(requestEntity, RESPONSE_CODE_EXCEPTION, "Internal system error");
 	}
 
 	/**

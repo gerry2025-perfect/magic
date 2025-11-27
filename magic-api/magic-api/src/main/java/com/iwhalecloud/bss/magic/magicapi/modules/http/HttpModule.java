@@ -42,14 +42,14 @@ public class HttpModule {
 		this.url = url;
 	}
 
-	@Comment("创建连接")
-	public HttpModule connect(@Comment(name = "url", value = "目标URL") String url) {
+	@Comment("Create connection")
+	public HttpModule connect(@Comment(name = "url", value = "Target URL") String url) {
 		return new HttpModule(template, url);
 	}
 
-	@Comment("设置URL参数")
-	public HttpModule param(@Comment(name = "key", value = "参数名") String key,
-							@Comment(name = "values", value = "参数值") Object... values) {
+	@Comment("Set URL parameters")
+	public HttpModule param(@Comment(name = "key", value = "Parameter name") String key,
+							@Comment(name = "values", value = "Parameter value") Object... values) {
 		if (values != null) {
 			for (Object value : values) {
 				this.params.add(key, value);
@@ -58,15 +58,15 @@ public class HttpModule {
 		return this;
 	}
 
-	@Comment("批量设置URL参数")
-	public HttpModule param(@Comment(name = "values", value = "参数值") Map<String, Object> values) {
+	@Comment("Batch set URL parameters")
+	public HttpModule param(@Comment(name = "values", value = "Parameter value") Map<String, Object> values) {
 		values.forEach((key, value) -> param(key, Objects.toString(value, "")));
 		return this;
 	}
 
-	@Comment("设置form参数")
-	public HttpModule data(@Comment(name = "key", value = "参数名") String key,
-						   @Comment(name = "values", value = "参数值") Object... values) {
+	@Comment("Set form parameters")
+	public HttpModule data(@Comment(name = "key", value = "Parameter name") String key,
+						   @Comment(name = "values", value = "Parameter value") Object... values) {
 		if (values != null) {
 			for (Object value : values) {
 				this.data.add(key, value);
@@ -75,21 +75,21 @@ public class HttpModule {
 		return this;
 	}
 
-	@Comment("批量设置form参数")
-	public HttpModule data(@Comment(name = "values", value = "参数值") Map<String, Object> values) {
+	@Comment("Batch set form parameters")
+	public HttpModule data(@Comment(name = "values", value = "Parameter value") Map<String, Object> values) {
 		values.forEach((key, value) -> data(key, Objects.toString(value, "")));
 		return this;
 	}
 
-	@Comment("设置header")
-	public HttpModule header(@Comment(name = "key", value = "header名") String key,
-							 @Comment(name = "value", value = "header值") String value) {
+	@Comment("Set header")
+	public HttpModule header(@Comment(name = "key", value = "Header name") String key,
+							 @Comment(name = "value", value = "Header value") String value) {
 		httpHeaders.add(key, value);
 		return this;
 	}
 
-	@Comment("批量设置header")
-	public HttpModule header(@Comment(name = "values", value = "header值") Map<String, Object> values) {
+	@Comment("Batch set header")
+	public HttpModule header(@Comment(name = "values", value = "Header value") Map<String, Object> values) {
 		values.entrySet()
 				.stream()
 				.filter(it -> it.getValue() != null)
@@ -97,97 +97,97 @@ public class HttpModule {
 		return this;
 	}
 
-	@Comment("设置请求方法，默认GET")
-	public HttpModule method(@Comment(name = "method", value = "请求方法") HttpMethod method) {
+	@Comment("Set request method, default GET")
+	public HttpModule method(@Comment(name = "method", value = "Request method") HttpMethod method) {
 		this.method = method;
 		return this;
 	}
 
-	@Comment("设置`RequestBody`")
+	@Comment("Set `RequestBody`")
 	public HttpModule body(@Comment(name = "requestBody", value = "`RequestBody`") Object requestBody) {
 		this.requestBody = requestBody;
 		this.contentType(MediaType.APPLICATION_JSON);
 		return this;
 	}
 
-	@Comment("自定义`HttpEntity`")
+	@Comment("Custom `HttpEntity`")
 	public HttpModule entity(@Comment(name = "entity", value = "`HttpEntity`") HttpEntity<Object> entity) {
 		this.entity = entity;
 		return this;
 	}
 
-	@Comment("设置`ContentType`")
-	public HttpModule contentType(@Comment(name = "contentType", value = "Content-Type值") String contentType) {
+	@Comment("Set `ContentType`")
+	public HttpModule contentType(@Comment(name = "contentType", value = "Content-Type value") String contentType) {
 		return contentType(MediaType.parseMediaType(contentType));
 	}
 
-	@Comment("设置`ContentType`")
-	public HttpModule contentType(@Comment(name = "mediaType", value = "Content-Type值") MediaType mediaType) {
+	@Comment("Set `ContentType`")
+	public HttpModule contentType(@Comment(name = "mediaType", value = "Content-Type value") MediaType mediaType) {
 		this.httpHeaders.setContentType(mediaType);
 		return this;
 	}
 
-	@Comment("设置返回值为`byte[]`")
+	@Comment("Sets the return value to `byte[]`")
 	public HttpModule expectBytes() {
 		this.responseType = byte[].class;
 		return this;
 	}
 
-	@Comment("设置返回值为`String`")
+	@Comment("Sets the return value to `String`")
 	public HttpModule expectString() {
 		this.responseType = String.class;
 		return this;
 	}
 
-	@Comment("发送`POST`请求")
+	@Comment("Sends a `POST` request")
 	public ResponseEntity<?> post() {
 		this.method(HttpMethod.POST);
 		return this.execute();
 	}
 
-	@Comment("发送`GET`请求")
+	@Comment("Sends a `GET` request")
 	public ResponseEntity<?> get() {
 		this.method(HttpMethod.GET);
 		return this.execute();
 	}
 
-	@Comment("发送`PUT`请求")
+	@Comment("Sends a `PUT` request")
 	public ResponseEntity<?> put() {
 		this.method(HttpMethod.PUT);
 		return this.execute();
 	}
 
-	@Comment("发送`DELETE`请求")
+	@Comment("Sends a `DELETE` request")
 	public ResponseEntity<?> delete() {
 		this.method(HttpMethod.DELETE);
 		return this.execute();
 	}
 
-	@Comment("发送`HEAD`请求")
+	@Comment("Sends a `HEAD` request")
 	public ResponseEntity<?> head() {
 		this.method(HttpMethod.HEAD);
 		return this.execute();
 	}
 
-	@Comment("发送`OPTIONS`请求")
+	@Comment("Sends an `OPTIONS` request")
 	public ResponseEntity<?> options() {
 		this.method(HttpMethod.OPTIONS);
 		return this.execute();
 	}
 
-	@Comment("发送`TRACE`请求")
+	@Comment("Sends a `TRACE` request")
 	public ResponseEntity<?> trace() {
 		this.method(HttpMethod.TRACE);
 		return this.execute();
 	}
 
-	@Comment("发送`PATCH`请求")
+	@Comment("Sends a `PATCH` request")
 	public ResponseEntity<?> patch() {
 		this.method(HttpMethod.PATCH);
 		return this.execute();
 	}
 
-	@Comment("执行请求")
+	@Comment("Execute Request")
 	public ResponseEntity<?> execute() {
 		if (!this.params.isEmpty()) {
 			String queryString = this.params.entrySet().stream()

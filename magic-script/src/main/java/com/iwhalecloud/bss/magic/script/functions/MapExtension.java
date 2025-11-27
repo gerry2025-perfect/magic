@@ -13,9 +13,9 @@ import java.util.function.Function;
 public class MapExtension {
 
 
-	@Comment("Map类型对象转JavaBean")
+	@Comment("Convert a Map object to a JavaBean")
 	public static Object asBean(Map<?, ?> source,
-								@Comment(name = "target", value = "目标Class") Class<?> target) {
+								@Comment(name = "target", value = "Target Class") Class<?> target) {
 		Object result = null;
 		try {
 			result = target.newInstance();
@@ -33,9 +33,9 @@ public class MapExtension {
 		return result;
 	}
 
-	@Comment("map转List")
+	@Comment("Map to List")
 	public static List<?> asList(Map<?, ?> source,
-								 @Comment(name = "mapping", value = "映射函数，如:(key,value,source)=>{'k' : key,'v' : value}") Function<Object[], Object> mapping) {
+								 @Comment(name = "mapping", value = "Mapping function, such as: (key, value, source) => {'k' : key, 'v' : value}") Function<Object[], Object> mapping) {
 		List<Object> result = new ArrayList<>();
 		source.forEach((key, value) -> result.add(mapping.apply(new Object[]{key, value, source})));
 		return result;
@@ -60,14 +60,14 @@ public class MapExtension {
 		}
 	}
 
-	@Comment(value = "循环Map", origin = true)
+	@Comment(value = "Looping through a Map", origin = true)
 	public Map<?, ?> each(Map<?, ?> source,
-						  @Comment(name = "function", value = "循环函数，如:(key,value,source)=>map['xx'] = key;") Function<Object[], Object> function) {
+						  @Comment(name = "function", value = "Loop function, such as: (key, value, source)=>map['xx'] = key;") Function<Object[], Object> function) {
 		source.forEach((key, value) -> function.apply(new Object[]{key, value, source}));
 		return source;
 	}
 
-	@Comment("合并Map")
+	@Comment("Merge Maps")
 	public Map<?, ?> merge(Map<Object, Object> source,
 						   @Comment(name = "key", value = "key") Object key,
 						   @Comment(name = "value", value = "value") Object value) {
@@ -75,9 +75,9 @@ public class MapExtension {
 		return source;
 	}
 
-	@Comment("合并Map")
+	@Comment("Merge Maps")
 	public Map<?, ?> merge(Map<Object, Object> source,
-						   @Comment("另一个map或多个Map") Map<Object, Object>... targets) {
+						   @Comment("Another Map or multiple Maps") Map<Object, Object>... targets) {
 		if (targets != null) {
 			for (int i = 0, len = targets.length; i < len; i++) {
 				source.putAll(targets[i]);
@@ -86,10 +86,10 @@ public class MapExtension {
 		return source;
 	}
 
-	@Comment("将Map转为String")
+	@Comment("Convert Map to String")
 	public String asString(Map<?, ?> source,
-						   @Comment(name = "separator", value = "key与key之间的连接符如&") String separator,
-						   @Comment(name = "join", value = "key与value之间的连接符，如=") String join) {
+						   @Comment(name = "separator", value = "Concatenation operator between keys, such as &") String separator,
+						   @Comment(name = "join", value = "Concatenation operator between keys and values, such as =") String join) {
 		Set<? extends Map.Entry<?, ?>> entries = source.entrySet();
 		StringBuilder builder = new StringBuilder();
 		for (Map.Entry<?, ?> entry : entries) {
@@ -104,10 +104,10 @@ public class MapExtension {
 		return builder.toString();
 	}
 
-	@Comment("将Map转为String")
+	@Comment("Convert Map to String")
 	public String asString(Map<?, ?> source,
-						   @Comment(name = "separator", value = "key与value之间的连接符，如=") String separator,
-						   @Comment(name = "mapping", value = "转换方法，如：(key,value)=>key + '=' + value || ''") Function<Object[], Object> mapping) {
+						   @Comment(name = "separator", value = "Concatenation operator between keys and values, such as =") String separator,
+						   @Comment(name = "mapping", value = "Conversion method, such as: (key, value)=>key + '=' + value || ''") Function<Object[], Object> mapping) {
 		Set<? extends Map.Entry<?, ?>> entries = source.entrySet();
 		StringBuilder builder = new StringBuilder();
 		for (Map.Entry<?, ?> entry : entries) {
@@ -120,7 +120,7 @@ public class MapExtension {
 		return builder.toString();
 	}
 
-	@Comment("对Map进行排序")
+	@Comment("Sorting Maps")
 	public Map<?, ?> sort(Map<?, ?> source) {
 		Set<?> keys = source.keySet();
 		Map<Object, Object> sortedMap = new LinkedHashMap<>();
@@ -136,9 +136,9 @@ public class MapExtension {
 		return sortedMap;
 	}
 
-	@Comment("对Map进行排序")
+	@Comment("Sorting Maps")
 	public Map<?, ?> sort(Map<?, ?> source,
-						  @Comment(name = "comparator", value = "比较器，如:(k1,k2,v1,v2)=>k1.compareTo(k2);") Function<Object[], Object> comparator) {
+						  @Comment(name = "comparator", value = "Comparator, e.g., (k1,k2,v1,v2)=>k1.compareTo(k2);") Function<Object[], Object> comparator) {
 		Set<?> keys = source.keySet();
 		Map<Object, Object> sortedMap = new LinkedHashMap<>();
 		keys.stream().sorted((Comparator<Object>) (o1, o2) -> ObjectConvertExtension.asInt(comparator.apply(new Object[]{o1, o2, source.get(o1), source.get(o2)}), 0)).forEach(key -> {
@@ -147,23 +147,23 @@ public class MapExtension {
 		return sortedMap;
 	}
 
-	@Comment("对Map的key进行替换")
+	@Comment("Replace keys in a Map")
 	public Map<String, Object> replaceKey(Map<String, Object> source,
-										  @Comment(name = "target", value = "查找字符串") String target,
-										  @Comment(name = "replacement", value = "替换字符串") String replacement) {
+										  @Comment(name = "target", value = "Search for strings") String target,
+										  @Comment(name = "replacement", value = "Replace strings") String replacement) {
 		return replaceKey(source, src -> src[0].toString().replace(target, replacement));
 	}
 
-	@Comment("对Map的key进行正则替换")
+	@Comment("Perform regular expression replacement on keys in a Map")
 	public Map<String, Object> replaceAllKey(Map<String, Object> source,
-											 @Comment(name = "pattern", value = "正则表达式") String regx,
-											 @Comment(name = "replacement", value = "替换字符串") String replacement) {
+											 @Comment(name = "pattern", value = "Regular expression") String regx,
+											 @Comment(name = "replacement", value = "Replace strings") String replacement) {
 		return replaceKey(source, src -> src[0].toString().replaceAll(regx, replacement));
 	}
 
-	@Comment("对Map的key进行替换")
+	@Comment("Replace keys in a Map")
 	public Map<String, Object> replaceKey(Map<String, Object> source,
-										  @Comment(name = "function", value = "回调函数") Function<Object[], String> functional) {
+										  @Comment(name = "function", value = "Callback function") Function<Object[], String> functional) {
 		Map<String, Object> result = new LinkedHashMap<>();
 		Set<Map.Entry<String, Object>> entries = source.entrySet();
 		for (Map.Entry<String, Object> entry : entries) {

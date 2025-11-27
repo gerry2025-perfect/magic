@@ -34,8 +34,8 @@ public class RequestModule {
 	 *
 	 * @param name 参数名
 	 */
-	@Comment("获取文件")
-	public static MultipartFile getFile(@Comment(name = "name", value = "参数名") String name) {
+	@Comment("Retrieve File")
+	public static MultipartFile getFile(@Comment(name = "name", value = "Parameter name") String name) {
 		MultipartRequest request = getMultipartHttpServletRequest();
 		if (request == null) {
 			return null;
@@ -49,8 +49,8 @@ public class RequestModule {
 	 *
 	 * @param name 参数名
 	 */
-	@Comment("获取多个文件")
-	public static List<MultipartFile> getFiles(@Comment(name = "name", value = "参数名") String name) {
+	@Comment("Retrieve Multiple Files")
+	public static List<MultipartFile> getFiles(@Comment(name = "name", value = "Parameter name") String name) {
 		MultipartRequest request = getMultipartHttpServletRequest();
 		if (request == null) {
 			return null;
@@ -61,7 +61,7 @@ public class RequestModule {
 	/**
 	 * 获取原生HttpServletRequest对象
 	 */
-	@Comment("获取原生HttpServletRequest对象")
+	@Comment("Retrieve Native HttpServletRequest Object")
 	public static MagicHttpServletRequest get() {
 		return magicRequestContextHolder.getRequest();
 	}
@@ -79,8 +79,8 @@ public class RequestModule {
 	 *
 	 * @param name 参数名
 	 */
-	@Comment("根据请求参数名获取值")
-	public List<String> getValues(@Comment(name = "name", value = "参数名") String name) {
+	@Comment("Retrieve Value Based on Request Parameter Name")
+	public List<String> getValues(@Comment(name = "name", value = "Parameter name") String name) {
 		MagicHttpServletRequest request = get();
 		if (request != null) {
 			String[] values = request.getParameterValues(name);
@@ -94,8 +94,8 @@ public class RequestModule {
 	 *
 	 * @param name 参数名
 	 */
-	@Comment("根据header名获取值")
-	public List<String> getHeaders(@Comment(name = "name", value = "header名") String name) {
+	@Comment("Retrieve Value Based on Header Name")
+	public List<String> getHeaders(@Comment(name = "name", value = "Header name") String name) {
 		MagicHttpServletRequest request = get();
 		if (request != null) {
 			Enumeration<String> headers = request.getHeaders(name);
@@ -104,7 +104,7 @@ public class RequestModule {
 		return null;
 	}
 
-	@Comment("获取客户端IP")
+	@Comment("Retrieve Client IP")
 	public String getClientIP(String... otherHeaderNames) {
 		MagicHttpServletRequest request = get();
 		if (request == null) {

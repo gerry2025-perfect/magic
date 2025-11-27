@@ -10,52 +10,52 @@ public enum Options {
 	/**
 	 * 包装请求参数到一个变量中
 	 */
-	WRAP_REQUEST_PARAMETERS("包装请求参数到一个变量中", "wrap_request_parameter"),
+	WRAP_REQUEST_PARAMETERS("Wrap request parameters into a variable", "wrap_request_parameter"),
 
 	/**
 	 * 配置默认数据源的key
 	 */
-	DEFAULT_DATA_SOURCE("配置默认数据源的key", "default_data_source"),
+	DEFAULT_DATA_SOURCE("Configures the key for the default data source", "default_data_source"),
 
 	/**
 	 * 允许拥有该权限的访问
 	 */
-	PERMISSION("允许拥有该权限的访问", "permission"),
+	PERMISSION("Allows access for users with this permission", "permission"),
 
 	/**
 	 * 允许拥有该权限的查看
 	 */
-	PERMISSION_VISIBLE("允许拥有该权限的查看", "permission_visible"),
+	PERMISSION_VISIBLE("Allows viewing for users with this permission", "permission_visible"),
 
 	/**
 	 * 允许拥有该角色的访问
 	 */
-	ROLE("允许拥有该角色的访问", "role"),
+	ROLE("Allows access for users with this role", "role"),
 
 	/**
 	 * 允许拥有该角色的可查看
 	 */
-	ROLE_VISIBLE("允许拥有该角色的查看", "role_visible"),
+	ROLE_VISIBLE("Allows viewing for users with this role", "role_visible"),
 
 	/**
 	 * 该接口需要登录才允许访问
 	 */
-	REQUIRE_LOGIN("该接口需要登录才允许访问", "require_login", "true"),
+	REQUIRE_LOGIN("This API requires login to access", "require_login", "true"),
 
 	/**
 	 * 该接口不需要登录也可访问
 	 */
-	ANONYMOUS("该接口不需要登录也可访问", "anonymous", "true"),
+	ANONYMOUS("This API can be accessed without login", "anonymous", "true"),
 
 	/**
 	 * 不接收未经定义的参数
 	 */
-	DISABLED_UNKNOWN_PARAMETER("不接收未经定义的参数", "disabled_unknown_parameter", "true"),
+	DISABLED_UNKNOWN_PARAMETER("Does not accept undefined parameters", "disabled_unknown_parameter", "true"),
 
 	/**
 	 * 禁止验证requestBody
 	 */
-	DISABLED_VALIDATE_REQUEST_BODY("禁止验证RequestBody", "disabled_validate_request_body", "false");
+	DISABLED_VALIDATE_REQUEST_BODY("Disables RequestBody validation", "disabled_validate_request_body", "false");
 
 	private final String name;
 	private final String value;

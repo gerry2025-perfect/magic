@@ -25,7 +25,7 @@ public interface MagicExceptionHandler {
 	@ExceptionHandler(Exception.class)
 	@ResponseBody
 	default Object exceptionHandler(Exception e) {
-		logger.error("magic-api调用接口出错", e);
+		logger.error("Error calling the magic-api interface", e);
 		return new JsonBean<>(-1, e.getMessage());
 	}
 

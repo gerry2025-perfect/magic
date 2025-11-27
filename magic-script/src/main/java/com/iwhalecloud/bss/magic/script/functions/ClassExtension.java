@@ -16,7 +16,7 @@ public class ClassExtension {
 	}
 
 	public static Object newInstance(Class<?> clazz, RuntimeContext runtimeContext,
-									 @Comment(name = "values", value = "构造参数") Object... values) throws Throwable {
+									 @Comment(name = "values", value = "Constructor parameters") Object... values) throws Throwable {
 		if (values == null || values.length == 0) {
 			return newInstance(clazz);
 		}
@@ -34,9 +34,9 @@ public class ClassExtension {
 	}
 
 	public static Object newInstance(Object target, RuntimeContext runtimeContext,
-									 @Comment(name = "values", value = "构造参数") Object... values) throws Throwable {
+									 @Comment(name = "values", value = "Constructor parameters") Object... values) throws Throwable {
 		if (target == null) {
-			throw new NullPointerException("NULL不能被new");
+			throw new NullPointerException("NULL cannot be created with new");
 		}
 		if (target instanceof Class) {
 			return newInstance((Class<?>) target, runtimeContext, values);
@@ -47,21 +47,21 @@ public class ClassExtension {
 	/**
 	 * @since 1.6.2
 	 */
-	@Comment("获取Java类全名")
+	@Comment("Get the fully qualified Java class name")
 	public static String getName(Class<?> clazz) {
 		return clazz.getName();
 	}
 	/**
 	 * @since 1.6.2
 	 */
-	@Comment("获取Java类名")
+	@Comment("Get Java class name")
 	public static String getSimpleName(Class<?> clazz) {
 		return clazz.getSimpleName();
 	}
 	/**
 	 * @since 1.6.2
 	 */
-	@Comment("获取Java类规范全名")
+	@Comment("Get Java class fully qualified name")
 	public static String getCanonicalName(Class<?> clazz) {
 		return clazz.getCanonicalName();
 	}

@@ -64,7 +64,7 @@ public class TokenStream {
 	 **/
 	public Token consume() {
 		if (!hasMore()) {
-			throw new RuntimeException("流已经遍历完毕");
+			throw new RuntimeException("Stream has been traversed");
 		}
 		return tokens.get(index++);
 	}
@@ -74,7 +74,7 @@ public class TokenStream {
 	 */
 	public Token next() {
 		if (!hasMore()) {
-			throw new RuntimeException("流已经遍历完毕");
+			throw new RuntimeException("Stream has been traversed");
 		}
 		return tokens.get(++index);
 	}
@@ -84,7 +84,7 @@ public class TokenStream {
 	 */
 	public Token prev() {
 		if (index == 0) {
-			throw new RuntimeException("流已经遍历完毕");
+			throw new RuntimeException("Stream has been traversed");
 		}
 		return tokens.get(--index);
 	}
@@ -94,7 +94,7 @@ public class TokenStream {
 	 */
 	public Token getPrev() {
 		if (index == 0) {
-			throw new RuntimeException("流已经遍历完毕");
+			throw new RuntimeException("Stream has been traversed");
 		}
 		return tokens.get(index - 1);
 	}
@@ -107,9 +107,9 @@ public class TokenStream {
 			Token token = index < tokens.size() ? tokens.get(index) : null;
 			Span span = token != null ? token.getSpan() : null;
 			if (span == null) {
-				MagicScriptError.error("期待 '" + Stream.of(types).map(TokenType::getError).collect(Collectors.joining("','")) + "', 但是流已经遍历完毕", this);
+				MagicScriptError.error("Expected '" + Stream.of(types).map(TokenType::getError).collect(Collectors.joining("','")) + "', but stream has been traversed", this);
 			} else {
-				MagicScriptError.error("期待 '" + Stream.of(types).map(TokenType::getError).collect(Collectors.joining("','")) + "', 获得 '" + token.getText() + "'", span);
+				MagicScriptError.error("Expected '" + Stream.of(types).map(TokenType::getError).collect(Collectors.joining("','")) + "', obtained '" + token.getText() + "'", span);
 			}
 			return null; // 执行不到这里
 		} else {
@@ -132,9 +132,9 @@ public class TokenStream {
 			Token token = index < tokens.size() ? tokens.get(index) : null;
 			Span span = token != null ? token.getSpan() : null;
 			if (span == null) {
-				MagicScriptError.error("期待 '" + type.getError() + "', 但是流已经遍历完毕", this);
+				MagicScriptError.error("Expected '" + type.getError() + "', but stream has been traversed", this);
 			} else {
-				MagicScriptError.error("期待 '" + type.getError() + "', 获得 '" + token.getText() + "'", span);
+				MagicScriptError.error("Expected '" + type.getError() + "', obtained '" + token.getText() + "'", span);
 			}
 			return null; // 执行不到这里
 		} else {
@@ -160,9 +160,9 @@ public class TokenStream {
 			Token token = index < tokens.size() ? tokens.get(index) : null;
 			Span span = token != null ? token.getSpan() : null;
 			if (span == null) {
-				MagicScriptError.error("期待 '" + text + "', 但是流已经遍历完毕", this);
+				MagicScriptError.error("Expected '" + text + "', but stream has been traversed", this);
 			} else {
-				MagicScriptError.error("期待 '" + text + "', 获得 '" + token.getText() + "'", span);
+				MagicScriptError.error("Expected '" + text + "', obtained '" + token.getText() + "'", span);
 			}
 			return null; // never reached
 		} else {

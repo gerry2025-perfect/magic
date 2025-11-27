@@ -25,7 +25,7 @@ public class Transaction {
 	/**
 	 * 回滚事务
 	 */
-	@Comment("回滚事务")
+	@Comment("Roll back transaction")
 	public void rollback() {
 		this.dataSourceTransactionManager.rollback(this.transactionStatus);
 	}
@@ -33,7 +33,7 @@ public class Transaction {
 	/**
 	 * 提交事务
 	 */
-	@Comment("提交事务")
+	@Comment("Commit transaction")
 	public void commit() {
 		this.dataSourceTransactionManager.commit(this.transactionStatus);
 	}

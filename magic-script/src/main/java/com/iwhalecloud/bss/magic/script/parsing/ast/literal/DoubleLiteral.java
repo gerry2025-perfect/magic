@@ -19,7 +19,7 @@ public class DoubleLiteral extends NumberLiteral {
 			try {
 				setValue(Double.parseDouble(getText().replace("_", "")));
 			} catch (NumberFormatException e) {
-				MagicScriptError.error("定义double变量值不合法", getSpan(), e);
+				MagicScriptError.error("Invalid double variable value definition", getSpan(), e);
 			}
 		}
 		context.ldc(value).invoke(INVOKESTATIC, Double.class, "valueOf", Double.class, double.class);

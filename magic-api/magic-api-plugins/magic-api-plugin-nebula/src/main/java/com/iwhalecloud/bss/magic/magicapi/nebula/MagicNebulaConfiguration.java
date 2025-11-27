@@ -50,11 +50,11 @@ public class MagicNebulaConfiguration  implements MagicPluginConfiguration {
         try {
 
             NebulaPoolConfig nebulaPoolConfig = buildNebulaPoolConfig(nebulaPoolProperties);
-            Assert.isNotBlank(nebulaPoolProperties.getHostAddress(), "nebula.hostAddress 不能为空, 格式为 ip:port,ip:port 配置多个地址用逗号分隔");
+            Assert.isNotBlank(nebulaPoolProperties.getHostAddress(), "nebula.hostAddress cannot be empty, format is `ip:port,ip:port` (Multiple addresses should be separated by commas)");
             String[] hostAddress = nebulaPoolProperties.getHostAddress().split(",");
             List<HostAddress> addresses = Arrays.stream(hostAddress).map(address -> {
                 String[] ipAndPort = address.split(":");
-                Assert.isTrue(ipAndPort.length == 2, "nebula.hostAddress 格式错误, 格式为 ip:port,ip:port 配置多个地址用逗号分隔");
+                Assert.isTrue(ipAndPort.length == 2, "nebula.hostAddress format is incorrect. The format should be ip:port,ip:port. Multiple addresses should be separated by commas");
                 return new HostAddress(ipAndPort[0], Integer.parseInt(ipAndPort[1]));
             }).collect(Collectors.toList());
 
@@ -63,10 +63,10 @@ public class MagicNebulaConfiguration  implements MagicPluginConfiguration {
             session = pool.getSession(nebulaPoolProperties.getUserName(), nebulaPoolProperties.getPassword(), nebulaPoolProperties.isReconnect());
             return pool;
         } catch (Exception e) {
-            logger.error("初始化nebula pool 异常", e);
+            logger.error("Nebula pool initialization error", e);
             throw new RuntimeException(e);
         } finally {
-            logger.info("初始化nebula pool 完成");
+            logger.info("Nebula pool initialization complete");
             Optional.ofNullable(session).ifPresent(Session::release);
         }
     }
