@@ -12,10 +12,25 @@
     <packaging>pom</packaging>
     <name>magic-api-servlet</name>
     <description>auto generate http api</description>
-    <modules>
+    <profiles>
+        <profile>
+            <id>jdk-17</id>
+            <modules>
+                <module>magic-api-servlet-jakarta</module>
+                <module>magic-api-servlet-javaee</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>jdk-8</id>
+            <modules>
+                <module>magic-api-servlet-javaee</module>
+            </modules>
+        </profile>
+    </profiles>
+    <!--<modules>
         <module>magic-api-servlet-jakarta</module>
         <module>magic-api-servlet-javaee</module>
-    </modules>
+    </modules>-->
     <dependencies>
         <dependency>
             <groupId>com.iwhalecloud.bss.magic</groupId>

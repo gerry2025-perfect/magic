@@ -12,6 +12,19 @@
     <packaging>jar</packaging>
     <name>magic-api-spring-boot-starter</name>
     <description>magic-api-spring-boot-starter</description>
+
+    <profiles>
+        <profile>
+            <id>jdk-17</id>
+            <dependencies>
+                <dependency>
+                    <groupId>com.iwhalecloud.bss.magic</groupId>
+                    <artifactId>magic-api-servlet-jakarta</artifactId>
+                </dependency>
+            </dependencies>
+        </profile>
+    </profiles>
+
     <dependencies>
         <dependency>
             <groupId>com.iwhalecloud.bss.magic</groupId>
@@ -43,11 +56,8 @@
         </dependency>
         <dependency>
             <groupId>com.iwhalecloud.bss.magic</groupId>
-            <artifactId>magic-api-servlet-jakarta</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.iwhalecloud.bss.magic</groupId>
             <artifactId>magic-api-servlet-javaee</artifactId>
         </dependency>
+
     </dependencies>
 </project>
